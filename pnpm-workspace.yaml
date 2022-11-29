@@ -1,0 +1,4 @@
+packages:
+  - website # 存放组件测试实例
+  - docs #文档
+  - "packages/**" 
