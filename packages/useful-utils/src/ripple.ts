@@ -10,12 +10,11 @@ export interface RippleOptions {
 const bem = createNameSpace('ripples')
 
 function calculationPosition(event: MouseEvent) {
-  const { offsetLeft, offsetTop } = event.target as HTMLElement
-  const { clientX, clientY } = event
+  const { layerX, layerY } = event as any
 
   return {
-    x: clientX - offsetLeft,
-    y: clientY - offsetTop
+    x: layerX,
+    y: layerY
   }
 }
 

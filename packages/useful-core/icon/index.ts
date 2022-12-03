@@ -1,5 +1,5 @@
-import { withInstall } from '@useful-ui/utils'
 import Icon from './src/index'
+import { withInstall } from '@useful-ui/utils'
 
 export const UseIcon = withInstall(Icon)
 

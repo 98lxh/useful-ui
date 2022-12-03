@@ -1,5 +1,13 @@
-@use "./_mixins/mixins.scss" as *;
-@use "./_mixins/variable.scss" as *;
+@use './_mixins/mixins.scss' as *;
+@use './_variables/index.scss' as *;
+
+:root {
+  --use-ghost-text-color: var(--use-color-text-dark);
+}
+
+.dark {
+  --use-ghost-text-color: var(--use-color-text-light);
+}
 
 @mixin buttn-lifting($color, $shadow) {
   @include button-trigger() {
@@ -18,139 +26,181 @@
   }
 }
 
-@include b("button") {
+@include b('button') {
   height: 32px;
   cursor: pointer;
-  border: 1px solid transparent;
   padding: 4px 15px;
   font-size: 14px;
-  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
 
   //按钮类型
-  @include m("default") {
-    background-color: #ffffff;
-    border-color: #d9d9d9;
+  @include m('default') {
+    background-color: var(--use-color-background);
+    border: 1px solid var(--use-color-border);
 
-    &:hover {
-      @include buttn-lifting($primary, 0 10px 20px -10px rgba($primary, 1));
-    }
-
-    @include when("ghost") {
-      color: #ffffff;
+    @include when('ghost') {
       background-color: transparent;
+      color: var(--use-ghost-text-color);
     }
 
-    @include when("danger") {
-      color: $danger;
-      border-color: $danger;
+    @include when('danger') {
+      color: var(--use-color-danger);
+      border: 1px solid var(--use-color-danger);
 
       &:hover {
-        @include buttn-lifting($danger, 0 10px 20px -10px rgba($danger, 1));
+        @include buttn-lifting(
+          var(--use-color-danger),
+          0 10px 20px -10px var(--use-color-danger)
+        );
       }
+    }
+
+    &:hover {
+      @include buttn-lifting(
+        var(--use-color-primary),
+        0 10px 20px -10px var(--use-color-primary)
+      );
     }
   }
 
-  @include m("primary") {
-    color: #ffffff;
-    background-color: $primary;
+  @include m('primary') {
+    color: var(--use-color-white);
+    background-color: var(--use-color-primary);
 
     &:hover {
-      @include buttn-lifting(#ffffff, 0 10px 20px -10px rgba($primary, 1));
-      border-color: $primary !important;
+      @include buttn-lifting(
+        var(--use-color-white),
+        0 10px 20px -10px var(--use-color-primary)
+      );
+      border-color: var(--use-color-primary) !important;
     }
 
-    @include when("ghost") {
+    @include when('ghost') {
+      color: var(--use-color-primary) !important;
+      border: 1px solid var(--use-color-primary);
       background-color: transparent;
-      color: $primary !important;
-      border-color: $primary;
 
-      @include b("ripples-button") {
-        background-color: $primary !important;
+      @include b('ripples-button') {
+        background-color: var(--use-color-primary) !important;
       }
     }
 
-    @include when("danger") {
-      background-color: $danger;
-      color: #ffffff !important;
+    @include when('danger') {
+      background-color: var(--use-color-danger);
+      color: var(--use-color-white) !important;
 
       &:hover {
-        border-color: $danger !important;
+        border-color: var(--use-color-danger) !important;
 
         @include button-trigger() {
-          box-shadow: 0 10px 20px -10px rgba($danger, 1);
-          color: #ffffff !important;
+          box-shadow: 0 10px 20px -10px var(--use-color-danger);
+          color: var(--use-color-white) !important;
         }
       }
     }
 
-    @include b("ripples-button") {
-      background-color: #ffffff !important;
+    @include b('ripples-button') {
+      background-color: var(--use-color-white) !important;
     }
   }
 
-  @include m("dashed") {
-    background-color: #ffffff;
-    border-color: #d9d9d9;
+  @include m('dashed') {
+    background-color: var(--use-color-background);
+    border: 1px solid var(--use-color-border);
+    color: var(--use-color-text);
     border-style: dashed;
 
     &:hover {
-      @include buttn-lifting($primary, 0 10px 20px -10px rgba($primary, 1));
+      @include buttn-lifting(
+        var(--use-color-primary),
+        0 10px 20px -10px var(--use-color-primary)
+      );
     }
 
-    @include when("ghost") {
-      color: #ffffff;
+    @include when('ghost') {
       background-color: transparent;
+      color: var(--use-ghost-text-color);
     }
 
-    @include when("danger") {
-      color: $danger;
-      border-color: $danger;
+    @include when('danger') {
+      color: var(--use-color-danger);
+      border: 1px solid var(--use-color-danger);
+      border-style: dashed;
 
       &:hover {
         @include button-trigger {
-          box-shadow: 0 10px 20px -10px rgba($danger, 1);
-          color: $danger !important;
-          border-color: $danger !important;
+          box-shadow: 0 10px 20px -10px var(--use-color-danger);
+          color: var(--use-color-danger) !important;
+          border-color: var(--use-color-danger) !important;
         }
       }
     }
   }
 
-  @include m("text") {
+  @include m('text') {
     background-color: transparent;
 
     &:hover {
-      @include buttn-lifting(#000000, 0 10px 20px -10px rgba(0, 0, 0, 0.5));
+      @include buttn-lifting(
+        var(--use-color-text),
+        0 10px 20px -10px rgba(0, 0, 0, 0.5)
+      );
       border-color: transparent !important;
+    }
+
+    @include when('danger') {
+      color: var(--use-color-danger);
+
+      &:hover {
+        @include button-trigger {
+          box-shadow: 0 10px 20px -10px var(--use-color-danger);
+          color: var(--use-color-danger) !important;
+        }
+      }
     }
   }
 
-  @include m("link") {
+  @include m('link') {
     background-color: transparent;
-    color: $primary;
+    color: var(--use-color-primary);
 
     &:hover {
-      @include buttn-lifting($primary, 0 10px 20px -10px rgba(0, 0, 0, 0.5));
+      @include buttn-lifting(
+        var(--use-color-primary),
+        0 10px 20px -10px rgba(0, 0, 0, 0.5)
+      );
       border-color: transparent !important;
+    }
+
+    @include when('danger') {
+      color: var(--use-color-danger);
+
+      &:hover {
+        @include button-trigger {
+          box-shadow: 0 10px 20px -10px var(--use-color-danger);
+          color: var(--use-color-danger) !important;
+        }
+      }
     }
   }
 
   //按钮尺寸
-  @include m("large") {
+  @include m('large') {
     padding: 6.5px 15px;
     font-size: 16px;
     height: 40px;
   }
 
-  @include m("small") {
+  @include m('small') {
     padding: 0px 7px;
     height: 24px;
   }
 
   //按钮形状
-  @include m("circle") {
+  @include m('circle') {
     min-width: 32px;
     border-radius: 50%;
     padding-left: 0px;
@@ -158,52 +208,52 @@
     text-align: center;
   }
 
-  @include m("round") {
+  @include m('round') {
     border-radius: 12px;
   }
 
   //块级按钮
-  @include when("block") {
+  @include when('block') {
     width: 100%;
   }
 
-  @include when("disabled") {
+  @include when('disabled') {
     cursor: not-allowed;
     opacity: 0.6;
   }
 
-  @include when("danger") {
-    @include b("ripples-button") {
-      background-color: $danger;
+  @include when('danger') {
+    @include b('ripples-button') {
+      background-color: var(--use-color-danger);
     }
   }
 
   //按钮涟漪
-  @include b("ripples-button") {
+  @include b('ripples-button') {
     width: 0px;
     height: 0px;
     position: absolute;
     pointer-events: none;
-    background-color: $primary;
+    background-color: var(--use-color-primary);
     opacity: 0.5;
     border-radius: 50%;
     transform: translate(-50%, -50%);
+    pointer-events: none;
     border-radius: 50%;
-    animation: ripples-button-animation 0.4s linear;
+    animation: ripples-button-animation 0.7s linear;
   }
 }
 
 @keyframes ripples-button-animation {
   from {
-    width: 0px;
-    height: 0px;
+    width: 2px;
+    height: 2px;
     opacity: 0.5;
   }
 
   to {
+    opacity: 0;
     width: 500px;
     height: 500px;
-    opacity: 0 !important;
-    border-radius: 0px;
   }
 }

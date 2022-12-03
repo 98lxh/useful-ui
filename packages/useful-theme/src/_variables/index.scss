@@ -1,2 +1,21 @@
-@use './dark';
-@use './normal';
+@use './basic';
+
+:root {
+  --use-color-danger: var(--use-color-danger-light-1);
+  --use-color-primary: var(--use-color-primary-light-1);
+  --use-color-success: var(--use-color-success-light-1);
+  --use-color-warning: var(--use-color-warning-light-1);
+  --use-color-background: var(--use-background-light);
+  --use-color-text: var(--use-color-text-light);
+  --use-color-border: var(--use-color-border-light);
+}
+
+.dark {
+  --use-color-danger: var(--use-color-danger-dark-2);
+  --use-color-primary: var(--use-color-primary-dark-1);
+  --use-color-success: var(--use-color-success-dark-1);
+  --use-color-warning: var(--use-color-warning-dark-1);
+  --use-color-background: var(--use-background-dark-1);
+  --use-color-text: var(--use-color-text-dark);
+  --use-color-border: var(--use-color-border-dark);
+}

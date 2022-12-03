@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "site:dev": "pnpm -C website dev"
+    "site:dev": "pnpm -C website dev",
+    "doc:dev": "pnpm -C docs dev",
+    "doc:build": "pnpm -C docs build"
   },
   "keywords": [],
   "author": "",
