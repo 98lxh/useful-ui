@@ -1,0 +1,37 @@
+@use 'config' as *;
+@forward 'config';
+
+//square-button
+@mixin b($block) {
+  $B: $namespace + '-' + $block;
+  .#{$B} {
+    @content;
+  }
+}
+
+//is-disabled
+@mixin when($state) {
+  @at-root {
+    &.#{$state-prefix + $state} {
+      @content;
+    }
+  }
+}
+
+//square--primary
+@mixin m($modifier) {
+  @at-root {
+    #{& + $modifier-separator + $modifier} {
+      @content;
+    }
+  }
+}
+
+//square__header
+@mixin e($element) {
+  @at-root {
+    #{&$element-separator + $element} {
+      @content;
+    }
+  }
+}

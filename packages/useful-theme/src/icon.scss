@@ -1,0 +1,8 @@
+@use './_mxins/mixins.scss' as *;
+@use './_mxins/config.scss';
+
+@include b('icon') {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+}

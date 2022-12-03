@@ -1,0 +1,209 @@
+@use "./_mixins/mixins.scss" as *;
+@use "./_mixins/variable.scss" as *;
+
+@mixin buttn-lifting($color, $shadow) {
+  @include button-trigger() {
+    box-shadow: $shadow;
+    border-color: $color;
+    color: $color;
+    transform: translateY(-3px);
+  }
+}
+
+@mixin button-trigger() {
+  &:not(.is-disabled) {
+    &:not(.is-loading) {
+      @content;
+    }
+  }
+}
+
+@include b("button") {
+  height: 32px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  padding: 4px 15px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  //按钮类型
+  @include m("default") {
+    background-color: #ffffff;
+    border-color: #d9d9d9;
+
+    &:hover {
+      @include buttn-lifting($primary, 0 10px 20px -10px rgba($primary, 1));
+    }
+
+    @include when("ghost") {
+      color: #ffffff;
+      background-color: transparent;
+    }
+
+    @include when("danger") {
+      color: $danger;
+      border-color: $danger;
+
+      &:hover {
+        @include buttn-lifting($danger, 0 10px 20px -10px rgba($danger, 1));
+      }
+    }
+  }
+
+  @include m("primary") {
+    color: #ffffff;
+    background-color: $primary;
+
+    &:hover {
+      @include buttn-lifting(#ffffff, 0 10px 20px -10px rgba($primary, 1));
+      border-color: $primary !important;
+    }
+
+    @include when("ghost") {
+      background-color: transparent;
+      color: $primary !important;
+      border-color: $primary;
+
+      @include b("ripples-button") {
+        background-color: $primary !important;
+      }
+    }
+
+    @include when("danger") {
+      background-color: $danger;
+      color: #ffffff !important;
+
+      &:hover {
+        border-color: $danger !important;
+
+        @include button-trigger() {
+          box-shadow: 0 10px 20px -10px rgba($danger, 1);
+          color: #ffffff !important;
+        }
+      }
+    }
+
+    @include b("ripples-button") {
+      background-color: #ffffff !important;
+    }
+  }
+
+  @include m("dashed") {
+    background-color: #ffffff;
+    border-color: #d9d9d9;
+    border-style: dashed;
+
+    &:hover {
+      @include buttn-lifting($primary, 0 10px 20px -10px rgba($primary, 1));
+    }
+
+    @include when("ghost") {
+      color: #ffffff;
+      background-color: transparent;
+    }
+
+    @include when("danger") {
+      color: $danger;
+      border-color: $danger;
+
+      &:hover {
+        @include button-trigger {
+          box-shadow: 0 10px 20px -10px rgba($danger, 1);
+          color: $danger !important;
+          border-color: $danger !important;
+        }
+      }
+    }
+  }
+
+  @include m("text") {
+    background-color: transparent;
+
+    &:hover {
+      @include buttn-lifting(#000000, 0 10px 20px -10px rgba(0, 0, 0, 0.5));
+      border-color: transparent !important;
+    }
+  }
+
+  @include m("link") {
+    background-color: transparent;
+    color: $primary;
+
+    &:hover {
+      @include buttn-lifting($primary, 0 10px 20px -10px rgba(0, 0, 0, 0.5));
+      border-color: transparent !important;
+    }
+  }
+
+  //按钮尺寸
+  @include m("large") {
+    padding: 6.5px 15px;
+    font-size: 16px;
+    height: 40px;
+  }
+
+  @include m("small") {
+    padding: 0px 7px;
+    height: 24px;
+  }
+
+  //按钮形状
+  @include m("circle") {
+    min-width: 32px;
+    border-radius: 50%;
+    padding-left: 0px;
+    padding-right: 0px;
+    text-align: center;
+  }
+
+  @include m("round") {
+    border-radius: 12px;
+  }
+
+  //块级按钮
+  @include when("block") {
+    width: 100%;
+  }
+
+  @include when("disabled") {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  @include when("danger") {
+    @include b("ripples-button") {
+      background-color: $danger;
+    }
+  }
+
+  //按钮涟漪
+  @include b("ripples-button") {
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    pointer-events: none;
+    background-color: $primary;
+    opacity: 0.5;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    animation: ripples-button-animation 0.4s linear;
+  }
+}
+
+@keyframes ripples-button-animation {
+  from {
+    width: 0px;
+    height: 0px;
+    opacity: 0.5;
+  }
+
+  to {
+    width: 500px;
+    height: 500px;
+    opacity: 0 !important;
+    border-radius: 0px;
+  }
+}

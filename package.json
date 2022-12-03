@@ -4,16 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "site:dev": "pnpm -C website dev"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@useful-ui/core": "workspace:^1.0.0",
+    "@useful-ui/hooks": "workspace:^1.0.0",
     "@useful-ui/theme": "workspace:^1.0.0",
     "@useful-ui/utils": "workspace:^1.0.0",
     "typescript": "^4.9.3",
     "vue": "^3.2.45"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "@vue/eslint-config-typescript": "^11.0.2",
+    "eslint": "^8.28.0",
+    "eslint-plugin-vue": "^9.8.0",
+    "prettier": "^2.8.0",
+    "sass": "^1.56.1"
   }
 }
