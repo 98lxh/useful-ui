@@ -20,7 +20,7 @@ function handleSpinning() {
       :loading="state.visible"
       loading-type="corners"
       @click="handleSpinning"
-      >点击向目标元素怼进一个带文字的spin</use-button
+      >目标元素里整一个带文字的Spin</use-button
     >
   </use-space>
 </template>

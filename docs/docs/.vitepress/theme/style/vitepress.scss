@@ -92,16 +92,23 @@
       display: inline-table;
     }
 
-    th,
-    tr:nth-child(2n) {
-      background-color: transparent;
+    th {
+      background-color: rgba(5, 5, 5, 0.06);
     }
 
     td,
     th {
       text-align: center;
       font-size: 15px;
-      border-bottom: 1px solid #eee;
+      border: 1px solid rgba(5, 5, 5, 0.06);
+      font-size: 14px;
+      font-weight: 500 !important;
+      border-left: none !important;
+      border-right: none !important;
+    }
+
+    code {
+      color: rgb(196, 29, 127);
     }
   }
 
@@ -119,13 +126,15 @@
 .VPSidebarGroup {
   .VPLink.link.link {
     margin: 0;
-    padding: 5px 18px;
+    padding: 8px 18px;
     transition: 0.4s;
     padding-left: 14px !important;
+    margin: 5px 0px;
   }
 
   .VPLink.link.link.active {
-    background: lighten(#2d5af1, 39%);
+    background: rgba(26, 92, 255, 0.15);
+    color: rgb(26, 92, 255) !important;
     box-sizing: border-box;
 
     .link-text {
@@ -161,6 +170,13 @@ h2[id] {
   padding: 0px;
 }
 
+h2 {
+  margin: none !important;
+  border: none !important;
+  margin-bottom: 20px;
+  padding-top: 0px;
+}
+
 .space {
   display: flex;
   flex-wrap: wrap;
@@ -171,4 +187,23 @@ h2[id] {
 .content-container {
   margin: 0px !important;
   max-width: none !important;
+}
+
+.dark {
+  .vp-table__container {
+    td,
+    th {
+      border: 1px solid rgba(253, 253, 253, 0.12);
+      font-size: 14px;
+    }
+
+    th,
+    td {
+      color: rgb(92, 107, 119);
+    }
+
+    code {
+      color: rgb(224, 82, 156);
+    }
+  }
 }

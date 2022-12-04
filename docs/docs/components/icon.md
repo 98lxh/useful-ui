@@ -61,10 +61,10 @@ import { AlertOutlined } from '@vicons/antd'
 :::
 
 
-## Button Attributes
-<h2>Button Attributes</h2>
+## API
+<h2>API</h2>
 
-| 属性名  | 类型            | 默认值   | 说明     | 
+| 属性  | 类型            | 默认值   | 说明     | 
 | ----- | --------------- | -------- | -------- |
-| size  | `number\string` | `undefined` | 图标尺寸 |
+| size  | `number \| string` | `undefined` | 图标尺寸 |
 | color | `string`         | `undefined` | 图标颜色 |

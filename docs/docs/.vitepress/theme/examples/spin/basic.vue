@@ -10,5 +10,5 @@ function handleSpinning() {
 </script>
 
 <template>
-  <use-button @click="handleSpinning">Open Fullscreen Spin</use-button>
+  <use-button @click="handleSpinning">打开一个普普通通的Spin</use-button>
 </template>

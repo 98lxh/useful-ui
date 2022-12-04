@@ -109,15 +109,15 @@ function useSpin(options: SpinOptions = {}) {
     isSpinning.value = visible
     visible ? mountToTarget() : destroyed()
     const component = spin.value.component
-    const _changeVisible = component?.exposed?.changeVisible
-    _changeVisible && _changeVisible(visible)
+    const _changeState = component?.exposed?.changeState
+    _changeState && _changeState('visible', visible)
   }
 
   function changeType(type: SpinType) {
     if (!spin.value) return
     const component = spin.value.component
-    const _changeType = component?.exposed?.changeType
-    _changeType && _changeType(type)
+    const _changeState = component?.exposed?.changeState
+    _changeState && _changeState('type', type)
   }
 
   onMounted(() => initialization())

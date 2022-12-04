@@ -30,7 +30,7 @@ function handleSpinning() {
 </script>
 
 <template>
-  <use-button @click="handleSpinning">Open Fullscreen Spin</use-button>
+  <use-button @click="handleSpinning">打开一个普普通通的Spin</use-button>
 </template>
 ```
 :::
@@ -72,7 +72,7 @@ function handleSpinning() {
       :loading="state.visible"
       loading-type="waves"
       @click="handleSpinning"
-      >点击向目标元素怼进一个spin</use-button
+      >目标元素里整一个Spin</use-button
     >
   </use-space>
 </template>
@@ -130,7 +130,7 @@ function handleSpinning() {
       :loading="state.visible"
       loading-type="corners"
       @click="handleSpinning"
-      >点击向目标元素怼进一个带文字的spin</use-button
+      >目标元素里整一个带文字的Spin</use-button
     >
   </use-space>
 </template>

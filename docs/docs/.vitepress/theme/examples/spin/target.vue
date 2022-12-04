@@ -18,7 +18,7 @@ function handleSpinning() {
       :loading="state.visible"
       loading-type="waves"
       @click="handleSpinning"
-      >点击向目标元素怼进一个spin</use-button
+      >目标元素里整一个Spin</use-button
     >
   </use-space>
 </template>
