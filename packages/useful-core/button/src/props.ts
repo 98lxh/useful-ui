@@ -1,5 +1,7 @@
 import { ExtractPropTypes, PropType } from 'vue'
 
+import { type LoadingType } from '@useful-ui/core/loading'
+
 export type ButtonSize = 'large' | 'middle' | 'small'
 export type ButtonType = 'primary' | 'dashed' | 'link' | 'text' | 'default'
 export type ButtonShape = 'square' | 'circle' | 'round'
@@ -23,6 +25,12 @@ export const buttonProps = {
    */
   shape: {
     type: String as PropType<ButtonShape>
+  },
+  /**
+   * 加载图标类型
+   */
+  loadingType: {
+    type: String as PropType<LoadingType>
   },
   /**
    *  是否禁用

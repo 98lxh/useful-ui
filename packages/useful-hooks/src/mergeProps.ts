@@ -18,8 +18,6 @@ function useMergeProps<PropsType>(
         _componentProps[propName] = componentProps[propName]
       }
     }
-
-    console.log(componentProps)
     return _componentProps
   })
 

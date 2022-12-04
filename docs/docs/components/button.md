@@ -1,6 +1,5 @@
 # 按钮 Button
 
-
 按钮用于开始一个即时操作。
 
 ## 按钮类型
@@ -219,6 +218,113 @@
       <use-button ghost>Ghost</use-button>
       <use-button ghost disabled>Ghost(Disabled)</use-button>
     </use-space>
+  </use-space>
+</template>
+```
+:::
+
+## 加载状态
+::: demo
+<template #title>
+加载状态
+</template>
+
+<template #desc>
+添加 loading 属性即可让按钮处于加载状态
+</template>
+
+<template #source>
+  <use-space direction="vertical">
+    <use-space wrap :size="15">
+      <use-button type="primary" size="small" loading>Small Loading</use-button>
+      <use-button type="primary" loading>Default Loading</use-button>
+      <use-button type="primary" size="large" loading>Corners Loading</use-button>
+    </use-space>
+    <use-space wrap :size="15">
+      <use-button size="small" loading>Small Loading</use-button>
+      <use-button loading>Default Loading</use-button>
+      <use-button size="large" loading>Corners Loading</use-button>
+    </use-space>
+    <use-space wrap :size="15">
+      <use-button danger size="small" loading>Small Loading</use-button>
+      <use-button danger loading>Default Loading</use-button>
+      <use-button danger size="large" loading>Corners Loading</use-button>
+    </use-space>
+    <use-space wrap :size="15" style="background-color:#ccc;padding-top:10px;padding-left:10px">
+      <use-button ghost size="small" loading>Small Loading</use-button>
+      <use-button ghost loading>Default Loading</use-button>
+      <use-button ghost size="large" loading>Corners Loading</use-button>
+    </use-space>
+  </use-space>
+</template>
+
+```html
+<template>
+  <use-space direction="vertical">
+    <use-space wrap :size="15">
+      <use-button type="primary" size="small" loading>Small Loading</use-button>
+      <use-button type="primary" loading>Default Loading</use-button>
+      <use-button type="primary" size="large" loading>Corners Loading</use-button>
+    </use-space>
+    <use-space wrap :size="15">
+      <use-button size="small" loading>Small Loading</use-button>
+      <use-button loading>Default Loading</use-button>
+      <use-button size="large" loading>Corners Loading</use-button>
+    </use-space>
+    <use-space wrap :size="15">
+      <use-button danger size="small" loading>Small Loading</use-button>
+      <use-button danger loading>Default Loading</use-button>
+      <use-button danger size="large" loading>Corners Loading</use-button>
+    </use-space>
+    <use-space wrap :size="15" style="background-color:#ccc;padding:20px 10px">
+      <use-button ghost size="small" loading>Small Loading</use-button>
+      <use-button ghost loading>Default Loading</use-button>
+      <use-button ghost size="large" loading>Corners Loading</use-button>
+    </use-space>
+  </use-space>
+</template>
+```
+:::
+
+
+## 加载状态类型
+::: demo
+<template #title>
+加载状态类型
+</template>
+
+<template #desc>
+添加 loading 属性即可让按钮处于禁用状态
+</template>
+
+<template #source>
+  <use-space wrap :size="15">
+    <use-button type="primary" loading>Default Loading</use-button>
+    <use-button type="primary" loading-type="waves" loading>Waves Loading</use-button>
+    <use-button type="primary" loading-type="corners" loading>Corners Loading</use-button>
+    <use-button type="primary" loading-type="border" loading>Border Loading</use-button>
+    <use-button type="primary" loading-type="points" loading>Points Loading</use-button>
+    <use-button type="primary" loading-type="square" loading>Square Loading</use-button>
+    <use-button type="primary" loading-type="rectangle" loading>Rectangle Loading</use-button>
+    <use-button type="primary" loading-type="circles" loading>Circles Loading</use-button>
+    <use-button type="primary" loading-type="square-rotate" loading>square-rotate Loading</use-button>
+    <use-button type="primary" loading-type="scale" loading>Scale Loading</use-button>
+  </use-space>
+</template>
+
+```html
+<template>
+  <use-space wrap :size="15">
+    <use-button type="primary" loading>Default Loading</use-button>
+    <use-button type="primary" loading-type="waves" loading>Waves Loading</use-button>
+    <use-button type="primary" loading-type="corners" loading>Corners Loading</use-button>
+    <use-button type="primary" loading-type="border" loading>Border Loading</use-button>
+    <use-button type="primary" loading-type="points" loading>Points Loading</use-button>
+    <use-button type="primary" loading-type="square" loading>Square Loading</use-button>
+    <use-button type="primary" loading-type="rectangle" loading>Rectangle Loading</use-button>
+    <use-button type="primary" loading-type="circles" loading>Circles Loading</use-button>
+    <use-button type="primary" loading-type="square-rotate" loading>square-rotate Loading</use-button>
+    <use-button type="primary" loading-type="scale" loading>Scale Loading</use-button>
   </use-space>
 </template>
 ```

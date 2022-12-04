@@ -5,15 +5,18 @@ function _bem(
   modifier?: string
 ) {
   if (blockSuffix) prefixName += `-${blockSuffix}`
-  if (element) prefixName += `--${element}`
-  if (modifier) prefixName += `__${modifier}`
+  if (element) prefixName += `__${element}`
+  if (modifier) prefixName += `--${modifier}`
   return prefixName
 }
 
 function createBEM(prefixName: string) {
   const b = (blockSuffix = '') => _bem(prefixName, blockSuffix)
-  const e = (element = '') => (element ? _bem(prefixName, element) : element)
-  const m = (modifier = '') => (modifier ? _bem(prefixName, '', modifier) : '')
+
+  const e = (element = '') =>
+    element ? _bem(prefixName, '', element) : element
+  const m = (modifier = '') =>
+    modifier ? _bem(prefixName, '', '', modifier) : ''
 
   const be = (blockSuffix = '', element = '') =>
     blockSuffix && element ? _bem(prefixName, blockSuffix, element) : ''

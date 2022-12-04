@@ -13,7 +13,8 @@ export const sidebar = {
       text: '基础组件',
       items: [
         { text: '图标 Icon', link: '/components/icon' },
-        { text: '按钮 Button', link: '/components/button' }
+        { text: '按钮 Button', link: '/components/button' },
+        { text: '加载 Spin', link: '/components/spin' }
       ]
     }
   ]

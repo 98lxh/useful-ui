@@ -36,6 +36,7 @@
   transition: all 0.3s ease;
   border: 1px solid transparent;
   user-select: none;
+  color: var(--use-color-text);
 
   //按钮类型
   @include m('default') {
@@ -242,6 +243,12 @@
     pointer-events: none;
     border-radius: 50%;
     animation: ripples-button-animation 0.7s linear;
+  }
+
+  @include when('ghost') {
+    @include b('spin') {
+      background-color: transparent !important;
+    }
   }
 }
 

@@ -1,6 +1,7 @@
 import { computed, defineComponent, ref } from 'vue'
 import { buttonProps, type ButtonProps } from './props'
 import { useMergeProps } from '@useful-ui/hooks'
+import Spin from '@useful-ui/core/spin'
 
 import {
   className,
@@ -23,6 +24,12 @@ const defaultProps: ButtonProps = {
   size: 'middle',
   htmlType: 'button',
   ripple: true
+}
+
+const spinScale = {
+  small: '0.4',
+  middle: '0.5',
+  large: '0.7'
 }
 
 const name = createComponentName('Button')
@@ -68,6 +75,13 @@ const Button = defineComponent({
       emit('click', event)
     }
 
+    function renderSpinning() {
+      const { loading, loadingType, size } = props.value
+      const scale = spinScale[size || 'middle']
+      if (!loading) return null
+      return <Spin visible type={loadingType} scale={scale} target />
+    }
+
     return () => {
       const { htmlType } = props.value
 
@@ -78,6 +92,7 @@ const Button = defineComponent({
           class={classes.value}
           onClick={handleClick}
         >
+          {renderSpinning()}
           {slots.icon && slots.icon()}
           {slots.default && slots.default()}
         </button>

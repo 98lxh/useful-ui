@@ -6,3 +6,6 @@ export { UseButton, UseButtonGroup } from './button'
 
 export * from './space'
 export { UseSpace } from './space'
+
+export * from './spin'
+export { UseSpin } from './spin'

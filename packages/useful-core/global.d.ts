@@ -6,5 +6,6 @@ declare module '@vue/runtime-core' {
     UseButton: typeof components.UseButton
     UseButtonGroup: typeof components.UseButtonGroup
     UseSpace: typeof components.UseSpace
+    UseSpin: typeof components.UseSpin
   }
 }
