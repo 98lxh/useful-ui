@@ -4,5 +4,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     UseIcon: typeof components.UseIcon
     UseButton: typeof components.UseButton
+    UseButtonGroup: typeof components.UseButtonGroup
+    UseSpace: typeof components.UseSpace
   }
 }

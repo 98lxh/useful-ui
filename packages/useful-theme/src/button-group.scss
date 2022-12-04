@@ -1,12 +1,11 @@
-@use "./_mixins/mixins.scss" as *;
-@use "./_mixins/variable.scss" as *;
+@use './_mixins/mixins.scss' as *;
 
-@include b("button-group") {
+@include b('button-group') {
   display: inline-flex;
   align-items: center;
 
-  @include b("button"){
-    &:not(:last-child){
+  @include b('button') {
+    &:not(:last-child) {
       border-right-color: transparent;
     }
   }

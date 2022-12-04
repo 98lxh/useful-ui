@@ -1,0 +1,17 @@
+@import './_mixins/mixins.scss';
+
+@include b(space) {
+  display: inline-flex;
+
+  @include when(vertical) {
+    flex-direction: column;
+  }
+
+  @include when(wrap) {
+    flex-wrap: wrap;
+  }
+
+  @include when(fill) {
+    display: flex;
+  }
+}

@@ -78,6 +78,7 @@ const Button = defineComponent({
           class={classes.value}
           onClick={handleClick}
         >
+          {slots.icon && slots.icon()}
           {slots.default && slots.default()}
         </button>
       )
