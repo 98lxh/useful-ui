@@ -13,7 +13,7 @@
 </template>
 
 <template #source>
-  <use-space>
+  <use-space wrap>
     <use-button type="primary">Primary Button</use-button>
     <use-button>Default Button</use-button>
     <use-button type="dashed">Dashed Button</use-button>
@@ -24,7 +24,7 @@
 
 ```html
 <template>
-  <use-space>
+  <use-space wrap>
     <use-button type="primary">Primary Button</use-button>
     <use-button>Default Button</use-button>
     <use-button type="dashed">Dashed Button</use-button>
@@ -124,6 +124,89 @@
     <use-button danger ghost>Danger</use-button>
   </use-space>
 </template>
+```
+:::
+
+## 图标按钮
+::: demo
+<template #title>
+图标按钮
+</template>
+
+<template #desc>
+幽灵按钮将按钮的内容反色，背景变为透明，常用在有色背景上。
+</template>
+
+<template #source>
+  <use-space>
+    <use-button danger shape="circle">
+      <template #icon>
+        <use-icon>
+          <AlertOutlined />
+        </use-icon>
+      </template>
+    </use-button>
+    <use-button type="primary" shape="circle">
+      <template #icon>
+        <use-icon>
+          <AlertOutlined />
+        </use-icon>
+      </template>
+    </use-button>
+    <use-button shape="circle">
+      <template #icon>
+        <use-icon>
+          <AlertOutlined />
+        </use-icon>
+      </template>
+    </use-button>
+    <use-button type="dashed" shape="circle">
+      <template #icon>
+        <use-icon>
+          <AlertOutlined />
+        </use-icon>
+      </template>
+    </use-button>
+  </use-space>
+</template>
+
+```html
+<template>
+  <use-space>
+    <use-button danger shape="circle">
+      <template #icon>
+        <use-icon>
+          <AlertOutlined />
+        </use-icon>
+      </template>
+    </use-button>
+    <use-button type="primary" shape="circle">
+      <template #icon>
+        <use-icon>
+          <AlertOutlined />
+        </use-icon>
+      </template>
+    </use-button>
+    <use-button shape="circle">
+      <template #icon>
+        <use-icon>
+          <AlertOutlined />
+        </use-icon>
+      </template>
+    </use-button>
+    <use-button type="dashed" shape="circle">
+      <template #icon>
+        <use-icon>
+          <AlertOutlined />
+        </use-icon>
+      </template>
+    </use-button>
+  </use-space>
+</template>
+
+<script setup>
+import { AlertOutlined } from '@vicons/antd'
+</script>
 ```
 :::
 
@@ -342,19 +425,111 @@
 </template>
 
 <template #source>
+  <use-space direction="vertical">
     <use-button-group>
-      <use-button>User</use-button>
-      <use-button>...</use-button>
+      <use-button>Actions</use-button>
+      <use-button>
+        <template #icon>
+          <use-icon>
+            <EllipsisOutlined />
+          </use-icon>
+        </template>
+      </use-button>
     </use-button-group>
+    <use-button-group danger shape="round">
+      <use-button>Actions</use-button>
+      <use-button>
+        <template #icon>
+          <use-icon>
+            <EllipsisOutlined />
+          </use-icon>
+        </template>
+      </use-button>
+    </use-button-group>
+    <use-button-group shape="round">
+      <use-button>
+        <template #icon>
+          <use-icon>
+            <StepBackwardOutlined />
+          </use-icon>
+        </template>
+      </use-button>
+      <use-button>
+        <template #icon>
+          <use-icon>
+            <PlayCircleOutlined />
+          </use-icon>
+        </template>
+      </use-button>
+      <use-button>
+        <template #icon>
+          <use-icon>
+            <StepForwardFilled />
+          </use-icon>
+        </template>
+      </use-button>
+    </use-button-group>
+  </use-space>
 </template>
 
 ```html
 <template>
-  <use-button-group>
-    <use-button>User</use-button>
-    <use-button>...</use-button>
-  </use-button-group>
+  <use-space direction="vertical">
+    <use-button-group>
+      <use-button>Actions</use-button>
+      <use-button>
+        <template #icon>
+          <use-icon>
+            <EllipsisOutlined />
+          </use-icon>
+        </template>
+      </use-button>
+    </use-button-group>
+
+    <use-button-group danger>
+      <use-button>Actions</use-button>
+      <use-button>
+        <template #icon>
+          <use-icon>
+            <EllipsisOutlined />
+          </use-icon>
+        </template>
+      </use-button>
+    </use-button-group>
+
+    <use-button-group shape="round" ghost>
+      <use-button>
+        <template #icon>
+          <use-icon>
+            <StepBackwardOutlined />
+          </use-icon>
+        </template>
+      </use-button>
+      <use-button>
+        <template #icon>
+          <use-icon>
+            <PlayCircleOutlined />
+          </use-icon>
+        </template>
+      </use-button>
+      <use-button>
+        <template #icon>
+          <use-icon>
+            <StepForwardFilled />
+          </use-icon>
+        </template>
+      </use-button>
+    </use-button-group>
+  </use-space>
 </template>
+<script setup>
+import { 
+  EllipsisOutlined, 
+  StepBackwardOutlined,
+  StepBackwardOutlined, 
+  PlayCircleOutlined 
+} from '@vicons/antd'
+</script>
 ```
 :::
 

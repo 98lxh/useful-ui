@@ -1,6 +1,5 @@
 import { ExtractPropTypes, PropType } from 'vue'
-
-import { type LoadingType } from '@useful-ui/core/loading'
+import { type SpinType } from '@useful-ui/core/spin'
 
 export type ButtonSize = 'large' | 'middle' | 'small'
 export type ButtonType = 'primary' | 'dashed' | 'link' | 'text' | 'default'
@@ -30,7 +29,7 @@ export const buttonProps = {
    * 加载图标类型
    */
   loadingType: {
-    type: String as PropType<LoadingType>
+    type: String as PropType<SpinType>
   },
   /**
    *  是否禁用
@@ -82,4 +81,16 @@ export const buttonProps = {
   }
 }
 
+const { type, danger, disabled, shape, size, ghost } = buttonProps
+
+export const buttonGroupProps = {
+  type,
+  danger,
+  disabled,
+  shape,
+  size,
+  ghost
+}
+
 export type ButtonProps = ExtractPropTypes<typeof buttonProps>
+export type ButtonGroupProps = ExtractPropTypes<typeof buttonGroupProps>

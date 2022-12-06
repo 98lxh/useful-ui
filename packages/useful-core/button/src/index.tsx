@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, inject, provide, ref } from 'vue'
 import { buttonProps, type ButtonProps } from './props'
 import { useMergeProps } from '@useful-ui/hooks'
 import Spin from '@useful-ui/core/spin'
@@ -9,6 +9,7 @@ import {
   createNameSpace,
   createComponentName
 } from '@useful-ui/utils'
+import { injectButtonKey } from './context'
 
 const createRipplesOptions = (target: HTMLElement) => {
   return {
@@ -42,6 +43,7 @@ const Button = defineComponent({
   setup(componetProps, { emit, slots }) {
     const buttonRef = ref<HTMLButtonElement | null>(null)
     const props = useMergeProps(componetProps, defaultProps)
+    const context = inject(injectButtonKey, {})
 
     const classes = computed(() => {
       const { type, size, shape, ghost, block, danger, disabled, loading } =
@@ -49,14 +51,14 @@ const Button = defineComponent({
 
       return className(
         bem.b(),
-        bem.m(type),
-        bem.m(size),
-        bem.m(shape),
-        bem.is('disabled', disabled),
+        bem.m(context.type || type),
+        bem.m(context.size || size),
+        bem.m(context.shape || shape),
+        bem.is('danger', context.danger || danger),
+        bem.is('disabled', context.disabled || disabled),
+        bem.is('ghost', context.ghost || ghost),
         bem.is('loading', loading),
-        bem.is('ghost', ghost),
-        bem.is('block', block),
-        bem.is('danger', danger)
+        bem.is('block', block)
       )
     })
 

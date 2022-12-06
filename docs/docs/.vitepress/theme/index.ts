@@ -14,8 +14,8 @@ export default {
     return h(DefaultTheme.Layout, null, {})
   },
   enhanceApp({ app }) {
-    app.use(UsefulUi),
-      components.forEach(({ name, comp }) => app.component(name, comp))
+    app.use(UsefulUi)
+    components.forEach(({ name, comp }) => app.component(name, comp))
     examples.forEach(({ name, comp }) => app.component(name, comp))
   }
 }

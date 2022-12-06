@@ -37,6 +37,14 @@
   border: 1px solid transparent;
   user-select: none;
   color: var(--use-color-text);
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: center;
+
+  @include b('icon') {
+    font-size: 14px;
+  }
 
   //按钮类型
   @include m('default') {
@@ -194,11 +202,19 @@
     padding: 6.5px 15px;
     font-size: 16px;
     height: 40px;
+
+    @include b('icon') {
+      font-size: 16px;
+    }
   }
 
   @include m('small') {
     padding: 0px 7px;
     height: 24px;
+
+    @include b('icon') {
+      font-size: 12px;
+    }
   }
 
   //按钮形状

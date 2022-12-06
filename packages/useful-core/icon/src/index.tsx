@@ -11,9 +11,7 @@ const Icon = defineComponent({
   setup(props, { slots }) {
     const style = computed(() => {
       const { size, color } = props
-
       if (!size && !color) return {}
-
       return {
         ...(size ? { 'font-size': size + 'px' } : {}),
         ...(color ? { color } : {})

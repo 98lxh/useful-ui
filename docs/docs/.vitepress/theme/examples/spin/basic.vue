@@ -5,7 +5,7 @@ const { state } = useSpin()
 
 function handleSpinning() {
   state.visible = true
-  setTimeout(() => (state.visible = false), 1000)
+  setTimeout(() => (state.visible = false), 2000)
 }
 </script>
 
