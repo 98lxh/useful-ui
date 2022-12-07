@@ -19,7 +19,7 @@
 
 ```html
 <script setup lang="ts">
-import { useSpin } from '@useful-ui/core'
+import { useSpin } from 'useful-ui'
 
 const { state } = useSpin()
 
@@ -53,7 +53,7 @@ function handleSpinning() {
 
 ```html
 <script setup lang="ts">
-import { useSpin } from '@useful-ui/core'
+import { useSpin } from 'useful-ui'
 
 const { state, target } = useSpin({
   type: 'waves'
@@ -109,7 +109,7 @@ function handleSpinning() {
 
 ```html
 <script setup lang="ts">
-import { useSpin } from '@useful-ui/core'
+import { useSpin } from 'useful-ui'
 
 const { state, target } = useSpin({
   scale:'0.95',
@@ -167,50 +167,41 @@ function handleSpinning() {
 
 ```html
 <script setup lang="ts">
-import { useSpin, type SpinType } from '@useful-ui/core'
+import { useSpin, type SpinType } from 'useful-ui'
 
 const { state } = useSpin({
   scale: '1.5'
 })
 
+const types = [
+  'default',
+  'waves',
+  'corners',
+  'border',
+  'points',
+  'square',
+  'circles',
+  'rectangle',
+  'square-rotate',
+  'scale'
+] as const
+
 function handleSpinning(type: SpinType) {
   state.type = type
   state.visible = true
-  setTimeout(() => (state.visible = false), 1000)
+  setTimeout(() => (state.visible = false), 2000)
 }
 </script>
 
 <template>
   <use-space :size="20" wrap>
-    <div class="target" @click="() => handleSpinning('default')">
-      <UseSpin visible target text="default" />
-    </div>
-    <div class="target" @click="() => handleSpinning('waves')">
-      <UseSpin visible target type="waves" text="waves" />
-    </div>
-    <div class="target" @click="() => handleSpinning('corners')">
-      <UseSpin visible target type="corners" text="corners" />
-    </div>
-    <div class="target" @click="() => handleSpinning('border')">
-      <UseSpin visible target type="border" text="border" />
-    </div>
-    <div class="target" @click="() => handleSpinning('points')">
-      <UseSpin visible target type="points" text="points" />
-    </div>
-    <div class="target" @click="() => handleSpinning('square')">
-      <UseSpin visible target type="square" text="square" />
-    </div>
-    <div class="target" @click="() => handleSpinning('circles')">
-      <UseSpin visible target type="circles" text="circles" />
-    </div>
-    <div class="target" @click="() => handleSpinning('rectangle')">
-      <UseSpin visible target type="circles" text="rectangle" />
-    </div>
-    <div class="target" @click="() => handleSpinning('square-rotate')">
-      <UseSpin visible target type="square-rotate" text="square-rotate" />
-    </div>
-    <div class="target" @click="() => handleSpinning('scale')">
-      <UseSpin visible target type="scale" text="scale" />
+    <div
+      class="target"
+      v-for="type in types"
+      :key="type"
+      @click="() => handleSpinning(type)"
+    >
+      <UseSpin visible target :text="type" :type="type" />
     </div>
   </use-space>
 </template>

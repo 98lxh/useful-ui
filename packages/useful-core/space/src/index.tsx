@@ -5,7 +5,8 @@ import { type SpaceProps, spaceProps } from './props'
 import {
   className,
   createComponentName,
-  createNameSpace
+  createNameSpace,
+  flattenVNodes
 } from '@useful-ui/utils'
 
 const defaultProps: SpaceProps = {
@@ -24,7 +25,6 @@ const Space = defineComponent({
 
     const classes = computed(() => {
       const { direction, wrap, fill } = props.value
-
       return className(
         bem.b(),
         bem.is(direction!, true),
@@ -35,7 +35,6 @@ const Space = defineComponent({
 
     const styles = computed(() => {
       const { direction, size, wrap } = props.value
-
       return {
         marginRight: size + 'px',
         marginBottom: wrap || direction === 'vertical' ? size + 'px' : 0
@@ -43,9 +42,8 @@ const Space = defineComponent({
     })
 
     function renderChildren(): JSX.Element[] | null {
-      const children = slots.default && slots.default()
+      const children = flattenVNodes(slots.default && slots.default())
       if (!children) return null
-
       return children.map(childNode => (
         <div class={bem.b('item')} style={styles.value}>
           {childNode}

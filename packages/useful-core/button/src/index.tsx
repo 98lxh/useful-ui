@@ -48,7 +48,6 @@ const Button = defineComponent({
     const classes = computed(() => {
       const { type, size, shape, ghost, block, danger, disabled, loading } =
         props.value
-
       return className(
         bem.b(),
         bem.m(context.type || type),
@@ -69,7 +68,6 @@ const Button = defineComponent({
         typeof event?.preventDefault === 'function' && event.preventDefault()
         return
       }
-
       if (ripple && type !== 'link' && type !== 'text') {
         createRipples(event, createRipplesOptions(buttonRef.value!))
       }
