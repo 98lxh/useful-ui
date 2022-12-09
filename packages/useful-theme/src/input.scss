@@ -1,0 +1,12 @@
+@use './_mixins/mixins.scss' as *;
+@use './_variables/index.scss' as *;
+
+@include b('input') {
+  &-wrapper {
+    @include e('placeholder') {
+    }
+
+    @include e('input') {
+    }
+  }
+}

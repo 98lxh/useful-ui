@@ -10,7 +10,8 @@ import {
 } from '@useful-ui/utils'
 
 const defaultProps: SpinProps = {
-  type: 'default'
+  type: 'default',
+  document: true
 }
 
 const modelConfig = {
@@ -34,9 +35,14 @@ const Spin = defineComponent({
 
     const classes = computed(() => {
       const { type } = state
-      const { target } = props.value
+      const { target, document } = props.value
       const isTarget = target ? bem.m('target') : ''
-      return className(bem.b(), bem.m(type.value), isTarget)
+      return className(
+        bem.b(),
+        bem.is('document', document),
+        bem.m(type.value),
+        isTarget
+      )
     })
 
     function renderContent() {

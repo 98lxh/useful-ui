@@ -2,7 +2,8 @@
 import { useSpin, type SpinType } from '@useful-ui/core'
 
 const { state } = useSpin({
-  scale: '1.5'
+  scale: '1.5',
+  text: '加载中...'
 })
 
 const types = [

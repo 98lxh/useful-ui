@@ -78,18 +78,21 @@ export const buttonProps = {
   danger: {
     type: Boolean as PropType<boolean | undefined>,
     default: undefined
+  },
+  /**
+   * 原生click事件
+   */
+  onClick: {
+    type: Function as PropType<(event?: MouseEvent) => void>
   }
 }
 
-const { type, danger, disabled, shape, size, ghost } = buttonProps
+const { type, shape, size } = buttonProps
 
 export const buttonGroupProps = {
   type,
-  danger,
-  disabled,
   shape,
-  size,
-  ghost
+  size
 }
 
 export type ButtonProps = ExtractPropTypes<typeof buttonProps>

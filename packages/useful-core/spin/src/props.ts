@@ -39,8 +39,18 @@ export const spinProps = {
     type: Boolean as PropType<boolean | undefined>,
     default: () => undefined
   },
+  /**
+   * 缩放比例
+   */
   scale: {
     type: String
+  },
+  /**
+   * 是否在文档流
+   */
+  document: {
+    type: Boolean as PropType<boolean | undefined>,
+    default: () => undefined
   }
 }
 

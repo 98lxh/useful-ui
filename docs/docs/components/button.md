@@ -436,17 +436,19 @@ import { AlertOutlined } from '@vicons/antd'
         </template>
       </use-button>
     </use-button-group>
-    <use-button-group danger shape="round">
-      <use-button>Actions</use-button>
-      <use-button>
-        <template #icon>
-          <use-icon>
-            <EllipsisOutlined />
-          </use-icon>
-        </template>
-      </use-button>
-    </use-button-group>
     <use-button-group shape="round">
+      <use-button>唱</use-button>
+      <use-button>跳</use-button>
+      <use-button>rap</use-button>
+      <use-button>篮球</use-button>
+    </use-button-group>
+    <use-button-group size="small">
+      <use-button>🎵</use-button>
+      <use-button>🐔</use-button>
+      <use-button>...</use-button>
+      <use-button>...</use-button>
+    </use-button-group>
+    <use-button-group shape="round" size="lager">
       <use-button>
         <template #icon>
           <use-icon>
@@ -485,19 +487,19 @@ import { AlertOutlined } from '@vicons/antd'
         </template>
       </use-button>
     </use-button-group>
-
-    <use-button-group danger>
-      <use-button>Actions</use-button>
-      <use-button>
-        <template #icon>
-          <use-icon>
-            <EllipsisOutlined />
-          </use-icon>
-        </template>
-      </use-button>
+    <use-button-group shape="round">
+      <use-button>唱</use-button>
+      <use-button>跳</use-button>
+      <use-button>rap</use-button>
+      <use-button>篮球</use-button>
     </use-button-group>
-
-    <use-button-group shape="round" ghost>
+    <use-button-group size="small">
+      <use-button>🎵</use-button>
+      <use-button>🐔</use-button>
+      <use-button>...</use-button>
+      <use-button>...</use-button>
+    </use-button-group>
+    <use-button-group shape="round" size="lager">
       <use-button>
         <template #icon>
           <use-icon>

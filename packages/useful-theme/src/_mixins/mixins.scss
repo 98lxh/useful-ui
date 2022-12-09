@@ -30,7 +30,7 @@
 //square__header
 @mixin e($element) {
   @at-root {
-    #{&$element-separator + $element} {
+    #{& + $element-separator + $element} {
       @content;
     }
   }

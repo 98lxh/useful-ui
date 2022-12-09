@@ -46,6 +46,7 @@ function useSpin(options: SpinOptions = {}) {
   })
 
   function createSpinInstance() {
+    props.document = false
     props.target = !!target.value
     const vnode = createVNode(Spin, props)
     spin.value = vnode as SpinInstance

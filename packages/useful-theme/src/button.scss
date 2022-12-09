@@ -266,6 +266,14 @@
       background-color: transparent !important;
     }
   }
+
+  @include when('loading') {
+    cursor: wait;
+  }
+
+  @include b('spin') {
+    z-index: 1;
+  }
 }
 
 @keyframes ripples-button-animation {

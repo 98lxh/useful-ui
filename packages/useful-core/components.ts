@@ -9,3 +9,6 @@ export { UseSpace } from './space'
 
 export * from './spin'
 export { UseSpin } from './spin'
+
+export * from './input'
+export { UseInput } from './input'

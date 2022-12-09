@@ -1,7 +1,7 @@
 import type { InjectionKey } from 'vue'
 import { ButtonShape, ButtonSize, ButtonType } from './props'
 
-interface ButtonProvide {
+interface ButtonGroupState {
   type?: ButtonType
   size?: ButtonSize
   shape?: ButtonShape
@@ -10,4 +10,5 @@ interface ButtonProvide {
   ghost?: boolean
 }
 
-export const injectButtonKey: InjectionKey<ButtonProvide> = Symbol()
+export const BUTTON_GROUP_STATE: InjectionKey<ButtonGroupState> =
+  Symbol('BUTTON_GOURP_STATE')
