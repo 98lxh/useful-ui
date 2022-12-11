@@ -20,7 +20,7 @@ const Icon = defineComponent({
 
     return () => {
       return (
-        <i class={bem.b()} style={style.value}>
+        <i class={bem.b()} style={style.value} onClick={props.onClick}>
           {slots.default && slots.default()}
         </i>
       )

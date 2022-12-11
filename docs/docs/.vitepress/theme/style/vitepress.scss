@@ -13,7 +13,8 @@
 }
 
 .dark {
-  --vp-c-bg-alt: #242424; // 深色模式侧边栏
+  --vp-c-bg-alt: #141414;
+  --vp-c-bg: #141414;
 }
 
 .sidebar-link-item.active {
@@ -177,18 +178,6 @@ h2 {
   padding-top: 0px;
 }
 
-.space {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px !important;
-  margin-bottom: 10px;
-}
-
-.content-container {
-  margin: 0px !important;
-  max-width: none !important;
-}
-
 .dark {
   .vp-table__container {
     td,
@@ -206,4 +195,16 @@ h2 {
       color: rgb(224, 82, 156);
     }
   }
+}
+
+.dark .VPNavBar.has-sidebar .content {
+  background-color: #141414 !important;
+}
+
+.dark .use-demo__title p {
+  background-color: #141414 !important;
+}
+
+.dark .VPNav.no-sidebar {
+  background-color: #141414 !important;
 }

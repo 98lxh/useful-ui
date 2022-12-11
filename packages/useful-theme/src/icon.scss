@@ -4,9 +4,13 @@
   display: inline-block;
   height: 1em;
   width: 1em;
+  line-height: 1em;
+  outline: none !important;
 
   svg {
     height: 1em;
     width: 1em;
+    outline: none !important;
+    line-height: 1em;
   }
 }

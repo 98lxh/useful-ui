@@ -16,6 +16,10 @@ export const sidebar = {
         { text: '按钮 Button', link: '/components/button' },
         { text: '加载 Spin', link: '/components/spin' }
       ]
+    },
+    {
+      text: '数据录入',
+      items: [{ text: '图标 Input', link: '/components/input' }]
     }
   ]
 }

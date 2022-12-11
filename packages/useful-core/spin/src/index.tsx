@@ -24,7 +24,6 @@ const bem = createNameSpace('spin')
 const Spin = defineComponent({
   name,
   props: spinProps,
-  emits: ['update:visivle'],
   setup(componentProps, { expose }) {
     const props = useMergeProps(componentProps, defaultProps)
 

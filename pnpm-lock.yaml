@@ -8,6 +8,7 @@ importers:
       '@typescript-eslint/parser': ^5.45.0
       '@useful-ui/core': workspace:^1.0.0
       '@useful-ui/hooks': workspace:^1.0.0
+      '@useful-ui/icons': workspace:^1.0.0
       '@useful-ui/theme': workspace:^1.0.0
       '@useful-ui/utils': workspace:^1.0.0
       '@vue/eslint-config-typescript': ^11.0.2
@@ -20,6 +21,7 @@ importers:
     dependencies:
       '@useful-ui/core': link:packages/useful-core
       '@useful-ui/hooks': link:packages/useful-hooks
+      '@useful-ui/icons': link:packages/useful-icons
       '@useful-ui/theme': link:packages/useful-theme
       '@useful-ui/utils': link:packages/useful-utils
       typescript: 4.9.3

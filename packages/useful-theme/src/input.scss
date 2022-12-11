@@ -1,12 +1,205 @@
 @use './_mixins/mixins.scss' as *;
 @use './_variables/index.scss' as *;
 
-@include b('input') {
-  &-wrapper {
-    @include e('placeholder') {
+$input-name: 'input';
+$state-border: #{$namespace + '-' + $input-name + $element-separator + 'state'};
+$border: #{$namespace + '-' + $input-name + $element-separator + 'border'};
+$prefix: #{$namespace + '-' + $input-name + $element-separator + 'prefix'};
+$suffix: #{$namespace + '-' + $input-name + $element-separator + 'suffix'};
+$input: #{$namespace + '-' + $input-name + $element-separator + 'input'};
+$placeholder: #{$namespace + '-' + $input-name + $element-separator +
+  'placeholder'};
+
+:root {
+  --use-input-shadow-primary: 0 0 0 2.5px rgba(26, 92, 255, 0.25);
+  --use-input-shadow-warning: 0 0 0 2.5px rgba(255, 186, 0, 0.25);
+  --use-input-shadow-error: 0 0 0 2.5px rgba(255, 71, 87, 0.25);
+  --use-input-default-background: var(--use-color-gray-light-0);
+}
+
+@mixin input-border($border-color, $shadow, $z-index) {
+  position: absolute;
+  box-sizing: border-box;
+  pointer-events: none;
+  border: 1px solid $border-color;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: $z-index;
+  box-shadow: $shadow;
+}
+
+@mixin input-height($height, $font-size) {
+  height: $height;
+
+  .#{$prefix},
+  .#{$suffix} {
+    height: $height;
+    line-height: $height;
+    font-size: $font-size;
+  }
+
+  .#{$input} {
+    height: $height;
+    line-height: $height;
+    font-size: $font-size;
+
+    &-el {
+      height: $height;
+      line-height: $height;
     }
 
-    @include e('input') {
+    .#{$placeholder} {
+      height: $height;
+      line-height: $height;
+      font-size: $font-size;
+    }
+  }
+}
+
+@include b('input') {
+  position: relative;
+  padding: 0px 12px;
+  width: 100%;
+  font-size: 14px;
+  box-sizing: border-box;
+  @include input-height(var(--use-middle-height), var(--use-middle-font));
+
+  &-wrapper {
+    display: inline-flex;
+    width: 100%;
+
+    .#{$prefix},
+    .#{$suffix} {
+      color: var(--use-color-text);
+      font-size: 16px;
+      display: inline-flex;
+      align-items: center;
+      width: 20px;
+      flex-shrink: 0;
+    }
+
+    .#{$prefix} {
+      margin-right: 4px;
+    }
+
+    .#{$suffix} {
+      margin-left: 4px;
+    }
+
+    .#{$input} {
+      position: relative;
+      flex-grow: 1;
+      font-size: 14px;
+
+      &-el {
+        width: 100%;
+        padding: 0px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        box-sizing: border-box;
+        color: var(--use-color-text);
+      }
+
+      .#{$placeholder} {
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 2px;
+        pointer-events: none;
+        color: var(--use-color-border);
+        position: absolute;
+      }
+    }
+  }
+
+  .#{$border} {
+    @include input-border(var(--use-color-border), none, auto);
+  }
+
+  .#{$state-border} {
+    @include input-border(transparent, none, 1);
+    transition: box-shadow 0.3s var(--use-bezier),
+      border-color 0.3s var(--use-bezier);
+  }
+
+  &:hover {
+    .#{$state-border} {
+      @include input-border(var(--use-color-primary), none, 1);
+    }
+  }
+
+  @include when('focus') {
+    .#{$state-border} {
+      @include input-border(
+        var(--use-color-primary),
+        var(--use-input-shadow-primary),
+        1
+      );
+
+      transition: box-shadow 0.3s var(--use-bezier),
+        border-color 0.3s var(--use-bezier);
+    }
+  }
+
+  //尺寸
+  @include m('small') {
+    @include input-height(var(--use-small-height), var(--use-small-font));
+  }
+  @include m('large') {
+    @include input-height(var(--use-large-height), var(--use-large-font));
+  }
+
+  //验证状态
+  @include m('warning') {
+    .#{$state-border} {
+      @include input-border(var(--use-color-warning), none, 1);
+    }
+
+    &:hover {
+      .#{$state-border} {
+        @include input-border(var(--use-color-warning), none, 1);
+      }
+    }
+
+    @include when('focus') {
+      .#{$state-border} {
+        @include input-border(
+          var(--use-color-warning),
+          var(--use-input-shadow-warning),
+          1
+        );
+
+        transition: box-shadow 0.3s var(--use-bezier),
+          border-color 0.3s var(--use-bezier);
+      }
+    }
+  }
+
+  @include m('error') {
+    .#{$state-border} {
+      @include input-border(var(--use-color-danger), none, 1);
+    }
+
+    &:hover {
+      .#{$state-border} {
+        @include input-border(var(--use-color-danger), none, 1);
+      }
+    }
+
+    @include when('focus') {
+      .#{$state-border} {
+        @include input-border(
+          var(--use-color-danger),
+          var(--use-input-shadow-error),
+          1
+        );
+
+        transition: box-shadow 0.3s var(--use-bezier),
+          border-color 0.3s var(--use-bezier);
+      }
     }
   }
 }

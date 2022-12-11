@@ -1,7 +1,9 @@
 import { ExtractPropTypes, PropType } from 'vue'
+import { type SpinType } from '@useful-ui/core/spin'
 
 type InputType = 'text' | 'password' | 'textarea'
-
+type InputSize = 'small' | 'middle' | 'large'
+type InputStatus = 'error' | 'warning'
 type OnUpdateModelValue = (value?: string | number) => void
 
 export const inputProps = {
@@ -10,6 +12,9 @@ export const inputProps = {
    */
   type: {
     type: String as PropType<InputType>
+  },
+  size: {
+    type: String as PropType<InputSize>
   },
   /**
    * 输出框默认展示内容
@@ -20,7 +25,7 @@ export const inputProps = {
   /**
    * 双向绑定的数据
    */
-  modelValue: {
+  value: {
     type: [String, Number] as PropType<string | number>
   },
   /**
@@ -28,6 +33,9 @@ export const inputProps = {
    */
   label: {
     type: String
+  },
+  status: {
+    type: String as PropType<InputStatus>
   },
   /**
    * 是否可以清空输入框
@@ -57,11 +65,24 @@ export const inputProps = {
     type: Boolean as PropType<boolean | undefined>,
     default: () => undefined
   },
+  /**
+   * 是否加载中
+   */
+  loading: {
+    type: Boolean as PropType<boolean | undefined>,
+    default: () => undefined
+  },
+  /**
+   * 加载图标类型
+   */
+  loadingType: {
+    type: String as PropType<SpinType>
+  },
 
   /**
    * 更新双向绑定数据的方法
    */
-  ['onUpdate:modelValue']: {
+  ['onUpdate:value']: {
     type: Function as PropType<OnUpdateModelValue>
   },
   /**

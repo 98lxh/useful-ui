@@ -465,6 +465,7 @@ $load-node: #{$namespace + '-' + 'spin' + $element-separator + 'load'};
 .is-document {
   position: static !important;
   z-index: 0 !important;
+  background-color: transparent;
 }
 
 @keyframes scale {

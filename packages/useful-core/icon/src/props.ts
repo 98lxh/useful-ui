@@ -1,4 +1,4 @@
-import { ExtractPropTypes } from 'vue'
+import { ExtractPropTypes, PropType } from 'vue'
 
 export const iconProps = {
   /**
@@ -12,6 +12,12 @@ export const iconProps = {
    */
   size: {
     type: [Number, String]
+  },
+  /**
+   * 原生点击事件
+   */
+  onClick: {
+    type: Function as PropType<(event: MouseEvent) => void>
   }
 }
 
