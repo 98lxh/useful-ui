@@ -19,7 +19,7 @@ export const sidebar = {
     },
     {
       text: '数据录入',
-      items: [{ text: '图标 Input', link: '/components/input' }]
+      items: [{ text: '输入框 Input', link: '/components/input' }]
     }
   ]
 }

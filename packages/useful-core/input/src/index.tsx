@@ -1,18 +1,18 @@
-import { computed, defineComponent, ref } from 'vue'
-import { HiddenPassword, DisplayPassword } from '@useful-ui/icons'
+import { computed, defineComponent, ref, getCurrentInstance } from 'vue'
 import { useMergeProps } from '@useful-ui/hooks'
 import { InputProps, inputProps } from './props'
 import Spin from '@useful-ui/core/spin'
 import Icon from '@useful-ui/core/icon'
 
+import { HiddenPassword, DisplayPassword, ClearSharp } from '@useful-ui/icons'
+
 import {
   className,
-  createComponentName,
-  createNameSpace
+  createNameSpace,
+  createComponentName
 } from '@useful-ui/utils'
 
 const bem = createNameSpace('input')
-const name = createComponentName('Input')
 
 const defaultProps: InputProps = {
   value: '',
@@ -21,31 +21,27 @@ const defaultProps: InputProps = {
 }
 
 const Input = defineComponent({
-  name,
+  name: createComponentName('Input'),
   props: inputProps,
   setup(componetProps, { slots }) {
     const props = useMergeProps(componetProps, defaultProps)
-
+    const showPasswordRef = ref(componetProps.showPassword)
+    const currentInstance = getCurrentInstance()
     const focusedRef = ref(false)
-    const showPasswordRef = ref(false)
 
     const classes = computed(() => {
       const { size, status } = props.value
-      focusedRef.value
       return className(
         bem.b(),
         bem.m(size),
-        status ? bem.m(status) : '',
+        bem.is(status!, status),
         bem.is('focus', focusedRef.value)
       )
     })
 
     function handleFocus(event: FocusEvent) {
       const { onFocus, disabled } = props.value
-      if (disabled) {
-        return null
-      }
-
+      if (disabled) return null
       onFocus && onFocus(event)
       focusedRef.value = true
     }
@@ -57,10 +53,30 @@ const Input = defineComponent({
     }
 
     function handleInput(event: Event) {
-      const { ['onUpdate:value']: onUpdateValue, onInput } = props.value
+      const {
+        onInput,
+        disabled,
+        maxLength,
+        ['onUpdate:value']: onUpdateValue
+      } = props.value
+
       const targetValue = (event.target as HTMLInputElement).value
+      const valueLength = targetValue.length
+      const isMaxLength = maxLength ? maxLength + 1 === valueLength : null
+
+      if (disabled || isMaxLength) {
+        currentInstance?.proxy?.$forceUpdate()
+        return null
+      }
+
       onUpdateValue && onUpdateValue(targetValue)
       onInput && onInput(targetValue)
+    }
+
+    function handleClear() {
+      const { onClear, 'onUpdate:value': onUpdateValue, value } = props.value
+      onUpdateValue && onUpdateValue('')
+      onClear && onClear()
     }
 
     function renderPrefix() {
@@ -77,22 +93,45 @@ const Input = defineComponent({
       )
     }
 
+    function renderClearSuffix() {
+      const { value } = props.value
+      if (!value) return null
+
+      return (
+        <Icon class={bem.b('clear')} onClick={handleClear}>
+          <ClearSharp />
+        </Icon>
+      )
+    }
+
+    function renderCounterSuffix() {
+      const { maxLength, value } = props.value
+      const len = String(value).length
+      const innerText = maxLength ? `${len} / ${maxLength}` : len
+      return <p class={bem.b('counter')}>{innerText}</p>
+    }
+
     function renderLoadingSuffix() {
-      const { loadingType } = props.value
-      return <Spin target visible type={loadingType} scale="0.35" />
+      const { loadingType, status } = props.value
+      return (
+        <Spin target visible status={status} type={loadingType} scale="0.35" />
+      )
     }
 
     function renderSuffix() {
       const customSuffix = slots.suffix
-      const { type, loading } = props.value
-      const isPassword = type === 'password'
+      const { type, loading, clearable, showCount } = props.value
+      const isPassword = type === 'password' && !clearable
+      const isCounter = showCount
 
-      if (!isPassword && !loading && !customSuffix) {
-        return null
-      }
+      const opitons = [isPassword, loading, customSuffix, clearable, isCounter]
+      const isRender = opitons.some(state => !!state)
+      if (!isRender) return null
 
       return (
         <div class={bem.e('suffix')}>
+          {clearable && renderClearSuffix()}
+          {isCounter && renderCounterSuffix()}
           {customSuffix && customSuffix()}
           {loading && renderLoadingSuffix()}
           {isPassword && renderPasswordSuffix()}

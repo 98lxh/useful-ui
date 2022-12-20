@@ -8,6 +8,9 @@ hero:
   name: Useful UI
   text: 一个 Vue 3 组件库
   tagline: 还行,就是有点不行。
+  image:
+    src: /logo.png
+    alt: Useful UI
   actions:
     - theme: brand
       text: Get Started

@@ -9,6 +9,8 @@ import InputPrefixOrSuffix from './input/prefixOrSuffix.vue'
 import InputLoading from './input/loading.vue'
 import InputStatus from './input/status.vue'
 import InputPassword from './input/password.vue'
+import InputClear from './input/clear.vue'
+import InputMaxLength from './input/maxLength.vue'
 
 export default [
   { name: 'SpinBasic', comp: SpinBasic },
@@ -21,5 +23,7 @@ export default [
   { name: 'InputPrefixOrSuffix', comp: InputPrefixOrSuffix },
   { name: 'InputLoading', comp: InputLoading },
   { name: 'InputStatus', comp: InputStatus },
-  { name: 'InputPassword', comp: InputPassword }
+  { name: 'InputPassword', comp: InputPassword },
+  { name: 'InputClear', comp: InputClear },
+  { name: 'InputMaxLength', comp: InputMaxLength }
 ]

@@ -13,7 +13,7 @@ export const spaceProps = {
    * 间距尺寸
    */
   size: {
-    type: Number
+    type: [Number, String] as PropType<number | string>
   },
   /**
    * 是否换行

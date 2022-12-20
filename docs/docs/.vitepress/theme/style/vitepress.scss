@@ -1,6 +1,10 @@
 :root {
-  --vp-c-green: #5d80f4;
-  --vp-c-brand-dark: #5d80f4;
+  --vp-c-green: var(--use-color-primary);
+  --vp-button-brand-active-border: var(--use-color-primary);
+  --vp-button-brand-hover-bg: var(--use-color-primary);
+  --vp-button-brand-border: var(--use-color-primary);
+  --vp-button-brand-hover-border: var(--use-color-primary);
+  --vp-c-brand-dark: var(--use-color-primary);
   --vp-c-bg-alt: #fff; // 侧边栏
 }
 
@@ -207,4 +211,20 @@ h2 {
 
 .dark .VPNav.no-sidebar {
   background-color: #141414 !important;
+}
+
+.VPButton {
+  border-radius: 0px !important;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+a {
+  border-radius: 0px !important;
+}
+
+.VPLink {
+  border-radius: 0px !important;
 }

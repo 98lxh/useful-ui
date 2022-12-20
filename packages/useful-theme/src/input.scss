@@ -7,6 +7,10 @@ $border: #{$namespace + '-' + $input-name + $element-separator + 'border'};
 $prefix: #{$namespace + '-' + $input-name + $element-separator + 'prefix'};
 $suffix: #{$namespace + '-' + $input-name + $element-separator + 'suffix'};
 $input: #{$namespace + '-' + $input-name + $element-separator + 'input'};
+
+$clear-icon: #{$namespace + '-' + $input-name + '-' + 'clear'};
+$counter: #{$namespace + '-' + $input-name + '-' + 'counter'};
+
 $placeholder: #{$namespace + '-' + $input-name + $element-separator +
   'placeholder'};
 
@@ -66,6 +70,10 @@ $placeholder: #{$namespace + '-' + $input-name + $element-separator +
   box-sizing: border-box;
   @include input-height(var(--use-middle-height), var(--use-middle-font));
 
+  @include b('spin') {
+    width: 20px;
+  }
+
   &-wrapper {
     display: inline-flex;
     width: 100%;
@@ -76,7 +84,6 @@ $placeholder: #{$namespace + '-' + $input-name + $element-separator +
       font-size: 16px;
       display: inline-flex;
       align-items: center;
-      width: 20px;
       flex-shrink: 0;
     }
 
@@ -86,6 +93,20 @@ $placeholder: #{$namespace + '-' + $input-name + $element-separator +
 
     .#{$suffix} {
       margin-left: 4px;
+
+      .#{$clear-icon} {
+        border-radius: 50%;
+        box-sizing: border-box;
+        transform: scale(0);
+        transition: transform 0.3s var(--use-bezier);
+        color: var(--use-color-text);
+      }
+
+      .#{$counter} {
+        font-size: 12px;
+        pointer-events: none;
+        color: var(--use-color-text);
+      }
     }
 
     .#{$input} {
@@ -129,6 +150,14 @@ $placeholder: #{$namespace + '-' + $input-name + $element-separator +
     .#{$state-border} {
       @include input-border(var(--use-color-primary), none, 1);
     }
+
+    .#{$suffix} {
+      margin-left: 4px;
+
+      .#{$clear-icon} {
+        transform: scale(1);
+      }
+    }
   }
 
   @include when('focus') {
@@ -142,6 +171,14 @@ $placeholder: #{$namespace + '-' + $input-name + $element-separator +
       transition: box-shadow 0.3s var(--use-bezier),
         border-color 0.3s var(--use-bezier);
     }
+
+    .#{$suffix} {
+      margin-left: 4px;
+
+      .#{$clear-icon} {
+        transform: scale(1);
+      }
+    }
   }
 
   //尺寸
@@ -153,7 +190,7 @@ $placeholder: #{$namespace + '-' + $input-name + $element-separator +
   }
 
   //验证状态
-  @include m('warning') {
+  @include when('warning') {
     .#{$state-border} {
       @include input-border(var(--use-color-warning), none, 1);
     }
@@ -178,7 +215,7 @@ $placeholder: #{$namespace + '-' + $input-name + $element-separator +
     }
   }
 
-  @include m('error') {
+  @include when('error') {
     .#{$state-border} {
       @include input-border(var(--use-color-danger), none, 1);
     }

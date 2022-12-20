@@ -38,6 +38,12 @@ export const inputProps = {
     type: String as PropType<InputStatus>
   },
   /**
+   * 最大长度
+   */
+  maxLength: {
+    type: Number
+  },
+  /**
    * 是否可以清空输入框
    */
   clearable: {
@@ -48,6 +54,13 @@ export const inputProps = {
    * 是否明文展示密码
    */
   showPassword: {
+    type: Boolean as PropType<boolean | undefined>,
+    default: () => undefined
+  },
+  /**
+   * 是否显示字数
+   */
+  showCount: {
     type: Boolean as PropType<boolean | undefined>,
     default: () => undefined
   },

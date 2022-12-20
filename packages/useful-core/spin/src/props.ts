@@ -12,12 +12,20 @@ export type SpinType =
   | 'scale'
   | 'default'
 
+export type SpinStatus = 'error' | 'warning'
+
 export const spinProps = {
   /**
    * 加载类型
    */
   type: {
     type: String as PropType<SpinType>
+  },
+  /**
+   * 加载状态
+   */
+  status: {
+    type: String as PropType<SpinStatus>
   },
   /**
    * 是否显示加载状态

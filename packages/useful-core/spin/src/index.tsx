@@ -34,34 +34,31 @@ const Spin = defineComponent({
 
     const classes = computed(() => {
       const { type } = state
-      const { target, document } = props.value
-      const isTarget = target ? bem.m('target') : ''
+      const { target, document, status } = props.value
       return className(
         bem.b(),
+        bem.is(status!, status),
+        bem.is('target', target),
         bem.is('document', document),
-        bem.m(type.value),
-        isTarget
+        bem.m(type.value)
       )
     })
-
-    function renderContent() {
-      const { visible } = state
-      const { text, scale } = props.value
-      if (!visible.value) return null
-
-      return (
-        <div class={classes.value}>
-          <LoadNode {...{ text, scale }} />
-        </div>
-      )
-    }
 
     expose({
       changeState: (key: string, value) => (state[key].value = value)
     })
 
     return () => {
-      return <Transition name="spin">{renderContent()}</Transition>
+      const { visible } = state
+      const { text, scale } = props.value
+      if (!visible.value) return null
+      return (
+        <Transition name="spin">
+          <div class={classes.value}>
+            <LoadNode {...{ text, scale }} />
+          </div>
+        </Transition>
+      )
     }
   }
 })
