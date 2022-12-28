@@ -445,8 +445,6 @@ import { AlertOutlined } from '@vicons/antd'
     <use-button-group size="small">
       <use-button>🎵</use-button>
       <use-button>🐔</use-button>
-      <use-button>...</use-button>
-      <use-button>...</use-button>
     </use-button-group>
     <use-button-group shape="round" size="lager">
       <use-button>
@@ -496,8 +494,6 @@ import { AlertOutlined } from '@vicons/antd'
     <use-button-group size="small">
       <use-button>🎵</use-button>
       <use-button>🐔</use-button>
-      <use-button>...</use-button>
-      <use-button>...</use-button>
     </use-button-group>
     <use-button-group shape="round" size="lager">
       <use-button>

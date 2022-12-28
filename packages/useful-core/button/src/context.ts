@@ -10,5 +10,4 @@ interface ButtonGroupState {
   ghost?: boolean
 }
 
-export const BUTTON_GROUP_STATE: InjectionKey<ButtonGroupState> =
-  Symbol('BUTTON_GOURP_STATE')
+export const buttonGroupState: InjectionKey<ButtonGroupState> = Symbol('BUTTON_GOURP_STATE')

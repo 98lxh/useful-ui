@@ -1,7 +1,6 @@
 import { createNameSpace } from './namespace'
 
 export interface RippleOptions {
-  target: HTMLElement
   name?: string
   color?: string
   duration?: number
@@ -27,8 +26,8 @@ function createRipples({ x, y }: ReturnType<typeof calculationPosition>) {
   return ripples
 }
 
-function createRipplesEffect(event: MouseEvent, _options: RippleOptions) {
-  const { target, name, color, duration = 400 } = _options
+function createRipplesEffect(event: MouseEvent, target: HTMLElement, _options: RippleOptions) {
+  const { name, color, duration = 700 } = _options
 
   if (!target || !(target instanceof HTMLElement)) {
     return

@@ -1,7 +1,7 @@
 import { computed, defineComponent, inject, ref } from 'vue'
 import { buttonProps, type ButtonProps } from './props'
 import { useMergeProps } from '@useful-ui/hooks'
-import { BUTTON_GROUP_STATE } from './context'
+import { buttonGroupState } from './context'
 import Spin from '@useful-ui/core/spin'
 
 import {
@@ -16,22 +16,16 @@ const defaultProps: ButtonProps = {
   ripple: true
 }
 
-const spinScale = {
-  small: '0.4',
-  middle: '0.5',
-  large: '0.7'
-}
-
-const name = createComponentName('Button')
-const bem = createNameSpace('button')
+const name = 'button'
+const bem = createNameSpace(name)
 
 const Button = defineComponent({
-  name,
+  name: createComponentName('Button'),
   props: buttonProps,
   setup(componetProps, { slots }) {
     const props = useMergeProps(componetProps, defaultProps)
     const buttonRef = ref<HTMLButtonElement | null>(null)
-    const groupState = inject(BUTTON_GROUP_STATE, null)
+    const groupState = inject(buttonGroupState, {})
 
     const state = computed(() => {
       const { type, size, shape } = props.value
@@ -75,7 +69,7 @@ const Button = defineComponent({
         return
       }
       if (ripple && type !== 'link' && type !== 'text') {
-        createRipples(event, createRipplesOptions(buttonRef.value!))
+        createRipples(event, buttonRef.value!, { name })
       }
 
       onClick && onClick(event)
@@ -83,13 +77,12 @@ const Button = defineComponent({
 
     function renderSpinning() {
       const { loading, loadingType, size } = props.value
-      const scale = spinScale[size || 'middle']
       if (!loading) return null
       return (
         <Spin
           target
           visible
-          scale={scale}
+          scale='0.5'
           document={false}
           type={loadingType}
         />
