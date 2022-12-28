@@ -45,7 +45,7 @@ const Spin = defineComponent({
     })
 
     expose({
-      changeState: (key: string, value) => (state[key].value = value)
+      setState: (key: string, value) => (state[key].value = value)
     })
 
     return () => {

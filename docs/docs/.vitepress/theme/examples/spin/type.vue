@@ -14,7 +14,6 @@ const types = [
   'points',
   'square',
   'circles',
-  'rectangle',
   'square-rotate',
   'scale'
 ] as const

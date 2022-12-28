@@ -1,10 +1,9 @@
 import { computed, defineComponent, ref, getCurrentInstance } from 'vue'
+import { HiddenPassword, DisplayPassword, ClearSharp } from '@useful-ui/icons'
 import { useMergeProps } from '@useful-ui/hooks'
 import { InputProps, inputProps } from './props'
 import Spin from '@useful-ui/core/spin'
 import Icon from '@useful-ui/core/icon'
-
-import { HiddenPassword, DisplayPassword, ClearSharp } from '@useful-ui/icons'
 
 import {
   className,
@@ -26,16 +25,16 @@ const Input = defineComponent({
   setup(componetProps, { slots }) {
     const props = useMergeProps(componetProps, defaultProps)
     const showPasswordRef = ref(componetProps.showPassword)
-    const currentInstance = getCurrentInstance()
     const focusedRef = ref(false)
 
     const classes = computed(() => {
-      const { size, status } = props.value
+      const { size, status, disabled } = props.value
       return className(
         bem.b(),
         bem.m(size),
         bem.is(status!, status),
-        bem.is('focus', focusedRef.value)
+        bem.is('focus', focusedRef.value),
+        bem.is('disabled', disabled)
       )
     })
 
@@ -52,6 +51,7 @@ const Input = defineComponent({
       focusedRef.value = false
     }
 
+    const vm = getCurrentInstance();
     function handleInput(event: Event) {
       const {
         onInput,
@@ -65,7 +65,7 @@ const Input = defineComponent({
       const isMaxLength = maxLength ? maxLength + 1 === valueLength : null
 
       if (disabled || isMaxLength) {
-        currentInstance?.proxy?.$forceUpdate()
+        vm?.proxy?.$forceUpdate()
         return null
       }
 
@@ -96,7 +96,6 @@ const Input = defineComponent({
     function renderClearSuffix() {
       const { value } = props.value
       if (!value) return null
-
       return (
         <Icon class={bem.b('clear')} onClick={handleClear}>
           <ClearSharp />

@@ -4,14 +4,14 @@ import { createNameSpace } from '@useful-ui/utils'
 import {
   ref,
   Ref,
+  watch,
   VNode,
   render,
+  reactive,
   nextTick,
-  createVNode,
   onMounted,
   onUnmounted,
-  reactive,
-  watch
+  createVNode
 } from 'vue'
 
 type SpinInstance = VNode<any, any, SpinProps> & {
@@ -22,6 +22,7 @@ type SpinInstance = VNode<any, any, SpinProps> & {
 
 type SpinOptions = SpinProps & {
   mountToWindow?: boolean
+  blockScroll?: boolean
 }
 
 type SpinState = {
@@ -33,12 +34,12 @@ const containerClass = createNameSpace('spin').b('container')
 const targetClass = createNameSpace('spin').b('target')
 
 function useSpin(options: SpinOptions = {}) {
-  const { mountToWindow, ...props } = options
-
+  const { mountToWindow, blockScroll, ...props } = options
   const isSpinning = ref<boolean>(!!props.visible)
   const spin = ref<SpinInstance | null>(null)
   const target = ref<HTMLElement | null>(null)
   let container: HTMLDivElement | null = null
+  let _overflowBackup: string | null = null
 
   const state = reactive<SpinState>({
     visible: props.visible,
@@ -83,11 +84,20 @@ function useSpin(options: SpinOptions = {}) {
     }
   }
 
+  function setTargetScrollbar(targetNode: HTMLElement, type: 'setup' | 'backup') {
+    if (!blockScroll) return null;
+    const origin = targetNode.style.overflow
+    if (type === 'setup') _overflowBackup = origin
+    const current = type === 'setup' ? 'hidden' : _overflowBackup
+    targetNode.style.overflow = current!;
+  }
+
   function mountToTarget() {
     if (!spin.value) return
     container = createContainer()
     const targetNode = getTargetNode()
     setTargetClassName(targetNode, 'add')
+    setTargetScrollbar(targetNode, 'setup')
     targetNode.appendChild(container)
     render(spin.value, container)
   }
@@ -100,7 +110,9 @@ function useSpin(options: SpinOptions = {}) {
 
   const destroyed = () => {
     if (!spin.value || !container) return
-    setTargetClassName(getTargetNode(), 'remove')
+    const targetNode = getTargetNode();
+    setTargetClassName(targetNode, 'remove')
+    setTargetScrollbar(targetNode, 'backup');
     render(null, container)
     nextTick(() => container!.remove())
   }
@@ -110,15 +122,15 @@ function useSpin(options: SpinOptions = {}) {
     isSpinning.value = visible
     visible ? mountToTarget() : destroyed()
     const component = spin.value.component
-    const _changeState = component?.exposed?.changeState
-    _changeState && _changeState('visible', visible)
+    const _setState = component?.exposed?.setState
+    _setState && _setState('visible', visible)
   }
 
   function changeType(type: SpinType) {
     if (!spin.value) return
     const component = spin.value.component
-    const _changeState = component?.exposed?.changeState
-    _changeState && _changeState('type', type)
+    const _setState = component?.exposed?.setState
+    _setState && _setState('type', type)
   }
 
   onMounted(() => initialization())
