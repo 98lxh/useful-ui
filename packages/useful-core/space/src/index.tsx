@@ -4,9 +4,9 @@ import { type SpaceProps, spaceProps } from './props'
 
 import {
   className,
-  createComponentName,
+  flattenVNodes,
   createNameSpace,
-  flattenVNodes
+  createComponentName,
 } from '@useful-ui/utils'
 
 const defaultProps: SpaceProps = {
@@ -14,11 +14,10 @@ const defaultProps: SpaceProps = {
   direction: 'horizontal'
 }
 
-const name = createComponentName('Space')
 const bem = createNameSpace('space')
 
 const Space = defineComponent({
-  name,
+  name: createComponentName('Space'),
   props: spaceProps,
   setup(componetProps, { slots }) {
     const props = useMergeProps(componetProps, defaultProps)

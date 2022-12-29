@@ -1,7 +1,7 @@
 import { computed, defineComponent, inject, ref } from 'vue'
 import { buttonProps, type ButtonProps } from './props'
+import { buttonGroupInjectionKey } from './context'
 import { useMergeProps } from '@useful-ui/hooks'
-import { buttonGroupState } from './context'
 import Spin from '@useful-ui/core/spin'
 
 import {
@@ -24,15 +24,15 @@ const Button = defineComponent({
   props: buttonProps,
   setup(componetProps, { slots }) {
     const props = useMergeProps(componetProps, defaultProps)
+    const buttonGroupState = inject(buttonGroupInjectionKey, {})
     const buttonRef = ref<HTMLButtonElement | null>(null)
-    const groupState = inject(buttonGroupState, {})
 
     const state = computed(() => {
       const { type, size, shape } = props.value
       return {
-        type: type ?? groupState?.type ?? 'default',
-        size: size ?? groupState?.size ?? 'middle',
-        shape: shape ?? groupState?.shape ?? 'square'
+        type: type ?? buttonGroupState?.type ?? 'default',
+        size: size ?? buttonGroupState?.size ?? 'middle',
+        shape: shape ?? buttonGroupState?.shape ?? 'square'
       }
     })
 
@@ -53,14 +53,6 @@ const Button = defineComponent({
       )
     })
 
-    function createRipplesOptions(target: HTMLElement) {
-      return {
-        target,
-        duration: 700,
-        name: 'button'
-      }
-    }
-
     function handleClick(event: MouseEvent) {
       const { disabled, loading, ripple, type, onClick } = props.value
 
@@ -76,7 +68,7 @@ const Button = defineComponent({
     }
 
     function renderSpinning() {
-      const { loading, loadingType, size } = props.value
+      const { loading, loadingType } = props.value
       if (!loading) return null
       return (
         <Spin

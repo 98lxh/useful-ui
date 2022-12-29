@@ -18,11 +18,10 @@ const modelConfig = {
   triggerEmit: false
 }
 
-const name = createComponentName('Spin')
 const bem = createNameSpace('spin')
 
 const Spin = defineComponent({
-  name,
+  name: createComponentName('Spin'),
   props: spinProps,
   setup(componentProps, { expose }) {
     const props = useMergeProps(componentProps, defaultProps)
