@@ -35,7 +35,7 @@ $placeholder: #{$namespace + '-' + $input-name + $element-separator +
 }
 
 @mixin input-height($height, $font-size) {
-  height: $height;
+  height: 100%;
 
   .#{$prefix},
   .#{$suffix} {
@@ -46,12 +46,10 @@ $placeholder: #{$namespace + '-' + $input-name + $element-separator +
 
   .#{$input} {
     height: $height;
-    line-height: $height;
     font-size: $font-size;
 
     &-el {
-      height: $height;
-      line-height: $height;
+      height: 100%;
     }
 
     .#{$placeholder} {
@@ -64,8 +62,8 @@ $placeholder: #{$namespace + '-' + $input-name + $element-separator +
 
 @include b('input') {
   position: relative;
-  padding: 0px 12px;
   width: 100%;
+  height: 100%;
   font-size: 14px;
   box-sizing: border-box;
   @include input-height(var(--use-middle-height), var(--use-middle-font));
@@ -74,9 +72,43 @@ $placeholder: #{$namespace + '-' + $input-name + $element-separator +
     width: 20px;
   }
 
+  @include when('disabled') {
+    opacity: 0.4;
+    cursor: not-allowed;
+    .#{$input} {
+      &-el {
+        cursor: not-allowed;
+        caret-color: transparent;
+      }
+    }
+
+    .#{$state-border} {
+      border: 1px solid transparent !important;
+    }
+
+    @include when('error') {
+      .#{$state-border} {
+        border: 1px solid var(--use-color-danger) !important;
+      }
+    }
+
+    @include when('warning') {
+      .#{$state-border} {
+        border: 1px solid var(--use-color-warning) !important;
+      }
+    }
+
+    .#{$clear-icon} {
+      display: none;
+    }
+  }
+
   &-wrapper {
     display: inline-flex;
+    padding: 0px 12px;
     width: 100%;
+    overflow: hidden;
+    position: relative;
 
     .#{$prefix},
     .#{$suffix} {

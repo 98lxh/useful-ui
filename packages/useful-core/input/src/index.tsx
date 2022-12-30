@@ -5,6 +5,7 @@ import { InputProps, inputProps } from './props'
 import Spin from '@useful-ui/core/spin'
 import Icon from '@useful-ui/core/icon'
 
+
 import {
   className,
   createNameSpace,
@@ -56,16 +57,17 @@ const Input = defineComponent({
       const {
         onInput,
         disabled,
-        maxLength,
+        maxLength: _maxLength,
         ['onUpdate:value']: onUpdateValue
       } = props.value
-
+      console.log(111);
       const targetValue = (event.target as HTMLInputElement).value
-      const valueLength = targetValue.length
-      const isMaxLength = maxLength ? maxLength + 1 === valueLength : null
+      const length = targetValue.length
+      const maxLength = _maxLength && _maxLength + 1
+      const isMaxLength = maxLength ? length >= maxLength : false
 
       if (disabled || isMaxLength) {
-        vm?.proxy?.$forceUpdate()
+        vm?.proxy?.$forceUpdate();
         return null
       }
 
@@ -74,7 +76,8 @@ const Input = defineComponent({
     }
 
     function handleClear() {
-      const { onClear, 'onUpdate:value': onUpdateValue, value } = props.value
+      const { onClear, 'onUpdate:value': onUpdateValue, disabled } = props.value
+      if (disabled) return null
       onUpdateValue && onUpdateValue('')
       onClear && onClear()
     }
@@ -85,9 +88,15 @@ const Input = defineComponent({
       return <div class={bem.e('prefix')}>{customPrefix && customPrefix()}</div>
     }
 
+    function togglePassword() {
+      const { disabled } = props.value
+      if (disabled) return null
+      showPasswordRef.value = !showPasswordRef.value
+    }
+
     function renderPasswordSuffix() {
       return (
-        <Icon onClick={() => (showPasswordRef.value = !showPasswordRef.value)}>
+        <Icon onClick={togglePassword}>
           {showPasswordRef.value ? <DisplayPassword /> : <HiddenPassword />}
         </Icon>
       )
@@ -105,8 +114,8 @@ const Input = defineComponent({
 
     function renderCounterSuffix() {
       const { maxLength, value } = props.value
-      const len = String(value).length
-      const innerText = maxLength ? `${len} / ${maxLength}` : len
+      const length = String(value).length
+      const innerText = maxLength ? `${length} / ${maxLength}` : length
       return <p class={bem.b('counter')}>{innerText}</p>
     }
 
@@ -142,16 +151,18 @@ const Input = defineComponent({
       const { placeholder, value, type } = props.value
       const isPassword = type === 'password' && !showPasswordRef.value
 
+      const basicProps = {
+        value,
+        class: bem.e('input-el'),
+        type: isPassword ? 'password' : type,
+        onInput: handleInput,
+        onFocus: handleFocus,
+        onBlur: handleBlur
+      }
+
       return (
         <div class={bem.e('input')}>
-          <input
-            class={bem.e('input-el')}
-            type={isPassword ? 'password' : 'text'}
-            value={value}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            onInput={handleInput}
-          />
+          <input {...basicProps} />
           <div class={bem.e('placeholder')}>
             {!value && <span>{placeholder}</span>}
           </div>
