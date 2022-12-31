@@ -191,7 +191,6 @@ const value = ref('')
 </template>
 
 <template #desc>
-使用 status 为 Input 添加状态，可选 error 或者 warning。
 </template>
 
 <template #source>
@@ -220,7 +219,6 @@ const value = ref('')
 </template>
 
 <template #desc>
-使用 status 为 Input 添加状态，可选 error 或者 warning。
 </template>
 
 <template #source>
@@ -249,7 +247,6 @@ const value = ref('')
 </template>
 
 <template #desc>
-使用 status 为 Input 添加状态，可选 error 或者 warning。
 </template>
 
 <template #source>
@@ -271,14 +268,13 @@ const value = ref('')
 ```
 :::
 
-## 禁用状态
+## 禁用和只读
 ::: demo
 <template #title>
-禁用状态
+禁用和只读
 </template>
 
 <template #desc>
-使用 status 为 Input 添加状态，可选 error 或者 warning。
 </template>
 
 <template #source>
@@ -292,10 +288,10 @@ const value = ref('')
 </script>
 
 <template>
-  <use-space direction="vertical" fill>
-    <use-input v-model:value="value" status="warning" placeholder="警告" />
-    <use-input v-model:value="value" status="error" placeholder="错误" />
-  </use-space>
+ <use-space direction="vertical" fill>
+   <use-input v-model:value="value" readonly placeholder="只读状态" />
+   <use-input v-model:value="value" disabled placeholder="禁用状态" />
+ </use-space>
 </template>
 ```
 :::

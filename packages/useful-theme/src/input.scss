@@ -72,6 +72,7 @@ $placeholder: #{$namespace + '-' + $input-name + $element-separator +
     width: 20px;
   }
 
+  // 禁用状态
   @include when('disabled') {
     opacity: 0.4;
     cursor: not-allowed;
@@ -100,6 +101,17 @@ $placeholder: #{$namespace + '-' + $input-name + $element-separator +
 
     .#{$clear-icon} {
       display: none;
+    }
+  }
+  
+  //只读状态
+  @include when('readonly') {
+    cursor:pointer;
+    .#{$input} {
+      &-el {
+        cursor: pointer;
+        caret-color: transparent;
+      }
     }
   }
 

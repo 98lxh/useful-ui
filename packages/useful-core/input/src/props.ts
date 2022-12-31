@@ -13,6 +13,9 @@ export const inputProps = {
   type: {
     type: String as PropType<InputType>
   },
+  /**
+   * 输入框尺寸
+  */
   size: {
     type: String as PropType<InputSize>
   },

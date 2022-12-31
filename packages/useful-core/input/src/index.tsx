@@ -5,7 +5,6 @@ import { InputProps, inputProps } from './props'
 import Spin from '@useful-ui/core/spin'
 import Icon from '@useful-ui/core/icon'
 
-
 import {
   className,
   createNameSpace,
@@ -23,19 +22,30 @@ const defaultProps: InputProps = {
 const Input = defineComponent({
   name: createComponentName('Input'),
   props: inputProps,
-  setup(componetProps, { slots }) {
+  setup(componetProps, { slots, expose }) {
     const props = useMergeProps(componetProps, defaultProps)
     const showPasswordRef = ref(componetProps.showPassword)
+    const innerInputRef = ref<HTMLInputElement | null>(null);
     const focusedRef = ref(false)
 
+    const state = computed(() => {
+      const { disabled, readonly } = props.value;
+      return {
+        disabled,
+        readonly
+      }
+    })
+
     const classes = computed(() => {
-      const { size, status, disabled } = props.value
+      const { size, status } = props.value
+      const { disabled, readonly } = state.value;
       return className(
         bem.b(),
         bem.m(size),
         bem.is(status!, status),
         bem.is('focus', focusedRef.value),
-        bem.is('disabled', disabled)
+        bem.is('disabled', disabled),
+        bem.is('readonly', readonly)
       )
     })
 
@@ -43,7 +53,7 @@ const Input = defineComponent({
       const { onFocus, disabled } = props.value
       if (disabled) return null
       onFocus && onFocus(event)
-      focusedRef.value = true
+      focusedRef.value = true;
     }
 
     function handleBlur(event: FocusEvent) {
@@ -56,17 +66,18 @@ const Input = defineComponent({
     function handleInput(event: Event) {
       const {
         onInput,
-        disabled,
         maxLength: _maxLength,
         ['onUpdate:value']: onUpdateValue
       } = props.value
-      console.log(111);
+
+      const { disabled, readonly } = state.value;
+
       const targetValue = (event.target as HTMLInputElement).value
       const length = targetValue.length
       const maxLength = _maxLength && _maxLength + 1
       const isMaxLength = maxLength ? length >= maxLength : false
 
-      if (disabled || isMaxLength) {
+      if (disabled || readonly || isMaxLength) {
         vm?.proxy?.$forceUpdate();
         return null
       }
@@ -76,8 +87,9 @@ const Input = defineComponent({
     }
 
     function handleClear() {
-      const { onClear, 'onUpdate:value': onUpdateValue, disabled } = props.value
-      if (disabled) return null
+      const { onClear, 'onUpdate:value': onUpdateValue } = props.value
+      const { disabled, readonly } = state.value;
+      if (disabled || readonly) return null
       onUpdateValue && onUpdateValue('')
       onClear && onClear()
     }
@@ -89,9 +101,21 @@ const Input = defineComponent({
     }
 
     function togglePassword() {
-      const { disabled } = props.value
-      if (disabled) return null
+      const { disabled, readonly } = state.value
+      if (disabled || readonly) return null
       showPasswordRef.value = !showPasswordRef.value
+    }
+
+    function focus() {
+      if (!innerInputRef.value) return
+      innerInputRef.value.focus();
+      focusedRef.value = true;
+    }
+
+    function blur() {
+      if (!innerInputRef.value) return
+      innerInputRef.value.blur();
+      focusedRef.value = false;
     }
 
     function renderPasswordSuffix() {
@@ -162,13 +186,19 @@ const Input = defineComponent({
 
       return (
         <div class={bem.e('input')}>
-          <input {...basicProps} />
+          <input ref={innerInputRef} {...basicProps} />
           <div class={bem.e('placeholder')}>
             {!value && <span>{placeholder}</span>}
           </div>
         </div>
       )
     }
+
+    expose({
+      innerInputRef,
+      focus,
+      blur
+    })
 
     return () => {
       return (

@@ -1,6 +1,6 @@
-import { computed, defineComponent, reactive, ref, Transition } from 'vue'
-import { useMergeProps, useVModel } from '@useful-ui/hooks'
+import { computed, defineComponent, reactive, Transition } from 'vue'
 import { spinProps, type SpinProps } from './props'
+import { useMergeProps } from '@useful-ui/hooks'
 import LoadNode from './load-node'
 
 import {
@@ -14,10 +14,6 @@ const defaultProps: SpinProps = {
   document: true
 }
 
-const modelConfig = {
-  triggerEmit: false
-}
-
 const bem = createNameSpace('spin')
 
 const Spin = defineComponent({
@@ -26,10 +22,10 @@ const Spin = defineComponent({
   setup(componentProps, { expose }) {
     const props = useMergeProps(componentProps, defaultProps)
 
-    const state = {
-      type: useVModel(props.value, 'type', modelConfig),
-      visible: useVModel(props.value, 'visible', modelConfig)
-    }
+    const state = reactive({
+      type: props.value.type,
+      visible: props.value.visible
+    })
 
     const classes = computed(() => {
       const { type } = state
@@ -39,18 +35,18 @@ const Spin = defineComponent({
         bem.is(status!, status),
         bem.is('target', target),
         bem.is('document', document),
-        bem.m(type.value)
+        bem.m(type)
       )
     })
 
     expose({
-      setState: (key: string, value) => (state[key].value = value)
+      setState: (key: string, value) => (state[key] = value)
     })
 
     return () => {
       const { visible } = state
       const { text, scale } = props.value
-      if (!visible.value) return null
+      if (!visible) return null
       return (
         <Transition name="spin">
           <div class={classes.value}>
