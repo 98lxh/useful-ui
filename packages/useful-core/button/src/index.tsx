@@ -5,10 +5,10 @@ import { useMergeProps } from '@useful-ui/hooks'
 import Spin from '@useful-ui/core/spin'
 
 import {
-  className,
-  createRipples,
-  createNameSpace,
-  createComponentName
+    className,
+    createRipples,
+    createNameSpace,
+    createComponentName
 } from '@useful-ui/utils'
 
 const defaultProps: ButtonProps = {
@@ -16,22 +16,21 @@ const defaultProps: ButtonProps = {
   ripple: true
 }
 
-const name = 'button'
-const bem = createNameSpace(name)
+const bem = createNameSpace('button')
 
 const Button = defineComponent({
   name: createComponentName('Button'),
   props: buttonProps,
-  setup(componetProps, { slots }) {
-    const props = useMergeProps(componetProps, defaultProps)
+  setup(componentProps, { slots }) {
+    const props = useMergeProps(componentProps, defaultProps)
     const buttonGroupState = inject(buttonGroupInjectionKey, {})
     const buttonRef = ref<HTMLButtonElement | null>(null)
 
     const state = computed(() => {
       const { type, size, shape } = props.value
       return {
-        type: type ?? buttonGroupState?.type ?? 'default',
         size: size ?? buttonGroupState?.size ?? 'middle',
+        type: type ?? buttonGroupState?.type ?? 'default',
         shape: shape ?? buttonGroupState?.shape ?? 'square'
       }
     })
@@ -45,11 +44,11 @@ const Button = defineComponent({
         bem.m(type),
         bem.m(size),
         bem.m(shape),
-        bem.is('danger', danger),
-        bem.is('disabled', disabled),
         bem.is('ghost', ghost),
+        bem.is('block', block),
+        bem.is('danger', danger),
         bem.is('loading', loading),
-        bem.is('block', block)
+        bem.is('disabled', disabled)
       )
     })
 
@@ -61,7 +60,7 @@ const Button = defineComponent({
         return
       }
       if (ripple && type !== 'link' && type !== 'text') {
-        createRipples(event, buttonRef.value!, { name })
+        createRipples(event, buttonRef.value!, { name: 'button' })
       }
 
       onClick && onClick(event)

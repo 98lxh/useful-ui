@@ -1,37 +1,10 @@
-import Spin, { SpinType, type SpinProps } from '@useful-ui/core/spin'
+import { ref, Ref, watch, render, reactive, nextTick, onMounted, onUnmounted, createVNode } from 'vue'
+import type { SpinInstance, SpinOptions, SpinState } from './types'
+import Spin, { SpinType } from '@useful-ui/core/spin'
 import { createNameSpace } from '@useful-ui/utils'
 
-import {
-  ref,
-  Ref,
-  watch,
-  VNode,
-  render,
-  reactive,
-  nextTick,
-  onMounted,
-  onUnmounted,
-  createVNode
-} from 'vue'
-
-type SpinInstance = VNode<any, any, SpinProps> & {
-  onDisplay: () => void
-  onHidden: () => void
-  changeType: (type: SpinType) => void
-}
-
-type SpinOptions = SpinProps & {
-  mountToWindow?: boolean
-  blockScroll?: boolean
-}
-
-type SpinState = {
-  type?: SpinType
-  visible?: boolean
-}
-
-const containerClass = createNameSpace('spin').b('container')
 const targetClass = createNameSpace('spin').b('target')
+const containerClass = createNameSpace('spin').b('container')
 
 function useSpin(options: SpinOptions = {}) {
   const { mountToWindow, blockScroll, ...props } = options
@@ -49,11 +22,11 @@ function useSpin(options: SpinOptions = {}) {
   function createSpinInstance() {
     props.document = false
     props.target = !!target.value
-    const vnode = createVNode(Spin, props)
-    spin.value = vnode as SpinInstance
-    spin.value.changeType = changeType
-    spin.value.onDisplay = () => changeVisible(true)
-    spin.value.onHidden = () => changeVisible(false)
+    const vNode = createVNode(Spin, props)
+    spin.value = vNode as SpinInstance
+    spin.value.changeType = setType
+    spin.value.onDisplay = () => setVisible(true)
+    spin.value.onHidden = () => setVisible(false)
     if (mountToWindow) (window as any).$spin = spin.value
   }
 
@@ -65,8 +38,7 @@ function useSpin(options: SpinOptions = {}) {
 
   function getTargetNode() {
     const _target: any = target.value ? target.value : document.body
-    const _targetNode = _target.$el ? _target.$el : _target
-    return _targetNode
+    return _target.$el ? _target.$el : _target
   }
 
   function setTargetClassName(targetNode: HTMLElement, type: 'add' | 'remove') {
@@ -105,19 +77,19 @@ function useSpin(options: SpinOptions = {}) {
   function initialization() {
     createSpinInstance()
     const { onDisplay, onHidden } = spin.value!
-    state.visible ? onDisplay : onHidden()
+    state.visible ? onDisplay() : onHidden()
   }
 
-  const destroyed = () => {
+  const destroyed = async () => {
     if (!spin.value || !container) return
     const targetNode = getTargetNode();
     setTargetClassName(targetNode, 'remove')
     setTargetScrollbar(targetNode, 'backup');
     render(null, container)
-    nextTick(() => container!.remove())
+    await nextTick(() => container!.remove())
   }
 
-  function changeVisible(visible: boolean) {
+  function setVisible(visible: boolean) {
     if (!spin.value) return
     isSpinning.value = visible
     visible ? mountToTarget() : destroyed()
@@ -126,7 +98,7 @@ function useSpin(options: SpinOptions = {}) {
     _setState && _setState('visible', visible)
   }
 
-  function changeType(type: SpinType) {
+  function setType(type: SpinType) {
     if (!spin.value) return
     const component = spin.value.component
     const _setState = component?.exposed?.setState
@@ -139,8 +111,8 @@ function useSpin(options: SpinOptions = {}) {
   watch(
     () => state,
     ({ type, visible }) => {
-      changeVisible(visible || false)
-      changeType(type || 'default')
+        setVisible(visible || false)
+        setType(type || 'default')
     },
     {
       deep: true

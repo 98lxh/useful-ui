@@ -1,48 +1,19 @@
 <script setup lang="ts">
-import { AntDesignOutlined } from '@vicons/antd'
-import { ref } from 'vue'
-
-const value = ref('')
+import { ref } from 'vue';
+import { UseButton ,UseOverlay } from "@useful-ui/core"
+const visible = ref(false)
+const triggerRef = ref<InstanceType<typeof UseButton> | null>(null)
 </script>
 
 <template>
-  <use-space>
-    <use-input
-      v-model="value"
-      loading-type="corners"
-      placeholder="输入一些东西"
-    >
-      <template #prefix>
-        <use-icon>
-          <AntDesignOutlined />
-        </use-icon>
-      </template>
-      <template #suffix>
-        <use-icon>
-          <AntDesignOutlined />
-        </use-icon>
-      </template>
-    </use-input>
-
-    <use-input
-      v-model="value"
-      loading
-      loading-type="corners"
-      placeholder="输入一些东西"
-      size="small"
-    >
-      <template #prefix>
-        <use-icon>
-          <AntDesignOutlined />
-        </use-icon>
-      </template>
-      <template #suffix>
-        <use-icon>
-          <AntDesignOutlined />
-        </use-icon>
-      </template>
-    </use-input>
-  </use-space>
+  <div style="padding:800px">
+    <use-button ref="triggerRef">open</use-button>
+    <use-overlay v-model:visible="visible" trigger="click" placement="top-end" :trigger-element="triggerRef?.$el">
+      <div style="height:300px;width: 300px;background:#ccc">
+        overlay
+      </div>
+    </use-overlay>
+  </div>
 </template>
 
 <style>

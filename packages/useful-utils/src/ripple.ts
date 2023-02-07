@@ -10,19 +10,13 @@ const bem = createNameSpace('ripples')
 
 function calculationPosition(event: MouseEvent) {
   const { layerX, layerY } = event as any
-
-  return {
-    x: layerX,
-    y: layerY
-  }
+  return { x: layerX, y: layerY }
 }
 
 function createRipples({ x, y }: ReturnType<typeof calculationPosition>) {
   const ripples = document.createElement('span')
-
   ripples.style.left = x + 'px'
   ripples.style.top = y + 'px'
-
   return ripples
 }
 

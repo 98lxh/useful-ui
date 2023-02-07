@@ -21,7 +21,6 @@ const Spin = defineComponent({
   props: spinProps,
   setup(componentProps, { expose }) {
     const props = useMergeProps(componentProps, defaultProps)
-
     const state = reactive({
       type: props.value.type,
       visible: props.value.visible
@@ -40,7 +39,7 @@ const Spin = defineComponent({
     })
 
     expose({
-      setState: (key: string, value) => (state[key] = value)
+      setState: (key: string, value) => (state[key] = value),
     })
 
     return () => {

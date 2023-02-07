@@ -3,10 +3,9 @@ import { createNameSpace, createComponentName } from '@useful-ui/utils'
 import { iconProps } from './props'
 
 const bem = createNameSpace('icon')
-const name = createComponentName('Icon')
 
 const Icon = defineComponent({
-  name,
+  name: createComponentName('Icon'),
   props: iconProps,
   setup(props, { slots }) {
     const style = computed(() => {

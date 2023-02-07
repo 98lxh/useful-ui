@@ -1,20 +1,19 @@
 import { computed, defineComponent } from 'vue'
+import { useMergeProps } from '@useful-ui/hooks'
 import { loadNodeProps, LoadNodeProps } from './props'
 import { createNameSpace, createComponentName } from '@useful-ui/utils'
-import { useMergeProps } from '@useful-ui/hooks'
 
 const bem = createNameSpace('spin__load')
-const name = createComponentName('SpinLoadNode')
 
 const defaultProps: LoadNodeProps = {
   type: 'default'
 }
 
 const LoadNode = defineComponent({
-  name,
+  name: createComponentName('SpinLoadNode'),
   props: loadNodeProps,
-  setup(componetProps) {
-    const props = useMergeProps(componetProps, defaultProps)
+  setup(componentProps) {
+    const props = useMergeProps(componentProps, defaultProps)
 
     const styles = computed(() => {
       const { scale } = props.value
@@ -24,7 +23,6 @@ const LoadNode = defineComponent({
 
     return () => {
       const { text } = props.value
-
       return (
         <div class={bem.b()} style={styles.value}>
           <div class={bem.e('animation')}>
