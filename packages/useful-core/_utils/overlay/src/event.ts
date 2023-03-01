@@ -3,8 +3,8 @@ import { TriggerBindEventOptions } from "./types";
 
 const mapTriggerToEvent: Record<OverlayTrigger, string> = {
   'click': 'click',
+  'focus': 'focus',
   'hover': 'mousemove',
-  'focus': 'click'
 }
 export const getEventName = (trigger: OverlayTrigger) => mapTriggerToEvent[trigger]
 export function bindTriggerEvent(_options: TriggerBindEventOptions) {

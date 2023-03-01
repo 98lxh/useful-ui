@@ -7,8 +7,11 @@ const triggerRef = ref<InstanceType<typeof UseButton> | null>(null)
 
 <template>
   <div style="padding:800px">
-    <use-button ref="triggerRef">open</use-button>
-    <use-overlay v-model:visible="visible" trigger="click" placement="top-end" :trigger-element="triggerRef?.$el">
+    <use-overlay v-model:visible="visible" trigger="hover" placement="top">
+      <template #trigger>
+        <use-button>open</use-button>
+      </template>
+      
       <div style="height:300px;width: 300px;background:#ccc">
         overlay
       </div>

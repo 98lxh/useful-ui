@@ -9,11 +9,11 @@ export const overlayProps = {
     type: Boolean as PropType<boolean | undefined>,
     default: undefined
   },
-  ['onUpdate:visible']: {
-    type: Function as PropType<(visible: boolean) => void>
-  },
   triggerElement: {
     type: Object as PropType<HTMLElement>
+  },
+  ['onUpdate:visible']: {
+    type: Function as PropType<(visible: boolean) => void>
   },
   /**
    * overlay触发方式

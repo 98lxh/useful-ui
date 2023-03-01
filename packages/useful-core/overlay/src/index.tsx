@@ -1,4 +1,4 @@
-import { CSSProperties, defineComponent, onUnmounted, Teleport, watchEffect, ref, nextTick, onMounted, Transition } from 'vue'
+import { CSSProperties, defineComponent, onUnmounted, Teleport, watchEffect, ref, nextTick, onMounted, Transition, watch } from 'vue'
 import { getOverlayTarget, createOverlayStyle, getEventName, bindTriggerEvent, removeTriggerEvent } from '../../_utils/overlay'
 import { createComponentName, createOutsideHelper, type OutsideHelper } from '@useful-ui/utils'
 import { overlayProps, type OverlayProps } from './props'
@@ -16,6 +16,7 @@ const Overlay = defineComponent({
   setup(componentProps, { slots }) {
     let outsideHelper: OutsideHelper | null = null;
     const props = useMergeProps(componentProps, defaultProps)
+    const placementRef = ref(props.value.placement);
     const overlayRef = ref<HTMLElement | null>(null);
     const overlayStyle = ref<CSSProperties | null>(null)
     const eventName = getEventName(props.value.trigger!);
@@ -42,7 +43,9 @@ const Overlay = defineComponent({
       overlayTarget.incrementHierarchy()
       nextTick(() => {
         outsideHelper = getOutsideEvent()
-        overlayStyle.value = getOverlayStyle()
+        const { placement, ...style } = getOverlayStyle()!
+        overlayStyle.value = style
+        placementRef.value = placement || defaultProps.placement
         outsideHelper && outsideHelper.bind()
       })
     }
@@ -71,32 +74,29 @@ const Overlay = defineComponent({
       onUpdateVisible && onUpdateVisible(!!visible)
     })
 
+    watch(() => placementRef.value, () => {
+      const { "onUpdate:visible": onUpdateVisible } = props.value;
+      onUpdateVisible && onUpdateVisible(false)
+      nextTick(() => onUpdateVisible && onUpdateVisible(true))
+    })
+
     onMounted(() => {
       nextTick(() => {
         const { triggerElement } = props.value
-        bindTriggerEvent({
-          eventName,
-          triggerElement,
-          handler: triggerHandler
-        })
+        bindTriggerEvent({ eventName, triggerElement, handler: triggerHandler })
       })
     })
 
     onUnmounted(() => {
       const { triggerElement } = props.value;
       outsideHelper?.remove()
-      removeTriggerEvent({
-        eventName,
-        triggerElement,
-        handler: triggerHandler
-      })
+      removeTriggerEvent({ eventName, triggerElement, handler: triggerHandler })
     })
 
     return () => {
-      const { placement } = props.value
       return (
         <Teleport to={overlayTarget.target}>
-          <Transition name={placement}>
+          <Transition name={placementRef.value}>
             {renderOverlay()}
           </Transition>
         </Teleport>
