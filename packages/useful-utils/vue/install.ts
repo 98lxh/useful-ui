@@ -6,7 +6,6 @@ export function withInstall<T>(comp: T) {
   const _comp = comp as WithInstall<T>
   _comp.install = function (app) {
     const { name } = _comp as unknown as { name: string }
-    console.log(name)
     app.component(name, _comp)
   }
 

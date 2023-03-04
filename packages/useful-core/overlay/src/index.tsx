@@ -52,7 +52,7 @@ const Overlay = defineComponent({
         clickOutsideHelper = getOutsideEvent()
         const { placement, ..._overlayStyle } = getOverlayStyle()!
         overlayStyle.value = _overlayStyle
-        state.placement = placement || defaultProps.placement
+        if (state.placement !== placement) state.placement = placement
         clickOutsideHelper && clickOutsideHelper.registerListener()
       })
     }

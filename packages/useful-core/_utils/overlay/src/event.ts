@@ -29,6 +29,5 @@ export function createEventHandler(options: CreateEventHandlerOptions) {
     const wrapper = mapEventHandler[eventName]
     _handlers[eventName] = wrapper(options)
   }
-  console.log(_handlers)
   return _handlers
 }

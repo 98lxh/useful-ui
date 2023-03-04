@@ -4,7 +4,7 @@ export const sidebar = {
       text: '指南',
       items: [
         { text: '安装', link: '/guide/installation' },
-        { text: '快速开始', link: '/guide/installation1' }
+        { text: '快速开始', link: '/guide/getting-started' }
       ]
     }
   ],
@@ -20,6 +20,10 @@ export const sidebar = {
     {
       text: '数据录入',
       items: [{ text: '输入框 Input', link: '/components/input' }]
+    },
+    {
+      text: '其他',
+      items: [{ text: '弹出层 Overlay', link: '/components/overlay' }]
     }
   ]
 }

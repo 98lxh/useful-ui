@@ -44,7 +44,7 @@ export function getViewportOffset(element: Element | DOMRect): ViewportOffsetRes
     top: top,
     right: clientWidth - rectWidth - left,
     bottom: clientHeight - rectHeight - top,
-    rightIncludeBody: clientWidth - left,
-    bottomIncludeBody: clientHeight - top,
+    rightIncludeBody: clientWidth - left - rectWidth,
+    bottomIncludeBody: clientHeight - top - rectHeight,
   };
 }

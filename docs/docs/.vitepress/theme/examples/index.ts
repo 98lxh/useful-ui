@@ -14,6 +14,10 @@ import InputClear from './input/clear.vue'
 import InputMaxLength from './input/maxLength.vue'
 import InputDisabled from './input/disabled.vue'
 
+import OverlayBasic from "./overlay/basic.vue"
+import OverlayTrigger from "./overlay/trigger.vue"
+import OverlayPlacement from "./overlay/placement.vue"
+
 export default [
   { name: 'SpinBasic', comp: SpinBasic },
   { name: 'SpinTarget', comp: SpinTarget },
@@ -29,5 +33,9 @@ export default [
   { name: 'InputPassword', comp: InputPassword },
   { name: 'InputClear', comp: InputClear },
   { name: 'InputMaxLength', comp: InputMaxLength },
-  { name: 'InputDisabled', comp: InputDisabled }
+  { name: 'InputDisabled', comp: InputDisabled },
+
+  { name: 'OverlayBasic', comp: OverlayBasic },
+  { name: 'OverlayTrigger', comp: OverlayTrigger },
+  { name: 'OverlayPlacement', comp: OverlayPlacement }
 ]

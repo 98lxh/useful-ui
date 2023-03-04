@@ -6,6 +6,7 @@
   --vp-button-brand-hover-border: var(--use-color-primary);
   --vp-c-brand-dark: var(--use-color-primary);
   --vp-c-bg-alt: #fff; // 侧边栏
+  --overlay-basic-background:#ffffff;
 }
 
 .VPNav {
@@ -19,6 +20,7 @@
 .dark {
   --vp-c-bg-alt: #141414;
   --vp-c-bg: #141414;
+  --overlay-basic-background:#373739;
 }
 
 .sidebar-link-item.active {

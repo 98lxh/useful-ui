@@ -1,3 +1,4 @@
+import { getViewportOffset } from "@useful-ui/utils";
 import { getPlacement, getPlacementPoints } from "./placement";
 import { OverlayPlacementOptions } from "./types";
 
@@ -5,10 +6,11 @@ import { OverlayPlacementOptions } from "./types";
 export const getTriggerElement = (trigger) => trigger.$el ? trigger.$el : trigger
 export function getOverlayPosition(_options: OverlayPlacementOptions) {
   const { overlayElement, triggerElement } = _options
-  const { offsetTop: triOffsetTop, offsetLeft: triOffsetLeft } = triggerElement
+  const { top: triOffsetTop, left: triOffsetLeft } = getViewportOffset(triggerElement)
   const { width: triWidth, height: triHeight, top: triTop, left: triLeft } = triggerElement.getBoundingClientRect()
   const { width: layWidth, height: layHeight } = overlayElement!.getBoundingClientRect()
-  const { scrollTop: docScrollTop, scrollLeft: docScrollLeft, offsetLeft: docLeft, offsetTop: docTop } = document.body
+  const { scrollTop: docScrollTop, scrollLeft: docScrollLeft, offsetLeft: docLeft, offsetTop: docTop } = document.documentElement
+
   const baseTop = triOffsetTop - docTop + docScrollTop
   const baseLeft = triOffsetLeft - docLeft + docScrollLeft
 
