@@ -2,6 +2,8 @@ import { getViewportOffset } from "@useful-ui/utils";
 import type { OverlayPlacement } from "../../../overlay";
 import type { ComputePlacementOptions, OverlayPoints } from "./types";
 
+type ComputeSymbolOptions = Pick<ComputePlacementOptions, 'layHeight' | 'layWidth'> & ReturnType<typeof getViewportOffset>
+
 const mapPlacementToPoints: Record<OverlayPlacement, OverlayPoints> = {
   'top-start': ['bl', 'tl'],
   'top': ['bc', 'tc'],
@@ -46,7 +48,7 @@ export const getPlacementSymbols = (placement: OverlayPlacement) => mapPlacement
 
 function computePlacementPerfixSymbol(
   sourceSymbol: string,
-  options: Pick<ComputePlacementOptions, 'layHeight' | 'layWidth'> & ReturnType<typeof getViewportOffset>
+  options: ComputeSymbolOptions
 ) {
   let targetSymbol = sourceSymbol
   const { layHeight, layWidth, bottomIncludeBody, rightIncludeBody, top, left } = options;
@@ -69,7 +71,7 @@ function computePlacementPerfixSymbol(
 
 function computePlacementSuffixSymbol(
   sourceSymbol: string,
-  options: Pick<ComputePlacementOptions, 'layHeight' | 'layWidth'> & ReturnType<typeof getViewportOffset>
+  options: ComputeSymbolOptions
 ) {
   let targetSymbol = sourceSymbol
   const { layHeight, layWidth, bottomIncludeBody, rightIncludeBody, top, left } = options;

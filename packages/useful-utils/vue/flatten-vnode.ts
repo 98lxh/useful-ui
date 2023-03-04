@@ -1,6 +1,6 @@
 import { Comment, createTextVNode, Fragment, VNode, VNodeChild } from 'vue'
 
-function flattenVNodes(
+export function flatten(
   vnodes: VNodeChild[] = [],
   filterCommentNode = true,
   result: VNode[] = []
@@ -16,14 +16,14 @@ function flattenVNodes(
     }
 
     if (Array.isArray(vnode)) {
-      flattenVNodes(vnode, filterCommentNode, result)
+      flatten(vnode, filterCommentNode, result)
       return
     }
 
     if (vnode?.type === Fragment) {
       if (vnode.children === null) return null
       if (Array.isArray(vnode.children)) {
-        flattenVNodes(vnode.children, filterCommentNode, result)
+        flatten(vnode.children, filterCommentNode, result)
       }
     } else if (vnode?.type !== Comment) {
       result.push(vnode!)
@@ -32,5 +32,3 @@ function flattenVNodes(
 
   return result
 }
-
-export default flattenVNodes

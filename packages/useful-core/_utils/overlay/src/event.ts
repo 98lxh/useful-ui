@@ -1,18 +1,34 @@
 import type { OverlayTrigger } from "../../../overlay";
-import { TriggerBindEventOptions } from "./types";
+import { CreateEventHandlerOptions } from "./types";
 
-const mapTriggerToEvent: Record<OverlayTrigger, string> = {
+const mapOutsideEvent: Record<OverlayTrigger, string | null> = {
+  'focus': null,
   'click': 'click',
-  'focus': 'focus',
   'hover': 'mousemove',
 }
-export const getEventName = (trigger: OverlayTrigger) => mapTriggerToEvent[trigger]
-export function bindTriggerEvent(_options: TriggerBindEventOptions) {
-  const { eventName, triggerElement, handler } = _options;
-  triggerElement && triggerElement.addEventListener(eventName, handler);
+
+const mapEvent: Record<OverlayTrigger, string[]> = {
+  'focus': ['onFocus', 'onBlur'],
+  'hover': ['onMouseenter'],
+  'click': ['onClick']
 }
 
-export function removeTriggerEvent(_options: TriggerBindEventOptions) {
-  const { eventName, triggerElement, handler } = _options;
-  triggerElement && triggerElement.removeEventListener(eventName, handler);
+const mapEventHandler: Record<string, (...args: any[]) => any> = {
+  'onFocus': (options: CreateEventHandlerOptions) => () => options.onUpdateVisible(true),
+  'onBlur': (options: CreateEventHandlerOptions) => () => options.onUpdateVisible(false),
+  'onMouseenter': (options: CreateEventHandlerOptions) => () => options.onUpdateVisible(true),
+  'onClick': (options: CreateEventHandlerOptions) => () => options.onUpdateVisible(!options.currentVisible())
+}
+
+export const getOutsideEventName = (trigger: OverlayTrigger) => mapOutsideEvent[trigger]
+
+export function createEventHandler(options: CreateEventHandlerOptions) {
+  const eventNames = mapEvent[options.trigger]
+  const _handlers: any = {}
+  for (const eventName of eventNames) {
+    const wrapper = mapEventHandler[eventName]
+    _handlers[eventName] = wrapper(options)
+  }
+  console.log(_handlers)
+  return _handlers
 }

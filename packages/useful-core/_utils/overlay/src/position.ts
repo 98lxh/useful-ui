@@ -1,11 +1,13 @@
 import { getPlacement, getPlacementPoints } from "./placement";
 import { OverlayPlacementOptions } from "./types";
 
+
+export const getTriggerElement = (trigger) => trigger.$el ? trigger.$el : trigger
 export function getOverlayPosition(_options: OverlayPlacementOptions) {
-  const { trigger, overlay } = _options
-  const { offsetTop: triOffsetTop, offsetLeft: triOffsetLeft } = trigger
-  const { width: triWidth, height: triHeight, top: triTop, left: triLeft } = trigger.getBoundingClientRect()
-  const { width: layWidth, height: layHeight } = overlay!.getBoundingClientRect()
+  const { overlayElement, triggerElement } = _options
+  const { offsetTop: triOffsetTop, offsetLeft: triOffsetLeft } = triggerElement
+  const { width: triWidth, height: triHeight, top: triTop, left: triLeft } = triggerElement.getBoundingClientRect()
+  const { width: layWidth, height: layHeight } = overlayElement!.getBoundingClientRect()
   const { scrollTop: docScrollTop, scrollLeft: docScrollLeft, offsetLeft: docLeft, offsetTop: docTop } = document.body
   const baseTop = triOffsetTop - docTop + docScrollTop
   const baseLeft = triOffsetLeft - docLeft + docScrollLeft
@@ -21,7 +23,6 @@ export function getOverlayPosition(_options: OverlayPlacementOptions) {
   })
 
   const points = getPlacementPoints(placement)
-
   let top = getTriggerTop(points[1][0], baseTop, triHeight)
   let left = getTriggerLeft(points[1][1], baseLeft, triWidth)
   top = getOverlayTop(points[0][0], top, layHeight * 10)

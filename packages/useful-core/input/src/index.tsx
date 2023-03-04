@@ -30,10 +30,7 @@ const Input = defineComponent({
 
     const state = computed(() => {
       const { disabled, readonly } = props.value;
-      return {
-        disabled,
-        readonly
-      }
+      return { disabled, readonly }
     })
 
     const classes = computed(() => {
@@ -71,7 +68,6 @@ const Input = defineComponent({
       } = props.value
 
       const { disabled, readonly } = state.value;
-
       const targetValue = (event.target as HTMLInputElement).value
       const length = targetValue.length
       const maxLength = _maxLength && _maxLength + 1

@@ -2,9 +2,8 @@ import { Plugin } from 'vue'
 
 export type WithInstall<T> = T & Plugin
 
-function withInstall<T>(comp: T) {
+export function withInstall<T>(comp: T) {
   const _comp = comp as WithInstall<T>
-  // eslint-disable-next-line @typescript-eslint/no-extra-semi
   _comp.install = function (app) {
     const { name } = _comp as unknown as { name: string }
     console.log(name)
@@ -13,5 +12,3 @@ function withInstall<T>(comp: T) {
 
   return _comp
 }
-
-export default withInstall

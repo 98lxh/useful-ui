@@ -1,4 +1,4 @@
-import { createNameSpace } from './namespace'
+import { createNameSpace } from '../utils/namespace'
 
 export interface RippleOptions {
   name?: string

@@ -3,8 +3,8 @@ import { useMergeProps } from '@useful-ui/hooks'
 import { type SpaceProps, spaceProps } from './props'
 
 import {
+  flatten,
   className,
-  flattenVNodes,
   createNameSpace,
   createComponentName,
 } from '@useful-ui/utils'
@@ -41,7 +41,7 @@ const Space = defineComponent({
     })
 
     function renderChildren(): JSX.Element[] | null {
-      const children = flattenVNodes(slots.default && slots.default())
+      const children = flatten(slots.default && slots.default())
       if (!children) return null
       return children.map(childNode => (
         <div class={bem.b('item')} style={styles.value}>

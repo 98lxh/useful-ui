@@ -1,6 +1,6 @@
 import { getOverlayTarget } from "./target"
 import { getOverlayPosition } from "./position"
-import type { OverlayPlacement } from "../../../overlay"
+import type { OverlayPlacement, OverlayTrigger } from "../../../overlay"
 
 
 export type OverlayPoint = 'tc' | 'tl' | 'tr' | 'bc' | 'bl' | 'br' | 'cl' | 'lt' | 'lb' | 'cr' | 'rt' | 'rb'
@@ -20,8 +20,8 @@ export interface ComputePlacementOptions {
 
 
 export interface OverlayPlacementOptions {
-  trigger: HTMLElement
-  overlay: HTMLElement
+  triggerElement: HTMLElement
+  overlayElement: HTMLElement
   placement: OverlayPlacement
 }
 
@@ -33,4 +33,10 @@ export type TriggerBindEventOptions = {
 
 export type OverlayStyleOptions = OverlayPlacementOptions & {
   overlayTarget: ReturnType<typeof getOverlayTarget>
+}
+
+export type CreateEventHandlerOptions = {
+  trigger: OverlayTrigger
+  onUpdateVisible: Function
+  currentVisible: Function
 }
