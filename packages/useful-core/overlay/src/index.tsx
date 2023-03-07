@@ -1,7 +1,8 @@
-import { defineComponent, onUnmounted, Teleport, ref, nextTick, onMounted, Transition, watch, cloneVNode, Fragment, reactive } from 'vue'
-import { getOverlayTarget, createOverlayStyle, getOutsideEventName, createEventHandler, getTriggerElement } from '../../_utils/overlay'
+import { defineComponent, onUnmounted, Teleport, ref, nextTick, Transition, watch, cloneVNode, Fragment, reactive, provide, inject } from 'vue'
+import { getOverlayTarget, createOverlayStyle, getOutsideEventName, createEventHandler, getTriggerElement, TriggerHandlers, getOverlayPosition } from '../../_utils/overlay'
 import { createComponentName, createEventOutsideHelper, getFirstSlotVNode, type EventOutsideHelper } from '@useful-ui/utils'
-import { overlayProps, type OverlayProps } from './props'
+import { OnUpdateOverlayChildrenFnOptions, overlayInjectionKey } from './context'
+import { OverlayPlacement, overlayProps, type OverlayProps } from './props'
 import { useMergeProps } from '@useful-ui/hooks'
 import { type CSSProperties } from 'vue'
 
@@ -15,12 +16,17 @@ const Overlay = defineComponent({
   name: createComponentName('Overlay'),
   props: overlayProps,
   setup(componentProps, { slots }) {
-    let clickOutsideHelper: EventOutsideHelper | null = null;
+    let eventOutsideHelper: EventOutsideHelper | null = null;
     const props = useMergeProps(componentProps, defaultProps)
+    const overlayTarget = getOverlayTarget();
     const triggerRef = ref<HTMLElement | null>(null)
     const overlayRef = ref<HTMLElement | null>(null);
+    let triggerHandlers: TriggerHandlers | null = null
     const overlayStyle = ref<CSSProperties | null>(null)
-    const overlayTarget = getOverlayTarget();
+    const overlayParent = inject(overlayInjectionKey, null)
+    const getOverlayElementFns: Set<() => HTMLElement> = new Set();
+    let getOverlayPlacement: (() => OverlayPlacement) | null = null
+    const getOverlayElementFn = () => overlayRef.value as HTMLElement
 
     const state = reactive({
       placement: props.value.placement,
@@ -29,51 +35,66 @@ const Overlay = defineComponent({
 
     function getOverlayStyle() {
       const { placement } = props.value
+      if (!triggerRef.value || !placement) return null;
       const overlayElement = overlayRef.value as HTMLElement
       const triggerElement = getTriggerElement(triggerRef.value)
-      if (!triggerElement || !placement) return null;
-      const options = { overlayElement, triggerElement, placement, overlayTarget }
-      return createOverlayStyle(options)
+
+      const {
+        placement: overlayPlacement,
+        ...overlayPosition
+      } = getOverlayPosition({
+        triggerElement,
+        overlayElement,
+        placement
+      });
+
+      getOverlayPlacement = () => overlayPlacement;
+      return createOverlayStyle({ ...overlayPosition, overlayTarget })
     }
 
     function getOutsideEvent() {
       const { trigger } = props.value;
+      if (!triggerRef.value || !trigger) return null
       const triggerElement = getTriggerElement(triggerRef.value)
-      if (!triggerElement || !trigger) return null
-      const getOverlayElement = () => overlayRef.value as HTMLElement
       const callback = () => onUpdateVisible(false);
-      const options = { eventName: getOutsideEventName(trigger), elm: [triggerElement, getOverlayElement], callback }
+      const options = {
+        callback,
+        eventName: getOutsideEventName(trigger),
+        elm: [triggerElement, getOverlayElementFn, ...getOverlayElementFns.values()],
+      }
       return createEventOutsideHelper(options)
     }
 
     async function onDisplayOverlay() {
       overlayTarget.incrementHierarchy()
-      nextTick(() => {
-        clickOutsideHelper = getOutsideEvent()
-        const { placement, ..._overlayStyle } = getOverlayStyle()!
-        overlayStyle.value = _overlayStyle
-        if (state.placement !== placement) state.placement = placement
-        clickOutsideHelper && clickOutsideHelper.registerListener()
-      })
+
+      if (!eventOutsideHelper) {
+        eventOutsideHelper = getOutsideEvent()
+        eventOutsideHelper && eventOutsideHelper.registerListener()
+      }
+
+      overlayStyle.value = getOverlayStyle()!;
+      if (getOverlayPlacement) state.placement = getOverlayPlacement();
     }
 
     async function onUpdateVisible(visible: boolean) {
-      if (state.visible !== visible) {
-        state.visible = visible
-        state.visible ? onDisplayOverlay() : clickOutsideHelper?.removeListener()
-      }
+      state.visible = visible
+      state.visible && nextTick(() => onDisplayOverlay());
     }
 
     function renderTrigger() {
       const triggerNode = getFirstSlotVNode(slots, 'trigger')
       if (!triggerNode) return null
+
+      triggerHandlers = createEventHandler({
+        onUpdateVisible,
+        trigger: props.value.trigger!,
+        currentVisible: () => state.visible
+      })
+
       return cloneVNode(triggerNode, {
         ref: triggerRef,
-        ...createEventHandler({
-          onUpdateVisible,
-          trigger: props.value.trigger!,
-          currentVisible: () => state.visible
-        })
+        ...triggerHandlers.get()
       })
     }
 
@@ -92,19 +113,36 @@ const Overlay = defineComponent({
       nextTick(() => onUpdateVisible(true))
     })
 
-    onMounted(() => onUpdateVisible(props.value.visible!))
-    onUnmounted(() => clickOutsideHelper && clickOutsideHelper.removeListener())
+    function onUpdateChildrenFn(options: OnUpdateOverlayChildrenFnOptions) {
+      getOverlayElementFns[options.mode](options.getOverlayElementFn)
+      overlayParent?.onUpdateChildrenFn(options)
+      if (triggerRef.value) {
+        const triggerElement = getTriggerElement(triggerRef.value)
+        const containsElement = [triggerElement, getOverlayElementFn, ...getOverlayElementFns.values()];
+        eventOutsideHelper?.setContainsElement(containsElement)
+      }
+    }
+
+    overlayParent && overlayParent.onUpdateChildrenFn({ getOverlayElementFn, mode: 'add' })
+
+    onUnmounted(() => {
+      onUpdateChildrenFn({ getOverlayElementFn, mode: 'delete' })
+      eventOutsideHelper && eventOutsideHelper.removeListener()
+      triggerHandlers?.cancel()
+    })
+
+    provide(overlayInjectionKey, { onUpdateChildrenFn })
 
     return () => {
       return (
         <Fragment>
           {renderTrigger()}
           <Teleport to={overlayTarget.target}>
-            <Transition name={state.placement}>
+            <Transition name={state.placement} appear>
               {renderOverlay()}
             </Transition>
           </Teleport>
-        </Fragment>
+        </Fragment >
       )
     }
   }

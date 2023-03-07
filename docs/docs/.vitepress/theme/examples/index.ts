@@ -17,6 +17,7 @@ import InputDisabled from './input/disabled.vue'
 import OverlayBasic from "./overlay/basic.vue"
 import OverlayTrigger from "./overlay/trigger.vue"
 import OverlayPlacement from "./overlay/placement.vue"
+import OverlayNestification from "./overlay/nestification.vue"
 
 export default [
   { name: 'SpinBasic', comp: SpinBasic },
@@ -37,5 +38,6 @@ export default [
 
   { name: 'OverlayBasic', comp: OverlayBasic },
   { name: 'OverlayTrigger', comp: OverlayTrigger },
-  { name: 'OverlayPlacement', comp: OverlayPlacement }
+  { name: 'OverlayPlacement', comp: OverlayPlacement },
+  { name: 'OverlayNestification', comp: OverlayNestification }
 ]

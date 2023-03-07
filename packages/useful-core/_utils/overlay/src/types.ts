@@ -1,6 +1,7 @@
 import { getOverlayTarget } from "./target"
 import { getOverlayPosition } from "./position"
 import type { OverlayPlacement, OverlayTrigger } from "../../../overlay"
+import { createEventHandler } from "./event"
 
 
 export type OverlayPoint = 'tc' | 'tl' | 'tr' | 'bc' | 'bl' | 'br' | 'cl' | 'lt' | 'lb' | 'cr' | 'rt' | 'rb'
@@ -31,12 +32,18 @@ export type TriggerBindEventOptions = {
   eventName: any
 }
 
-export type OverlayStyleOptions = OverlayPlacementOptions & {
-  overlayTarget: ReturnType<typeof getOverlayTarget>
+export type OverlayStyleOptions = {
+  left: number,
+  top: number,
+  overlayTarget
 }
 
 export type CreateEventHandlerOptions = {
   trigger: OverlayTrigger
+  // eslint-disable-next-line @typescript-eslint/ban-types
   onUpdateVisible: Function
+  // eslint-disable-next-line @typescript-eslint/ban-types
   currentVisible: Function
 }
+
+export type TriggerHandlers = ReturnType<typeof createEventHandler>

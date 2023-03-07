@@ -1,8 +1,8 @@
-import { getViewportOffset } from "@useful-ui/utils";
-import type { OverlayPlacement } from "../../../overlay";
+import { getViewportOffset, isEquals } from "@useful-ui/utils";
 import type { ComputePlacementOptions, OverlayPoints } from "./types";
+import type { OverlayPlacement } from "../../../overlay";
 
-type ComputeSymbolOptions = Pick<ComputePlacementOptions, 'layHeight' | 'layWidth'> & ReturnType<typeof getViewportOffset>
+type ComputeSymbolOptions = Pick<ComputePlacementOptions, 'layHeight' | 'layWidth' | 'triHeight' | 'triWidth'> & ReturnType<typeof getViewportOffset>
 
 const mapPlacementToPoints: Record<OverlayPlacement, OverlayPoints> = {
   'top-start': ['bl', 'tl'],
@@ -51,7 +51,8 @@ function computePlacementPerfixSymbol(
   options: ComputeSymbolOptions
 ) {
   let targetSymbol = sourceSymbol
-  const { layHeight, layWidth, bottomIncludeBody, rightIncludeBody, top, left } = options;
+  const { layHeight, layWidth, bottom, right, top, left } = options;
+
   switch (sourceSymbol) {
     case 'top':
       if (top < layHeight) targetSymbol = 'bottom'
@@ -60,12 +61,13 @@ function computePlacementPerfixSymbol(
       if (left < layWidth) targetSymbol = 'right'
       break
     case 'bottom':
-      if (bottomIncludeBody < layHeight) targetSymbol = 'top'
+      if (bottom < layHeight) targetSymbol = 'top'
       break
     case 'right':
-      if (rightIncludeBody < layWidth) targetSymbol = 'left'
+      if (right < layWidth) targetSymbol = 'left'
       break
   }
+
   return targetSymbol
 }
 
@@ -74,33 +76,34 @@ function computePlacementSuffixSymbol(
   options: ComputeSymbolOptions
 ) {
   let targetSymbol = sourceSymbol
-  const { layHeight, layWidth, bottomIncludeBody, rightIncludeBody, top, left } = options;
+  const { layHeight, layWidth, triHeight, triWidth, bottomIncludeBody, right, top, left } = options;
   switch (sourceSymbol) {
     case 'top':
-      if (top < layHeight) targetSymbol = 'middle'
-      if (top < layHeight / 2) targetSymbol = 'bottom'
+      if (bottomIncludeBody < layHeight) targetSymbol = 'middle'
+      if (bottomIncludeBody - (triHeight / 2) < layHeight / 2) targetSymbol = 'bottom'
       break
     case 'left':
-      if (rightIncludeBody < layWidth) targetSymbol = 'center'
-      if (rightIncludeBody < layWidth / 2) targetSymbol = 'right'
+      if (right + triWidth < layWidth) targetSymbol = 'center'
+      if (right + (triWidth / 2) < layWidth / 2) targetSymbol = 'right'
       break
     case 'bottom':
-      if (bottomIncludeBody < layHeight) targetSymbol = 'middle'
-      if (bottomIncludeBody < layHeight / 2) targetSymbol = 'top'
+      if (top + triHeight < layHeight) targetSymbol = 'middle'
+      if (top + (triHeight / 2) < layHeight / 2) targetSymbol = 'top'
       break
     case 'right':
-      if (left < layWidth) targetSymbol = 'center'
-      if (left < layWidth / 2) targetSymbol = 'left'
+      if (left + triWidth < layWidth) targetSymbol = 'center'
+      if (left + (triWidth / 2) < layWidth / 2) targetSymbol = 'left'
       break
     case 'middle':
-      if (top < layHeight / 2) targetSymbol = 'top'
-      if (bottomIncludeBody < layHeight / 2) targetSymbol = 'bottom'
+      if (top + (triHeight / 2) < layHeight / 2) targetSymbol = 'top'
+      if (bottomIncludeBody - (triHeight / 2) < layHeight / 2) targetSymbol = 'bottom'
       break
     case 'center':
-      if (left < layWidth / 2) targetSymbol = 'left'
-      if (rightIncludeBody < layWidth / 2) targetSymbol = 'right'
+      if (left + (triWidth / 2) < layWidth / 2) targetSymbol = 'left'
+      if (right + (triWidth / 2) < layWidth / 2) targetSymbol = 'right'
       break
   }
+
   return targetSymbol
 }
 
@@ -109,7 +112,7 @@ export function getPlacement(options: ComputePlacementOptions) {
   const { layHeight, layWidth, triLeft, triTop, triHeight, triWidth } = options
   const symbols = getPlacementSymbols(options.placement)
   const viewportOffsetResult = getViewportOffset({ left: triLeft, top: triTop, width: triWidth, height: triHeight } as DOMRect)
-  const prefixSymbol = computePlacementPerfixSymbol(symbols[0], { layHeight, layWidth, ...viewportOffsetResult })
-  const suffixSymbol = computePlacementSuffixSymbol(symbols[1], { layHeight, layWidth, ...viewportOffsetResult })
+  const prefixSymbol = computePlacementPerfixSymbol(symbols[0], { layHeight, layWidth, triHeight, triWidth, ...viewportOffsetResult })
+  const suffixSymbol = computePlacementSuffixSymbol(symbols[1], { layHeight, layWidth, triHeight, triWidth, ...viewportOffsetResult })
   return prefixSymbol + translateSuffixSymbol(suffixSymbol) as OverlayPlacement
 }

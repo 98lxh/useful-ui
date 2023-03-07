@@ -20,21 +20,27 @@ function isContains(event: MouseEvent, _options: Omit<OutsideOptions, 'eventName
   return elm.map(el => getOutsideElement(el)?.contains(target)).some((state) => state)
 }
 
-function createDocumentHandler(_options: Omit<OutsideOptions, 'eventName'>) {
-  const { elm, callback } = _options;
-  return function documentHandler(event: MouseEvent) {
-    (elm as any).__handler__ = documentHandler;
-    if (isContains(event, { elm })) return
-    callback()
-  }
-}
-
 export function createEventOutsideHelper(_options: OutsideOptions) {
   const { eventName = 'click', elm, callback, } = _options;
-  const registerListener = () => window.addEventListener(eventName, createDocumentHandler({ elm, callback }))
-  const removeListener = () => window.removeEventListener(eventName, (elm as any).__handler__)
+  let containsElement: OutsideElement | OutsideElement[] | null = null;
+
+  function documentHandler(event: MouseEvent) {
+    (elm as any).__handler__ = documentHandler;
+    if (isContains(event, { elm: containsElement! })) return
+    callback()
+  }
+
+  const registerListener = () => {
+    window.addEventListener(eventName, documentHandler)
+    setContainsElement(elm)
+  }
+
+  const removeListener = () => window.removeEventListener(eventName, documentHandler)
+
+  const setContainsElement = (_containsElement: OutsideElement | OutsideElement[]) => containsElement = _containsElement
 
   return {
+    setContainsElement,
     registerListener,
     removeListener
   }

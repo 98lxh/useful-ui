@@ -1,26 +1,24 @@
 <template>
-  <div style="padding: 300px;">
     <use-overlay trigger="hover" placement="right">
       <template #trigger>
-        <use-button class="button">START 0</use-button>
+        <use-button class="button">hover</use-button>
       </template>
       <div class="overlay-basic">
-        <use-overlay trigger="hover" placement="right">
+        <use-overlay trigger="click" placement="right-start">
           <template #trigger>
-            <use-button class="button">START 1</use-button>
+            <use-button class="button">click</use-button>
           </template>
-          <div class="overlay-basic">
-            <use-overlay trigger="hover" placement="right">
+          <div class="overlay-basic" style="height: 52px;">
+            <use-overlay trigger="focus" placement="bottom-start">
               <template #trigger>
-                <use-button class="button">START 2</use-button>
+                <use-input placeholder="focus" />
               </template>
-              <div class="overlay-basic">111</div>
+              <div class="overlay-basic">Overlay</div>
             </use-overlay> 
           </div>
         </use-overlay> 
       </div>
     </use-overlay>
-  </div>
 </template>
 
 <style scoped>
@@ -30,7 +28,8 @@
 
 .overlay-basic {
   padding: 10px;
-  width: 170px;
+  width: 160px;
+  height:200px;
   background-color: #fff;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
 }

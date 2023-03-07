@@ -4,6 +4,7 @@ import { OverlayPlacementOptions } from "./types";
 
 
 export const getTriggerElement = (trigger) => trigger.$el ? trigger.$el : trigger
+
 export function getOverlayPosition(_options: OverlayPlacementOptions) {
   const { overlayElement, triggerElement } = _options
   const { top: triOffsetTop, left: triOffsetLeft } = getViewportOffset(triggerElement)

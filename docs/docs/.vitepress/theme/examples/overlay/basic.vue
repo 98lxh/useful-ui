@@ -1,7 +1,7 @@
 <template>
   <use-overlay trigger="hover" placement="bottom">
     <template #trigger>
-      <use-button>hover</use-button>
+      <use-button>Hover</use-button>
     </template>
     <div class="overlay-basic">
       overlay

@@ -29,8 +29,9 @@
 
 <style scoped>
 .overlay-basic {
+  height: 100px;
   padding: 10px;
-  width: 170px;
+  width: 165px;
   background-color: var(--overlay-basic-background);
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
 }
