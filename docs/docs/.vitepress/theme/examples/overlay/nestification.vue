@@ -30,7 +30,7 @@
   padding: 10px;
   width: 160px;
   height:200px;
-  background-color: #fff;
+  background-color: var(--overlay-basic-background);
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
 }
 </style>
