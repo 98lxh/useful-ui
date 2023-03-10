@@ -1,6 +1,6 @@
 import { debounce } from "@useful-ui/utils";
 import type { OverlayTrigger } from "../../../overlay";
-import { CreateEventHandlerOptions } from "./types";
+import type { CreateEventHandlerOptions } from "./types";
 
 const mapOutsideEvent: Record<OverlayTrigger, string | null> = {
   'focus': null,
@@ -30,7 +30,7 @@ export function createEventHandler(options: CreateEventHandlerOptions) {
 
   for (const eventName of eventNames) {
     const wrapper = mapEventHandler[eventName]
-    const debounceWrapper = debounce(wrapper(options), { delay: 80 })
+    const debounceWrapper = debounce(wrapper(options), { delay: 50 })
     handlers[eventName] = debounceWrapper.run
     handlers[eventName].cancel = debounceWrapper.cancel
   }

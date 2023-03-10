@@ -168,13 +168,14 @@ const Input = defineComponent({
     }
 
     function renderInput() {
-      const { placeholder, value, type } = props.value
-      const isPassword = type === 'password' && !showPasswordRef.value
+      const { placeholder, value, type: _type } = props.value
+      const isPassword = _type === 'password' && showPasswordRef.value
+      const type = isPassword ? 'text' : _type
 
       const basicProps = {
+        type,
         value,
         class: bem.e('input-el'),
-        type: isPassword ? 'password' : type,
         onInput: handleInput,
         onFocus: handleFocus,
         onBlur: handleBlur
