@@ -192,7 +192,7 @@ const Input = defineComponent({
     }
 
     expose({
-      innerInputRef,
+      getInput: () => innerInputRef.value,
       focus,
       blur
     })

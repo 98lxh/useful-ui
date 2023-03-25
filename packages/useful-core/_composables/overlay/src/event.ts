@@ -18,8 +18,8 @@ const mapEvent: Record<OverlayTrigger, string[]> = {
 const mapEventHandler: Record<string, (...args: any[]) => any> = {
   'onFocus': (options: CreateEventHandlerOptions) => () => options.onUpdateVisible(true),
   'onBlur': (options: CreateEventHandlerOptions) => () => options.onUpdateVisible(false),
-  'onMouseenter': (options: CreateEventHandlerOptions) => () => !options.currentVisible() && options.onUpdateVisible(true),
-  'onClick': (options: CreateEventHandlerOptions) => () => options.onUpdateVisible(!options.currentVisible())
+  'onClick': (options: CreateEventHandlerOptions) => () => options.onUpdateVisible(!options.currentVisible()),
+  'onMouseenter': (options: CreateEventHandlerOptions) => () => !options.currentVisible() && options.onUpdateVisible(true)
 }
 
 export const getOutsideEventName = (trigger: OverlayTrigger) => mapOutsideEvent[trigger]
@@ -29,15 +29,21 @@ export function createEventHandler(options: CreateEventHandlerOptions) {
   const handlers: any = {}
 
   for (const eventName of eventNames) {
-    const wrapper = mapEventHandler[eventName]
-    const debounceWrapper = debounce(wrapper(options), { delay: 50 })
+    const handler = mapEventHandler[eventName]
+    const debounceWrapper = debounce(handler(options), { delay: 80 })
     handlers[eventName] = debounceWrapper.run
     handlers[eventName].cancel = debounceWrapper.cancel
   }
 
   return {
-    get: () => handlers,
-    cancel: () => Object.keys(handlers).forEach(eventName => handlers[eventName]?.cancel())
+    get: function () {
+      return handlers
+    },
+    cancel: function () {
+      return Object.keys(handlers).forEach(eventName => {
+        handlers[eventName] && handlers[eventName].cancel()
+      })
+    }
   }
 }
 

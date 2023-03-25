@@ -3,7 +3,9 @@ import { getPlacement, getPlacementPoints } from "./placement";
 import { OverlayPlacementOptions } from "./types";
 
 
-export const getTriggerElement = (trigger) => trigger.$el ? trigger.$el : trigger
+export function getTriggerElement(trigger) {
+  return trigger.$el ? trigger.$el : trigger
+}
 
 export function getOverlayPosition(_options: OverlayPlacementOptions) {
   const { overlayElement, triggerElement } = _options

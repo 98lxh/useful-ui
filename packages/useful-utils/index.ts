@@ -6,5 +6,5 @@ export { getBoundingClientRect, getViewportOffset } from "./dom/viewport-offset"
 export { getFirstSlotVNode } from './vue/first-slot'
 export { flatten } from './vue/flatten-vnode'
 export { withInstall } from './vue/install'
-export { isEquals, isFunction } from './utils/_is'
 export { debounce } from './utils/debounce'
+export * from './utils/_is'

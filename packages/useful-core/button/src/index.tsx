@@ -5,10 +5,10 @@ import { useMergeProps } from '@useful-ui/hooks'
 import Spin from '@useful-ui/core/spin'
 
 import {
-    className,
-    createRipples,
-    createNameSpace,
-    createComponentName
+  className,
+  createRipples,
+  createNameSpace,
+  createComponentName
 } from '@useful-ui/utils'
 
 const defaultProps: ButtonProps = {
@@ -59,6 +59,7 @@ const Button = defineComponent({
         typeof event?.preventDefault === 'function' && event.preventDefault()
         return
       }
+
       if (ripple && type !== 'link' && type !== 'text') {
         createRipples(event, buttonRef.value!, { name: 'button' })
       }

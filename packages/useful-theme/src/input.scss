@@ -11,8 +11,7 @@ $input: #{$namespace + '-' + $input-name + $element-separator + 'input'};
 $clear-icon: #{$namespace + '-' + $input-name + '-' + 'clear'};
 $counter: #{$namespace + '-' + $input-name + '-' + 'counter'};
 
-$placeholder: #{$namespace + '-' + $input-name + $element-separator +
-  'placeholder'};
+$placeholder: #{$namespace + '-' + $input-name + $element-separator + 'placeholder'};
 
 :root {
   --use-input-shadow-primary: 0 0 0 2.5px rgba(26, 92, 255, 0.25);

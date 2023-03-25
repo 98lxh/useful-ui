@@ -26,6 +26,7 @@ const Spin = defineComponent({
       visible: props.value.visible
     })
 
+
     const classes = computed(() => {
       const { type } = state
       const { target, document, status } = props.value

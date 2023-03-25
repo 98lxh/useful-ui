@@ -1,0 +1,37 @@
+@use './_mixins/mixins.scss' as *;
+@use './_variables/index.scss' as *;
+
+:root {
+  --use-select-background: var(--use-background-light);
+  --use-select-hover-background: var(--use-color-gray-light-0);
+}
+
+.dark {
+  --use-select-background: var(--use-background-dark);
+  --use-select-hover-background: var(--use-color-gray-dark-1);
+}
+
+
+@include b('select-option') {
+  box-sizing: border-box;
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+  background-color: var(--use-select-background,1);
+  color: var(--use-color-text,1);
+  box-shadow: var(--use-shadow);
+
+  @include e('item'){
+    user-select: none;
+    overflow: hidden;    
+    text-overflow:ellipsis;    
+    white-space: nowrap;
+    cursor: pointer;
+    padding: 0 32px 0 20px;
+    line-height: 30px;
+
+    &:hover{
+      background-color: var(--use-select-hover-background,1);
+    }
+  }
+}

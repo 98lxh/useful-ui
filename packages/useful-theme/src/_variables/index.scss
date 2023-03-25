@@ -8,6 +8,7 @@
   --use-color-background: var(--use-background-light);
   --use-color-text: var(--use-color-text-light);
   --use-color-border: var(--use-color-border-light);
+  --use-shadow: var(--use-shadow-light);
 }
 
 .dark {
@@ -18,4 +19,5 @@
   --use-color-background: var(--use-background-dark-1);
   --use-color-text: var(--use-color-text-dark);
   --use-color-border: var(--use-color-border-dark);
+  --use-shadow: var(--use-shadow-light);
 }

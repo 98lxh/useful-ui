@@ -1,5 +1,6 @@
 import { ExtractPropTypes, PropType } from 'vue'
 import { type SpinType } from '@useful-ui/core/spin'
+import Input from '.'
 
 type InputType = 'text' | 'password' | 'textarea'
 type InputSize = 'small' | 'middle' | 'large'
@@ -134,3 +135,9 @@ export const inputProps = {
 }
 
 export type InputProps = ExtractPropTypes<typeof inputProps>
+
+export interface InputInstance extends InstanceType<typeof Input> {
+  getInput: () => HTMLInputElement,
+  focus: (event?: FocusEvent) => void,
+  blur: (event?: FocusEvent) => void
+}

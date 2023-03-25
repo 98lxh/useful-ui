@@ -9,5 +9,6 @@ declare module 'vue' {
     UseSpin: typeof components.UseSpin
     UseInput: typeof components.UseInput
     UseOverlay: typeof components.UseOverlay
+    UseSelect: typeof components.UseSelect
   }
 }
