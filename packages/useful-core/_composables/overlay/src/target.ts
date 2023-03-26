@@ -2,6 +2,10 @@ let target: HTMLDivElement | null = null;
 let zIndex = 1000;
 
 function createOverlayTarget() {
+  if (typeof window === undefined) {
+    return null
+  }
+
   target = document.createElement('div')
   target.style.position = 'absolute'
   target.style.width = '100%'
