@@ -388,10 +388,9 @@ import { AlertOutlined } from '@vicons/antd'
     <use-button type="primary" loading-type="border" loading>Border Loading</use-button>
     <use-button type="primary" loading-type="points" loading>Points Loading</use-button>
     <use-button type="primary" loading-type="square" loading>Square Loading</use-button>
-    <use-button type="primary" loading-type="rectangle" loading>Rectangle Loading</use-button>
     <use-button type="primary" loading-type="circles" loading>Circles Loading</use-button>
-    <use-button type="primary" loading-type="square-rotate" loading>square-rotate Loading</use-button>
     <use-button type="primary" loading-type="scale" loading>Scale Loading</use-button>
+    <use-button type="primary" loading-type="square-rotate" loading>square-rotate Loading</use-button>
   </use-space>
 </template>
 
@@ -404,10 +403,9 @@ import { AlertOutlined } from '@vicons/antd'
     <use-button type="primary" loading-type="border" loading>Border Loading</use-button>
     <use-button type="primary" loading-type="points" loading>Points Loading</use-button>
     <use-button type="primary" loading-type="square" loading>Square Loading</use-button>
-    <use-button type="primary" loading-type="rectangle" loading>Rectangle Loading</use-button>
     <use-button type="primary" loading-type="circles" loading>Circles Loading</use-button>
-    <use-button type="primary" loading-type="square-rotate" loading>square-rotate Loading</use-button>
     <use-button type="primary" loading-type="scale" loading>Scale Loading</use-button>
+    <use-button type="primary" loading-type="square-rotate" loading>square-rotate Loading</use-button>
   </use-space>
 </template>
 ```

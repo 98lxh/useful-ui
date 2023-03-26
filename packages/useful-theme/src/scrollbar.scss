@@ -3,6 +3,16 @@
 $scrollbar-name: 'scrollbar-thumb';
 $scrollbar-bar: #{$namespace + '-' + $scrollbar-name + $element-separator + 'bar'};
 
+:root {
+  --use-scrollbar-bar-background: rgba(0,0,0,0.3);
+  --use-scrollbar-bar-hover-background: rgba(0,0,0,0.4);
+}
+
+.dark {
+  --use-scrollbar-bar-background: rgba(255,255,255,0.3);
+  --use-scrollbar-bar-hover-background: rgba(255,255,255,0.4);
+}
+
 
 @include b('scrollbar') {
   position: relative;
@@ -33,12 +43,12 @@ $scrollbar-bar: #{$namespace + '-' + $scrollbar-name + $element-separator + 'bar
     @include e('bar'){
       transition: background-color 0.3s;
       position: absolute;
-      background-color: rgba(0,0,0,0.3);
+      background-color: var(--use-scrollbar-bar-background,1);
       border-radius: 5px;
       cursor: pointer;
 
       &:hover{
-        background-color: rgba(0,0,0,0.4);
+        background-color: var(--use-scrollbar-bar-hover-background,1);
       }
     }
 

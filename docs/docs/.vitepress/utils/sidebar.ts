@@ -14,7 +14,8 @@ export const sidebar = {
       items: [
         { text: '图标 Icon', link: '/components/icon' },
         { text: '按钮 Button', link: '/components/button' },
-        { text: '加载 Spin', link: '/components/spin' }
+        { text: '加载 Spin', link: '/components/spin' },
+        { text: '滚动条 Scrollbar', link: '/components/scrollbar' }
       ]
     },
     {

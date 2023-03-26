@@ -19,6 +19,9 @@ import OverlayTrigger from "./overlay/trigger.vue"
 import OverlayPlacement from "./overlay/placement.vue"
 import OverlayNestification from "./overlay/nestification.vue"
 
+import ScrollbarBasic from "./scrollbar/basic.vue"
+import ScrollbarHorizontal from "./scrollbar/horizontal.vue"
+
 export default [
   { name: 'SpinBasic', comp: SpinBasic },
   { name: 'SpinTarget', comp: SpinTarget },
@@ -39,5 +42,8 @@ export default [
   { name: 'OverlayBasic', comp: OverlayBasic },
   { name: 'OverlayTrigger', comp: OverlayTrigger },
   { name: 'OverlayPlacement', comp: OverlayPlacement },
-  { name: 'OverlayNestification', comp: OverlayNestification }
+  { name: 'OverlayNestification', comp: OverlayNestification },
+
+  { name: 'ScrollbarBasic', comp: ScrollbarBasic },
+  { name: 'ScrollbarHorizontal', comp: ScrollbarHorizontal }
 ]
