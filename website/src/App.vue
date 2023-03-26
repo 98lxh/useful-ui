@@ -1,66 +1,78 @@
 <script setup lang="ts">
-const options = [
-        {
-          label: "Everybody's Got Something to Hide Except Me and My Monkey",
-          value: 'song0',
-          disabled: true
-        },
-        {
-          label: 'Drive My Car',
-          value: 'song1'
-        },
-        {
-          label: 'Norwegian Wood',
-          value: 'song2'
-        },
-        {
-          label: "You Won't See",
-          value: 'song3',
-          disabled: true
-        },
-        {
-          label: 'Nowhere Man',
-          value: 'song4'
-        },
-        {
-          label: 'Think For Yourself',
-          value: 'song5'
-        },
-        {
-          label: 'The Word',
-          value: 'song6'
-        },
-        {
-          label: 'Michelle',
-          value: 'song7',
-          disabled: true
-        },
-        {
-          label: 'What goes on',
-          value: 'song8'
-        },
-        {
-          label: 'Girl',
-          value: 'song9'
-        },
-        {
-          label: "I'm looking through you",
-          value: 'song10'
-        },
-        {
-          label: 'In My Life',
-          value: 'song11'
-        },
-        {
-          label: 'Wait',
-          value: 'song12'
-        }
-      ]
+import { onMounted ,ref} from 'vue';
+
+const theme = ref('light')
+let html:HTMLHtmlElement | null = null
+
+onMounted(() => {
+  html = document.getElementsByTagName('html')[0]
+  html.className = theme.value
+})
+
+function onChangeTheme(){
+  theme.value = theme.value === 'light' ? 'dark' : 'light'
+  html!.className = theme.value
+}
 </script>
 
-
 <template>
-  <div style="width:300px">
-    <use-select :options="options" placeholder="这是一个选择器" />
+  <use-button @click="onChangeTheme">切换{{ theme === 'light' ? '深色' : '浅色' }}</use-button>
+  <div style="width:400px">
+    <use-scrollbar height="400px">
+      <p v-for="item in 20" :key="item" class="use-scrollbar-demo-item">
+        {{
+          item
+        }}
+      </p>
+    </use-scrollbar>
+
+    <use-scrollbar>
+      <div class="scrollbar-flex-content">
+        <p v-for="item in 20" :key="item" class="scrollbar-demo-item">
+          {{ item }}
+        </p>
+      </div>
+    </use-scrollbar>
   </div>
 </template>
+
+<style scoped>
+.scrollbar-flex-content {
+  display: flex;
+}
+
+.scrollbar-demo-item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 50px;
+  margin: 10px 0;
+  margin-right: 10px;
+  text-align: center;
+  border-radius: 4px;
+  background: #fef0f0;
+  color: #f56c6c;
+}
+.scrollbar-demo-item:last-of-type {
+  margin-right: 0;
+}
+
+
+p.use-scrollbar-demo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  margin: 0 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  border-radius: 4px;
+  background: #409eff;
+  color: #\red;
+}
+p.use-scrollbar-demo-item:last-of-type {
+  margin-bottom: 0;
+}
+</style>

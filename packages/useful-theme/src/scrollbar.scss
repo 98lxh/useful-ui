@@ -1,0 +1,63 @@
+@use './_mixins/mixins.scss' as *;
+
+$scrollbar-name: 'scrollbar-thumb';
+$scrollbar-bar: #{$namespace + '-' + $scrollbar-name + $element-separator + 'bar'};
+
+
+@include b('scrollbar') {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  &:hover {
+    .#{$namespace + '-' + $scrollbar-name}{
+      opacity: 1;
+    }
+  }
+  
+
+  @include e('wrap'){
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+  }
+
+  &-thumb{
+    position: absolute;
+    transition: opacity 0.3s;
+    opacity: 0;
+
+    @include e('bar'){
+      transition: background-color 0.3s;
+      position: absolute;
+      background-color: rgba(0,0,0,0.3);
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:hover{
+        background-color: rgba(0,0,0,0.4);
+      }
+    }
+
+    @include when('vertical'){
+      top: 0;
+      width: 5px;
+      right: 12px;
+      .#{$scrollbar-bar} {
+        width: 5px;
+      }
+    }
+
+    @include when('horizontal'){
+      left:0px;
+      height: 5px;
+      bottom: 12px;
+      .#{$scrollbar-bar} {
+        height: 6px;
+      }
+    }
+  }
+}

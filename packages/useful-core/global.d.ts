@@ -10,5 +10,6 @@ declare module 'vue' {
     UseInput: typeof components.UseInput
     UseOverlay: typeof components.UseOverlay
     UseSelect: typeof components.UseSelect
+    UseScrollbar: typeof components.UseScrollbar
   }
 }
