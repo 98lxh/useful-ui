@@ -1,0 +1,215 @@
+.top-enter-active,
+.top-leave-active {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: 50% 100%;
+}
+
+.top-enter-from {
+  opacity: 0;
+  transform: scale(0.1);
+}
+
+.top-leave-to {
+  opacity: 0;
+  transform: scale(.1);
+}
+
+
+.top-end-enter-active,
+.top-end-leave-active {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: 100% 100%;
+}
+
+.top-end-enter-from {
+  opacity: 0;
+  transform: scale(0.1);
+}
+
+.top-end-leave-to {
+  opacity: 0;
+  transform: scale(.1);
+}
+
+
+.top-start-enter-active,
+.top-start-leave-active {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: 0% 100%;
+}
+
+.top-start-enter-from {
+  opacity: 0;
+  transform: scale(0.1);
+}
+
+.top-start-leave-to {
+  opacity: 0;
+  transform: scale(.1);
+}
+
+
+.left-start-enter-active,
+.left-start-leave-active {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: 100% 0%;
+}
+
+.left-start-enter-from {
+  opacity: 0;
+  transform: scale(0.1);
+}
+
+.left-start-leave-to {
+  opacity: 0;
+  transform: scale(.1);
+}
+
+.left-enter-active,
+.left-leave-active {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: 100% 50%;
+}
+
+.left-enter-from {
+  opacity: 0;
+  transform: scale(0.1);
+}
+
+.left-leave-to {
+  opacity: 0;
+  transform: scale(.1);
+}
+
+
+.left-end-enter-active,
+.left-end-leave-active {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: 100% 100%;
+}
+
+.left-end-enter-from {
+  opacity: 0;
+  transform: scale(0.1);
+}
+
+.left-end-leave-to {
+  opacity: 0;
+  transform: scale(.1);
+}
+
+
+.right-start-enter-active,
+.right-start-leave-active {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: 0% 0%;
+}
+
+.right-start-enter-from {
+  opacity: 0;
+  transform: scale(0.1);
+}
+
+.right-start-leave-to {
+  opacity: 0;
+  transform: scale(.1);
+}
+
+.right-end-enter-active,
+.right-end-leave-active {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: 0% 100%;
+}
+
+.right-end-enter-from {
+  opacity: 0;
+  transform: scale(0.1);
+}
+
+.right-end-leave-to {
+  opacity: 0;
+  transform: scale(.1);
+}
+
+.right-enter-active,
+.right-leave-active {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: 0% 50%;
+}
+
+.right-enter-from {
+  opacity: 0;
+  transform: scale(0.1);
+}
+
+.right-leave-to {
+  opacity: 0;
+  transform: scale(.1);
+}
+
+
+.right-bottomb-enter-active,
+.right-bottomb-leave-active {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: 0% 100%;
+}
+
+.right-bottomb-enter-from {
+  opacity: 0;
+  transform: scale(0.1);
+}
+
+.right-bottomb-leave-to {
+  opacity: 0;
+  transform: scale(.1);
+}
+
+
+.bottom-start-enter-active,
+.bottom-start-leave-active {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: 0% 0%;
+}
+
+.bottom-start-enter-from {
+  opacity: 0;
+  transform: scale(0.1);
+}
+
+.bottom-start-leave-to { 
+  opacity: 0;
+  transform: scale(.1);
+}
+
+.bottom-enter-active,
+.bottom-leave-active {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: 50% 0%;
+}
+
+.bottom-enter-from {
+  opacity: 0;
+  transform: scale(0.1);
+}
+
+.bottom-leave-to {
+  opacity: 0;
+  transform: scale(.1);
+}
+
+
+.bottom-end-enter-active,
+.bottom-end-leave-active {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: 100% 0%;
+}
+
+.bottom-end-enter-from {
+  opacity: 0;
+  transform: scale(0.1);
+}
+
+.bottom-end-leave-to {
+  opacity: 0;
+  transform: scale(.1);
+}

@@ -1,0 +1,94 @@
+@use './_mixins/mixins.scss' as *;
+@use "./_variables/_transitions";
+@use "./_variables/basic";
+
+
+@include b('tag'){
+  padding: 0px 7px;
+  font-size: 14px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  background-color:var(--use-color-gray-opacity,1);
+  color: var(--use-color-text);
+  box-sizing: border-box;
+
+  svg {
+    color: var(--use-color-text);
+  }
+
+  @include when('round'){
+    border-radius: 5px;
+  }
+
+  @include b('button'){
+    padding: 0;
+    height:100%;
+  }
+
+  @include when('bordered'){
+    border: 1px solid var(--use-color-gray-light-5);
+  }
+
+  @include m('info'){
+    background-color: var(--use-color-primary-opacity-1,1);
+    color: var(--use-color-primary-light-1,1);
+
+    svg {
+      color: var(--use-color-primary-light-1,1);
+    }
+
+    @include when('bordered'){
+      border: 1px solid var(--use-color-primary-light-1);
+    }
+  }
+
+  @include m('success'){
+    background-color: var(--use-color-success-opacity-1,1);
+    color: var(--use-color-success-light-1,1);
+
+    svg {
+      color: var(--use-color-success-light-1,1);
+    }
+
+    @include when('bordered'){
+      border: 1px solid var(--use-color-success-light-1);
+    }
+  }
+
+  @include m('warning'){
+    background-color: var(--use-color-warning-opacity-1,1);
+    color: var(--use-color-warning-light-1,1);
+
+    svg {
+      color: var(--use-color-warning-light-1,1);
+    }
+
+    @include when('bordered'){
+      border: 1px solid var(--use-color-warning-light-1);
+    }
+  }
+
+
+  @include m('danger'){
+    background-color: var(--use-color-danger-opacity-1,1);
+    color: var(--use-color-danger-light-1,1);
+
+    svg {
+      color: var(--use-color-danger-light-1,1);
+    }
+
+    @include when('bordered'){
+      border: 1px solid var(--use-color-danger-light-1);
+    }
+  }
+
+  @include m('small'){
+    font-size: 12px;
+    height: 22px;
+  }
+
+  @include m('large'){
+    height: 34px;
+  }
+}

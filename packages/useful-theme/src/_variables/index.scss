@@ -1,6 +1,7 @@
 @use './basic';
 
 :root {
+  --use-color-gray-opacity:var( --use-color-gray-opacity-light-1);
   --use-color-danger: var(--use-color-danger-light-1);
   --use-color-primary: var(--use-color-primary-light-1);
   --use-color-success: var(--use-color-success-light-1);
@@ -12,6 +13,7 @@
 }
 
 .dark {
+  --use-color-gray-opacity:var( --use-color-gray-opacity-dark-1);
   --use-color-danger: var(--use-color-danger-dark-2);
   --use-color-primary: var(--use-color-primary-dark-1);
   --use-color-success: var(--use-color-success-dark-1);

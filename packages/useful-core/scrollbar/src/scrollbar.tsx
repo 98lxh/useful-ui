@@ -45,7 +45,8 @@ const Scrollbar = defineComponent({
     })
 
     const heightStyle = computed<CSSProperties>(() => ({
-      ...(state.height ? { height: state.height + 'px' } : {})
+      ...(state.height ? { height: state.height + 'px' } : {}),
+      ...(state.maxHeight ? { 'max-height': state.maxHeight + 'px' } : {}),
     }))
 
     function updateScrollTop(top: number) {
@@ -90,17 +91,22 @@ const Scrollbar = defineComponent({
       state.viewWidth = scrollbarViewRef.value!.scrollWidth
       /* 视口内容高度 **/
       state.viewHeight = scrollbarViewRef.value!.offsetHeight
+
+      /* 计算是否到到达maxHeight **/
+      if (state.maxHeight) {
+        if (state.viewHeight >= state.maxHeight) state.height = state.maxHeight
+        else {
+          state.height = 0
+          state.thumbHeight = 0
+        }
+      }
+
+
       /* thumb高度 **/
       state.thumbHeight = Number(Number.prototype.toFixed.call((state.height * state.height) / state.viewHeight, 0))
-
       //TODO: miniSize
-
       /* thumb宽度 **/
       state.thumbWidth = Number(Number.prototype.toFixed.call((state.width * state.width) / state.viewWidth, 0))
-      console.log((state.width * state.width), state.viewWidth)
-
-      //TODO: 计算是否到到达maxHeight
-
       /* 滚动条空白区域范围占比 **/
       state.retio = 1 - (move.value === 'moveX' ?
         Number(Number.prototype.toFixed.call(state.thumbWidth / state.width, 2)) :
@@ -177,8 +183,8 @@ const Scrollbar = defineComponent({
             viewHeight={viewHeight}
             viewWidth={viewWidth}
             move={move.value}
-            width={width}
             height={height}
+            width={width}
             retio={retio}
           />
         </div>

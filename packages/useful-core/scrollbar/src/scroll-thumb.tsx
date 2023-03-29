@@ -28,6 +28,7 @@ const ScrollThumb = defineComponent({
 
     const classes = computed(() => className(
       bem.b(),
+      bem.is('hidden', isHidden.value),
       bem.is('display', state.isDrawing),
       bem.is('horizontal', props.move === 'moveX'),
       bem.is('vertical', props.move === 'moveY')
@@ -49,6 +50,13 @@ const ScrollThumb = defineComponent({
           { width: thumbWidth + 'px', left: scrollLeft + 'px' } :
           { height: thumbHeight + 'px', top: scrollTop + 'px' }
       })
+    })
+
+    const isHidden = computed(() => {
+      const { height, viewWidth, maxHeight } = props
+      return viewWidth ?
+        !height && !maxHeight && viewWidth <= width.value :
+        !props.height && !props.maxHeight
     })
 
     /* 更新滚动条top值 **/

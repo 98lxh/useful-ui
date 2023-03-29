@@ -1,75 +1,88 @@
-import { computed, defineComponent, ref } from 'vue'
-import { SelectProps, selectProps } from './props'
-import { useMergeProps } from '@useful-ui/hooks'
+import { computed, defineComponent, ref, shallowRef, watch } from 'vue'
+import { SelectProps, selectProps, SelectValue } from './props'
 import Overlay, { OverlayInstance } from '../../overlay'
+import { useMergeProps } from '@useful-ui/hooks'
+import { ArrowDown } from "@useful-ui/icons"
+import Options from "./options"
 import Input from '../../input'
+import Icon from "../../icon"
 
 import {
   isNumber,
-  createNameSpace,
   createComponentName,
-  getBoundingClientRect,
-  className
+  getBoundingClientRect
 } from '@useful-ui/utils'
 
 const defaultProps: SelectProps = {
+  options: [],
+  disabled: false
 }
-
-const bem = createNameSpace('select')
 
 const Select = defineComponent({
   name: createComponentName('Select'),
   props: selectProps,
-  setup(componentProps, { slots }) {
+  setup(componentProps) {
     const props = useMergeProps(componentProps, defaultProps)
     const overlayRef = ref<OverlayInstance | null>(null)
-    const optionWidth = ref(0)
+    const inputValue = ref<SelectValue>(undefined)
+    const inputWidth = shallowRef(0)
 
-    const style = computed(() => {
-      return ({
-        width: optionWidth.value + 'px'
-      })
+    const active = computed(() => {
+      const { options } = props.value
+      return options!.find(({ value }) => value === inputValue.value)
     })
 
-    function computeOptionWidth() {
+    function calculateOptionWidth() {
       if (!overlayRef.value) return 0
       const { getTriggerElement } = overlayRef.value
       const rect = getBoundingClientRect(getTriggerElement() || 0)
-      optionWidth.value = isNumber(rect) ? rect : rect.width
+      inputWidth.value = isNumber(rect) ? rect : rect.width
     }
 
-    function renderInput() {
-      const { placeholder } = props.value
+    function onUpdateInputValue(value: SelectValue) {
+      const { "onUpdate:value": onUpdateValue } = props.value
+      inputValue.value = value;
+      onUpdateValue && onUpdateValue(value)
+    }
+
+    function renderTrigger() {
+      const { placeholder, disabled, size } = props.value
       return (
         <Input
           readonly
+          size={size}
           placeholder={placeholder}
+          value={active.value?.label}
+          disabled={disabled}
+          v-slots={{
+            suffix: () => (<Icon><ArrowDown /></Icon>)
+          }}
         />
       )
     }
 
-    function renderOptions() {
-      const { options } = props.value
-      return (
-        <ul class={bem.b('option')} style={style.value}>
-          {
-            options?.map(option => (
-              <li class={bem.b('option__item')}>{option.label}</li>
-            ))
-          }
-        </ul>
-      )
-    }
+    watch(() => props.value.value, (value: SelectValue) => {
+      onUpdateInputValue(value)
+    }, {
+      immediate: true
+    })
 
     return () => {
       return (
         <Overlay
+          trigger='focus'
           ref={overlayRef}
-          trigger='click'
-          onVisible={computeOptionWidth}
+          onVisible={calculateOptionWidth}
           v-slots={{
-            trigger: () => renderInput(),
-            default: () => renderOptions()
+            trigger: () => renderTrigger(),
+            default: () => (
+              <Options
+                width={inputWidth.value}
+                value={props.value.value}
+                options={props.value.options}
+                onUpdateValue={onUpdateInputValue}
+              />
+            ),
           }}
         />
       )

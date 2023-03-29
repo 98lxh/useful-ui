@@ -44,6 +44,7 @@ $scrollbar-bar: #{$namespace + '-' + $scrollbar-name + $element-separator + 'bar
       transition: background-color 0.3s;
       position: absolute;
       background-color: var(--use-scrollbar-bar-background,1);
+      // box-shadow: var(--use-shadow);
       border-radius: 5px;
       cursor: pointer;
 
@@ -52,10 +53,14 @@ $scrollbar-bar: #{$namespace + '-' + $scrollbar-name + $element-separator + 'bar
       }
     }
 
+    @include when('hidden'){
+     display: none;
+    }
+
     @include when('vertical'){
       top: 0;
       width: 5px;
-      right: 12px;
+      right: 3px;
       .#{$scrollbar-bar} {
         width: 5px;
       }
@@ -64,7 +69,7 @@ $scrollbar-bar: #{$namespace + '-' + $scrollbar-name + $element-separator + 'bar
     @include when('horizontal'){
       left:0px;
       height: 5px;
-      bottom: 12px;
+      bottom: 3px;
       .#{$scrollbar-bar} {
         height: 6px;
       }

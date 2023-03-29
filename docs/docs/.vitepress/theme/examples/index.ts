@@ -21,6 +21,10 @@ import OverlayNestification from "./overlay/nestification.vue"
 
 import ScrollbarBasic from "./scrollbar/basic.vue"
 import ScrollbarHorizontal from "./scrollbar/horizontal.vue"
+import ScrollbarMaxheight from "./scrollbar/maxHeight.vue"
+
+import SelectBasic from "./select/basic.vue"
+import SelectSize from "./select/size.vue"
 
 export default [
   { name: 'SpinBasic', comp: SpinBasic },
@@ -45,5 +49,9 @@ export default [
   { name: 'OverlayNestification', comp: OverlayNestification },
 
   { name: 'ScrollbarBasic', comp: ScrollbarBasic },
-  { name: 'ScrollbarHorizontal', comp: ScrollbarHorizontal }
+  { name: 'ScrollbarHorizontal', comp: ScrollbarHorizontal },
+  { name: 'ScrollbarMaxheight', comp: ScrollbarMaxheight },
+
+  { name: 'SelectBasic', comp: SelectBasic },
+  { name: 'SelectSize', comp: SelectSize },
 ]

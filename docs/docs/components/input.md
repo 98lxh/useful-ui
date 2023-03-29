@@ -2,10 +2,10 @@
 
 useful-ui 推荐使用 xicons 作为图标库。
 
-## 基本使用
+## 基础用法
 ::: demo
 <template #title>
-基本使用
+基础用法
 </template>
 
 <template #desc>

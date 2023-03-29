@@ -2,11 +2,11 @@
 
 用于对元素添加 hover, click, focus 等事件，并且显示弹出层
 
-## 基本使用
+## 基础用法
 
 ::: demo
 <template #title>
-基本使用
+基础用法
 </template>
 
 <template #source>

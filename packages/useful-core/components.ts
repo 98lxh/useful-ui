@@ -22,3 +22,6 @@ export { UseSelect } from "./select"
 export * from "./scrollbar"
 export { UseScrollbar } from "./scrollbar"
 
+export * from "./tag"
+export { UseTag } from "./tag"
+

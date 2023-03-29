@@ -29,9 +29,16 @@
     cursor: pointer;
     padding: 0 32px 0 20px;
     line-height: 30px;
+    font-size: 14px;
+    transition: background-color 0.25s;
 
     &:hover{
       background-color: var(--use-select-hover-background,1);
+    }
+
+    @include when('active'){
+      background-color: rgba(26, 92, 255, 0.15);
+      font-weight: 600;
     }
   }
 }

@@ -60,7 +60,7 @@ const Button = defineComponent({
         return
       }
 
-      if (ripple && type !== 'link' && type !== 'text') {
+      if (ripple) {
         createRipples(event, buttonRef.value!, { name: 'button' })
       }
 

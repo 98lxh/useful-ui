@@ -2,10 +2,10 @@
 
 用于替换浏览器原生滚动条。
 
-## 基本使用
+## 基础用法
 ::: demo
 <template #title>
-基本使用
+基础用法
 </template>
 
 <template #desc>
@@ -34,6 +34,25 @@
 
 <template #source>
   <scrollbar-horizontal />
+</template>
+
+```html
+
+```
+:::
+
+## 最大高度
+::: demo
+<template #title>
+最大高度
+</template>
+
+<template #desc>
+当元素高度超过最大高度，才会显示滚动条。
+</template>
+
+<template #source>
+  <scrollbar-maxheight />
 </template>
 
 ```html

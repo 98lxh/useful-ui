@@ -2,11 +2,11 @@
 
 用于页面和区块的加载中状态。
 
-## 基本使用
+## 基础用法
 
 ::: demo
 <template #title>
-基本使用
+基础用法
 </template>
 
 <template #desc>

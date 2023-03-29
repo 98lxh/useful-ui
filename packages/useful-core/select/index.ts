@@ -1,4 +1,4 @@
-import Select from './src/index'
+import Select from './src'
 import { withInstall } from '@useful-ui/utils'
 
 export const UseSelect = withInstall(Select)
