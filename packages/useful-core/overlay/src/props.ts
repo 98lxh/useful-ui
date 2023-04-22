@@ -22,11 +22,15 @@ export const overlayProps = {
   },
   onVisible: {
     type: Function
+  },
+  onHidden:{
+    type: Function
   }
 }
 
 export type OverlayProps = ExtractPropTypes<typeof overlayProps>
 
 export interface OverlayInstance extends InstanceType<typeof Overlay> {
-  getTriggerElement: () => HTMLElement
+  getTrigger: <T = any>() => T,
+  updateOverlayPosition: () => void
 }

@@ -35,3 +35,17 @@
 ```
 :::
 
+## 多选
+::: demo
+<template #title>
+多选
+</template>
+
+<template #source>
+  <select-multiple />
+</template>
+
+```vue
+```
+:::
+

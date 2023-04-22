@@ -24,6 +24,7 @@ export interface OverlayPlacementOptions {
   triggerElement: HTMLElement
   overlayElement: HTMLElement
   placement: OverlayPlacement
+  zoom: number
 }
 
 export type TriggerBindEventOptions = {

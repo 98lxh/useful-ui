@@ -36,9 +36,7 @@ export function createEventOutsideHelper(_options: OutsideOptions) {
   }
 
   const removeListener = () => window.removeEventListener(eventName, documentHandler)
-
   const setContainsElement = (_containsElement: OutsideElement | OutsideElement[]) => containsElement = _containsElement
-
   return {
     setContainsElement,
     registerListener,

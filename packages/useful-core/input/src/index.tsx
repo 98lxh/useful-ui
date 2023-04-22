@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, getCurrentInstance } from 'vue'
+import { computed, defineComponent, ref, getCurrentInstance, Fragment } from 'vue'
 import { HiddenPassword, DisplayPassword, ClearSharp } from '@useful-ui/icons'
 import { useMergeProps } from '@useful-ui/hooks'
 import { InputProps, inputProps } from './props'
@@ -25,12 +25,19 @@ const Input = defineComponent({
   setup(componetProps, { slots, expose }) {
     const props = useMergeProps(componetProps, defaultProps)
     const showPasswordRef = ref(componetProps.showPassword)
-    const innerInputRef = ref<HTMLInputElement | null>(null);
+    const innerInputRef = ref<HTMLInputElement | null>(null)
+    const wrapperRef = ref<HTMLDivElement | null>(null)
     const focusedRef = ref(false)
 
     const state = computed(() => {
       const { disabled, readonly } = props.value;
-      return { disabled, readonly }
+      const { tags } = slots
+
+      return {
+        disabled,
+        readonly,
+        isRenderTag: !!tags
+      }
     })
 
     const classes = computed(() => {
@@ -46,14 +53,14 @@ const Input = defineComponent({
       )
     })
 
-    function handleFocus(event: FocusEvent) {
+    function onFocus(event: FocusEvent) {
       const { onFocus, disabled } = props.value
       if (disabled) return null
       onFocus && onFocus(event)
       focusedRef.value = true;
     }
 
-    function handleBlur(event: FocusEvent) {
+    function onBlur(event: FocusEvent) {
       const { onBlur } = props.value
       onBlur && onBlur(event)
       focusedRef.value = false
@@ -103,14 +110,14 @@ const Input = defineComponent({
     }
 
     function focus() {
-      if (!innerInputRef.value) return
-      innerInputRef.value.focus();
+      const { isRenderTag } = state.value
+      isRenderTag ? wrapperRef.value?.focus() : innerInputRef.value?.focus();
       focusedRef.value = true;
     }
 
     function blur() {
-      if (!innerInputRef.value) return
-      innerInputRef.value.blur();
+      const { isRenderTag } = state.value
+      isRenderTag ? wrapperRef.value?.blur() : innerInputRef.value?.blur();
       focusedRef.value = false;
     }
 
@@ -168,38 +175,48 @@ const Input = defineComponent({
     }
 
     function renderInput() {
-      const { placeholder, value, type: _type } = props.value
+      const { placeholder, value, type: _type, renderTag ,inputStyle} = props.value
       const isPassword = _type === 'password' && showPasswordRef.value
       const type = isPassword ? 'text' : _type
-
       const basicProps = {
         type,
         value,
         class: bem.e('input-el'),
-        onInput: handleInput,
-        onFocus: handleFocus,
-        onBlur: handleBlur
+        ...(!renderTag ? {
+          onInput: handleInput,
+          onFocus,
+          onBlur
+        } : {})
       }
 
       return (
-        <div class={bem.e('input')}>
-          <input ref={innerInputRef} {...basicProps} />
-          <div class={bem.e('placeholder')}>
+        <div class={bem.e('input')} style={{...(inputStyle ? inputStyle : {})}}>
+          {renderTag ? renderTag() : (<input ref={innerInputRef} {...basicProps} />)}
+          < div class={bem.e('placeholder')} >
             {!value && <span>{placeholder}</span>}
-          </div>
-        </div>
+          </div >
+        </div >
       )
     }
 
     expose({
       getInput: () => innerInputRef.value,
+      onFocus,
+      onblur,
       focus,
       blur
     })
 
     return () => {
+      const { renderTag } = props.value
       return (
-        <div class={classes.value}>
+        <div class={classes.value} ref={wrapperRef} {
+          ...renderTag ? {
+            tabindex: -1,
+            onFocus,
+            onBlur
+          } : {}
+        }>
           <div class={bem.b('wrapper')}>
             {renderPrefix()}
             {renderInput()}

@@ -43,11 +43,15 @@ const Tag = defineComponent({
       )
     })
 
+    function onClose(event?:MouseEvent){
+      onUpdateVisible(false)
+      props.value.onClose && props.value.onClose(event)
+    }
+
     function onUpdateVisible(value: boolean) {
       const { disabled } = props.value
-      if (!disabled) {
-        visible.value = value
-      }
+      if (disabled) return null
+      visible.value = value
     }
 
     function renderCloseButton() {
@@ -57,7 +61,7 @@ const Tag = defineComponent({
       return (
         <Button
           size={props.value.size}
-          onClick={() => onUpdateVisible(false)}
+          onClick={(event) => onClose(event)}
           type='text'
           v-slots={{
             icon: () => (<Icon><ClearSharp /></Icon>)

@@ -2,9 +2,9 @@ import { computed, defineComponent, nextTick, onMounted, onUnmounted, ref, shall
 import { ScrollbarMove, scrollThumbProps } from './props'
 
 import {
-  createNameSpace,
-  createComponentName,
   className,
+  createNameSpace,
+  createComponentName
 } from '@useful-ui/utils'
 
 const bem = createNameSpace('scrollbar-thumb')

@@ -1,11 +1,12 @@
-import { computed, defineComponent, ref, shallowRef } from 'vue'
-import { SelectOption, selectOptionsProps, SelectValue } from './props'
+import { computed, defineComponent } from 'vue'
+import { SelectOption, selectOptionsProps } from './props'
 import Scrollbar from '../../scrollbar'
 
 import {
   className,
   createNameSpace,
-  createComponentName
+  createComponentName,
+  isArray
 } from '@useful-ui/utils'
 
 const bem = createNameSpace('select-option')
@@ -21,18 +22,16 @@ const Options = defineComponent({
         bem.e('item'),
         bem.is('disbaled', option.disabled),
         bem.is('active', option.value === props.value),
+        bem.is('multiple-active', isArray(props.value) && props.value.includes(option.value))
       )
     }
 
     function onUpdateValue(option: SelectOption) {
-      const { disabled, value } = option
-      const { onUpdateValue } = props
-
-      if (disabled || !onUpdateValue) {
-        return
+      const { onUpdateValue, multiple, focus } = props
+      if (!option.disabled){
+        onUpdateValue && onUpdateValue({ value:option.value, isDeletion: false })
+        multiple && focus?.()
       }
-
-      onUpdateValue(value)
     }
 
     return () => {
@@ -43,10 +42,7 @@ const Options = defineComponent({
           style={style.value}
           v-slots={{
             default: () => props.options?.map(option => (
-              <li
-                class={createOptionClassName(option)}
-                onClick={() => onUpdateValue(option)}
-              >
+              <li class={createOptionClassName(option)} onClick={() => onUpdateValue(option)}>
                 {option.render ? option.render() : option.label}
               </li>
             ))

@@ -114,13 +114,15 @@ $placeholder: #{$namespace + '-' + $input-name + $element-separator + 'placehold
     }
   }
 
+
   &-wrapper {
-    display: inline-flex;
+    display: flex;
     padding: 0px 12px;
     width: 100%;
     overflow: hidden;
     position: relative;
     box-sizing: border-box;
+    align-items: center;
 
     .#{$prefix},
     .#{$suffix} {

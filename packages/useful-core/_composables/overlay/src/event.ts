@@ -30,7 +30,7 @@ export function createEventHandler(options: CreateEventHandlerOptions) {
 
   for (const eventName of eventNames) {
     const handler = mapEventHandler[eventName]
-    const debounceWrapper = debounce(handler(options), { delay: 80 })
+    const debounceWrapper = debounce(handler(options), { delay: 0 })
     handlers[eventName] = debounceWrapper.run
     handlers[eventName].cancel = debounceWrapper.cancel
   }

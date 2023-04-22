@@ -25,6 +25,7 @@ import ScrollbarMaxheight from "./scrollbar/maxHeight.vue"
 
 import SelectBasic from "./select/basic.vue"
 import SelectSize from "./select/size.vue"
+import SelectMultiple from "./select/multiple.vue"
 
 export default [
   { name: 'SpinBasic', comp: SpinBasic },
@@ -54,4 +55,5 @@ export default [
 
   { name: 'SelectBasic', comp: SelectBasic },
   { name: 'SelectSize', comp: SelectSize },
+  { name: 'SelectMultiple', comp: SelectMultiple },
 ]

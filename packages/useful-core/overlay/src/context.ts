@@ -2,7 +2,6 @@ import type { InjectionKey } from 'vue'
 
 export const Deletion = 0b00000001;
 export const Addition = 0b00000010;
-
 type GetOverlayElementFn = () => HTMLElement
 type Action = typeof Deletion | typeof Addition
 

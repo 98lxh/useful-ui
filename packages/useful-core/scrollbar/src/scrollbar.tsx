@@ -48,7 +48,6 @@ const Scrollbar = defineComponent({
       ...(state.height ? { height: state.height + 'px' } : {}),
       ...(state.maxHeight ? { 'max-height': state.maxHeight + 'px' } : {}),
     }))
-
     function updateScrollTop(top: number) {
       scrollThumbRef.value?.handleDrawScrollValue(top, 'moveY')
       state.isDrawing = false
@@ -59,7 +58,6 @@ const Scrollbar = defineComponent({
       state.isDrawing = false
     }
 
-    /* 更新滚动条的thumb **/
     function updateScrollThumb() {
       const { onScroll } = props.value
       const sTop = move.value === 'moveX' ?

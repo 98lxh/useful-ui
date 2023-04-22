@@ -7,4 +7,5 @@ export { getFirstSlotVNode } from './vue/first-slot'
 export { flatten } from './vue/flatten-vnode'
 export { withInstall } from './vue/install'
 export { debounce } from './utils/debounce'
+export { isArray } from "./utils/_is"
 export * from './utils/_is'

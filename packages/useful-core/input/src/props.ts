@@ -6,6 +6,7 @@ type InputType = 'text' | 'password' | 'textarea'
 type InputSize = 'small' | 'middle' | 'large'
 type InputStatus = 'error' | 'warning'
 type OnUpdateModelValue = (value?: string | number) => void
+type RenderTagFn = () => ChildNode | JSX.Element | null
 
 export const inputProps = {
   /**
@@ -131,6 +132,12 @@ export const inputProps = {
    */
   onBlur: {
     type: Function as PropType<(event?: FocusEvent) => void>
+  },
+  renderTag:{
+    type:Function as PropType<RenderTagFn>
+  },
+  inputStyle:{
+    type:Object
   }
 }
 

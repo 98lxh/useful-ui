@@ -1,17 +1,16 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const value = ref(['1','2'])
+
+const options = ref(Array(20).fill(0).map((_,index) => ({
+  label:index + 1,
+  value:index + 1
+})))
+</script>
+
 <template>
-  <use-space>
-    <use-tag> 爱在西元前 </use-tag>
-    <use-tag type="success" size="small">
-      不该
-    </use-tag>
-    <use-tag type="warning" size="large">
-      超人不会飞
-    </use-tag>
-    <use-tag type="danger">
-      手写的从前
-    </use-tag>
-    <use-tag type="info">
-      哪里都是你
-    </use-tag>
+  <use-space direction="vertical" fill>
+    <use-select v-model:value="value" multiple placeholder="请选择" :options="options" />
   </use-space>
 </template>

@@ -19,8 +19,8 @@ export function getOverlayPosition(_options: OverlayPlacementOptions) {
 
   const placement = getPlacement({
     placement: _options.placement,
-    layHeight: layHeight * 10,
-    layWidth: layWidth * 10,
+    layHeight: layHeight * _options.zoom,
+    layWidth: layWidth * _options.zoom,
     triHeight,
     triWidth,
     triLeft,
@@ -30,8 +30,8 @@ export function getOverlayPosition(_options: OverlayPlacementOptions) {
   const points = getPlacementPoints(placement)
   let top = getTriggerTop(points[1][0], baseTop, triHeight)
   let left = getTriggerLeft(points[1][1], baseLeft, triWidth)
-  top = getOverlayTop(points[0][0], top, layHeight * 10)
-  left = getOverlayLeft(points[0][1], left, layWidth * 10)
+  top = getOverlayTop(points[0][0], top, layHeight * _options.zoom)
+  left = getOverlayLeft(points[0][1], left, layWidth * _options.zoom)
   return { left, top, placement }
 }
 

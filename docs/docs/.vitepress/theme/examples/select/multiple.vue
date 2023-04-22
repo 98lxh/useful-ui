@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const value = ref('')
+const value = ref([])
 
 const options = ref([
         {
@@ -57,7 +57,6 @@ const options = ref([
 
 <template>
   <use-space direction="vertical" fill>
-    <use-select v-model:value="value" placeholder="请选择" :options="options" />
-    <use-select v-model:value="value" placeholder="请选择" disabled :options="options" />
+    <use-select v-model:value="value" multiple placeholder="请选择" :options="options" />
   </use-space>
 </template>
