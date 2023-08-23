@@ -1,13 +1,24 @@
 import { computed, defineComponent, nextTick, ref, shallowReactive } from 'vue'
-import { SelectProps, selectProps, OnUpdateInputValueFn, RenderTriggerFn, SelectValueGather, SelectValue } from './props'
 import Overlay, { OverlayInstance } from '../../overlay'
 import Input, { InputInstance } from '../../input'
+import { Operators } from '../../_tokens'
+import { selectProps } from './props'
 import Options from "./options"
 import Icon from "../../icon"
 import Tag from "../../tag"
 
+
 import { useMergeProps } from '@useful-ui/hooks'
 import { ArrowDown } from "@useful-ui/icons"
+
+import type {
+  SelectProps,
+  SelectValue,
+  SelectOption,
+  RenderTriggerFn,
+  SelectSingleValue,
+  OnUpdateInputValueFn
+} from "./props"
 
 import {
   isArray,
@@ -33,14 +44,11 @@ const Select = defineComponent({
     const props = useMergeProps(componentProps, defaultProps)
     const overlayRef = ref<OverlayInstance | null>(null)
 
-    const state = computed(() => {
-      const { disabled, placeholder, multiple } = props.value
-      return ({
-        disabled,
-        placeholder,
-        trigger: multiple ? 'click' : 'focus'
-      }) as const
-    })
+    const state = computed(() => ({
+      disabled: props.value.disabled,
+      placeholder: props.value.placeholder,
+      trigger: props.value.multiple ? 'click' : 'focus'
+    } as const))
 
     const inputState = shallowReactive({
       height: 0,
@@ -50,29 +58,37 @@ const Select = defineComponent({
 
     const active = computed(() => {
       const { options, value } = props.value
-      if (!isArray(value))return options?.find(({ value: _value }) => value === _value)
-      return options?.filter(({ value: _value }) => value.includes(_value))
+      let _active: SelectOption | SelectOption[] | undefined = []
+      if (!Array.isArray(value)) {
+        _active = options?.find(({ value: oV }) => value === oV)
+      } else {
+        for (const sV of value) {
+          const item = options?.find(({ value: oV }) => oV === sV)
+          item && _active.push(item)
+        }
+      }
+      return _active
     })
 
-    const calculateOptionWidth = function() {
+    const calculateOptionWidth = function () {
       if (!overlayRef.value) return 0
       const { getTrigger } = overlayRef.value
       const rect = getBoundingClientRect(getTrigger()?.$el || 0)
       inputState.width = isNumber(rect) ? rect : rect.width
     }
 
-    const getUpdateValue = function(originalValue: SelectValueGather, options){
-      if (!isArray(originalValue)) return options.value;
-      const isDeletion = options.isDeletion || originalValue.includes(options.value)
-      if (isDeletion) return originalValue.filter(value => value !== options.value) 
-      return [...originalValue, options.value]
-    }
-
-    const onUpdateValue: OnUpdateInputValueFn = function({ isDeletion, value }) {
+    const onUpdateValue: OnUpdateInputValueFn = function (value, operator) {
       const { "onUpdate:value": onUpdateValue, value: originalValue } = props.value
-      const updateValue = getUpdateValue(originalValue as SelectValueGather, { isDeletion, value })
-      onUpdateValue && onUpdateValue(updateValue)
-      nextTick(() => overlayRef.value?.updateOverlayPosition())
+      let updateValue: SelectValue | null = null;
+      if (!Array.isArray(originalValue) || !originalValue) {
+        updateValue = value
+      } else if (operator === Operators.Deletion || originalValue.includes(value)) {
+        updateValue = originalValue.filter(oV => oV !== value)
+      } else {
+        updateValue = [...originalValue, value]
+      }
+      onUpdateValue && onUpdateValue(updateValue!)
+      nextTick(() => overlayRef.value && overlayRef.value.updateOverlayPosition())
     }
 
     function focus() {
@@ -80,54 +96,50 @@ const Select = defineComponent({
       input?.focus()
     }
 
-    function blur(){
+    function blur() {
       const input = overlayRef.value?.getTrigger<InputInstance>()
       input?.blur()
     }
 
-    function onCloseTag(event?:MouseEvent,value?:SelectValue){
+    function onCloseTag(event?: MouseEvent, value?: SelectSingleValue) {
       event?.stopPropagation()
-      onUpdateValue({ value, isDeletion: true })
+      onUpdateValue(value!, Operators.Deletion)
     }
 
-    const renderTags: RenderTriggerFn = function()  {
+    const renderTags: RenderTriggerFn = function () {
       const { multiple, size } = props.value
-      if (!multiple || !isArray(active.value)) return null   
+      if (!multiple || !isArray(active.value)) return null
       return (
         <div class={bem.e('tags')}>
           {active.value.map(({ label, value }) => (
-              <Tag
-                closable
-                size={size}
-                key={value}
-                v-slots={{ default: () => label }}
-                onClose={(event) => onCloseTag(event,value)}
-              />
-            ))}
+            <Tag
+              closable
+              size={size}
+              key={value}
+              v-slots={{ default: () => label }}
+              onClose={(event) => onCloseTag(event, value)}
+            />
+          ))}
         </div>
       )
     }
 
-    const renderTrigger: RenderTriggerFn = function(config) {
+    const renderTrigger: RenderTriggerFn = function (hasInnerInput) {
       const { size, multiple } = props.value
       const value = !isArray(active.value) ? active.value?.label : active.value.join(',')
-      const hasInnerInput = config.hasInnerInput || false
-      const isRenderTag = multiple && isArray(active.value) && config.hasInnerInput
+      const isRenderTag = multiple && isArray(active.value) && hasInnerInput
+      const renderTag = isRenderTag ? () => renderTags(hasInnerInput) : undefined
 
       return (
         <Input
           class={bem.is('inner', !hasInnerInput)}
-          inputStyle={value && isRenderTag ? {height:'100% !important'} : {}}
+          inputStyle={value && isRenderTag ? { height: '100% !important' } : {}}
           placeholder={state.value.placeholder}
           disabled={state.value.disabled}
-          readonly={config.hasInnerInput}
+          readonly={hasInnerInput}
+          renderTag={renderTag}
           value={value}
           size={size}
-          renderTag={
-            isRenderTag
-              ? () => renderTags({ hasInnerInput: false })
-              : undefined
-          }
           v-slots={{
             suffix: hasInnerInput
               ? () => (<Icon><ArrowDown /></Icon>)
@@ -147,10 +159,10 @@ const Select = defineComponent({
             trigger={trigger}
             onHidden={blur}
             onVisible={calculateOptionWidth}
-            v-slots={{
-              trigger: () => renderTrigger({ hasInnerInput: true }),
-              default: () => (
-                <Options
+            onPositionUpdate={() => nextTick(() => calculateOptionWidth())}
+            v-slots={{ trigger: () => renderTrigger(true) }}
+          >
+            <Options
                   value={value}
                   focus={focus}
                   options={options}
@@ -158,9 +170,7 @@ const Select = defineComponent({
                   width={inputState.width}
                   onUpdateValue={onUpdateValue}
                 />
-              )
-            }}
-          />
+          </Overlay>
         </div >
       )
     }

@@ -1,12 +1,13 @@
 import { computed, defineComponent } from 'vue'
 import { SelectOption, selectOptionsProps } from './props'
+import { Operators } from '../../_tokens'
 import Scrollbar from '../../scrollbar'
 
 import {
+  isArray,
   className,
   createNameSpace,
   createComponentName,
-  isArray
 } from '@useful-ui/utils'
 
 const bem = createNameSpace('select-option')
@@ -22,14 +23,14 @@ const Options = defineComponent({
         bem.e('item'),
         bem.is('disbaled', option.disabled),
         bem.is('active', option.value === props.value),
-        bem.is('multiple-active', isArray(props.value) && props.value.includes(option.value))
+        bem.is('multiple-active', isArray(props.value) && props.value.includes(option.value!))
       )
     }
 
     function onUpdateValue(option: SelectOption) {
       const { onUpdateValue, multiple, focus } = props
-      if (!option.disabled){
-        onUpdateValue && onUpdateValue({ value:option.value, isDeletion: false })
+      if (!option.disabled) {
+        onUpdateValue && onUpdateValue(option.value!, Operators.Addition)
         multiple && focus?.()
       }
     }

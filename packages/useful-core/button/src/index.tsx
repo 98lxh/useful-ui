@@ -38,7 +38,6 @@ const Button = defineComponent({
     const classes = computed(() => {
       const { type, shape, size } = state.value
       const { ghost, block, danger, disabled, loading } = props.value
-
       return className(
         bem.b(),
         bem.m(type),

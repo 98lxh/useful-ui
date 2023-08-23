@@ -1,5 +1,5 @@
-import { defineComponent, onUnmounted, Teleport, ref, nextTick, Transition, watch, cloneVNode, Fragment, reactive, provide, inject } from 'vue'
-import { createComponentName, createEventOutsideHelper, getFirstSlotVNode, type EventOutsideHelper } from '@useful-ui/utils'
+import { defineComponent, onUnmounted, Teleport, ref, nextTick, Transition, cloneVNode, Fragment, reactive, provide, inject, onMounted } from 'vue'
+import { createComponentName, createEventOutsideHelper, getFirstSlotVNode, debounce, type EventOutsideHelper } from '@useful-ui/utils'
 import { Addition, Deletion, OnUpdateChildrenFn, overlayInjectionKey } from './context'
 import { OverlayPlacement, overlayProps, type OverlayProps } from './props'
 import { useMergeProps } from '@useful-ui/hooks'
@@ -79,6 +79,7 @@ const Overlay = defineComponent({
     function updateOverlayPosition({ zoom, allowConvertPlacement } = {zoom:10 ,allowConvertPlacement:true}) {
       if (!overlayRef.value || !triggerRef.value) return null
       overlayStyle.value = getOverlayStyle({ zoom })!;
+
       if(allowConvertPlacement){
          const placement = getOverlayPlacement?.()
          if (placement && placement !== state.placement){
@@ -86,7 +87,11 @@ const Overlay = defineComponent({
            onPlacementChange()
          } 
       }
+
+      props.value.onPositionUpdate && props.value.onPositionUpdate()
     }
+
+    const { run: updatePositionHandler } = debounce(updateOverlayPosition, { delay: 100 })
 
     async function onDisplayOverlay() {
       const { onVisible } = props.value
@@ -137,11 +142,9 @@ const Overlay = defineComponent({
     function renderOverlay() {
       const style: CSSProperties = overlayStyle.value ? overlayStyle.value : { position: 'absolute' }
       if (!state.visible) return null
-      return (
-        <div style={style} ref={overlayRef}>
+      return (<div style={style} ref={overlayRef}>
           {slots.default && slots.default()}
-        </div >
-      )
+      </div>)
     }
 
     function onPlacementChange(){
@@ -160,8 +163,10 @@ const Overlay = defineComponent({
     }
     
     overlayParent && overlayParent.onUpdateChildrenFn(getOverlayElementFn, Addition)
+    onMounted(() => window.addEventListener('resize', updatePositionHandler))
 
     onUnmounted(() => {
+      window.removeEventListener('resize', updatePositionHandler)
       onUpdateChildrenFn(getOverlayElementFn, Deletion)
       eventOutsideHelper && eventOutsideHelper.removeListener()
       triggerHandlers && triggerHandlers.cancel()

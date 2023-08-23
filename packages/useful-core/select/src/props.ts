@@ -1,33 +1,33 @@
 import { CSSProperties, ExtractPropTypes, PropType, VNodeChild } from 'vue'
+import { Operators } from '../../_tokens'
 
 
-export type SelectValue = number | string
-export type SelectArrayValue = Array<SelectValue>
-export type SelectValueGather = SelectValue | SelectArrayValue | null
 export type SelectSize = 'small' | 'middle' | 'large'
+export type SelectSingleValue = number | string
+export type SelectValue = SelectSingleValue | Array<SelectSingleValue>
 
 export interface SelectOption {
   class?: string
   label?: string
   disabled?: boolean
-  value?: SelectValue
+  value?: SelectSingleValue
   style?: CSSProperties
   render?: () => VNodeChild
 }
 
 export interface OnUpdateInputValueFn {
-  (options: { value?: SelectValueGather, isDeletion: boolean }): void
+  (value: SelectSingleValue, operator: Operators): void
 }
 
 export interface RenderTriggerFn {
-  (options: { hasInnerInput: boolean }): JSX.Element | null
+  (hasInnerInput: boolean): JSX.Element | null
 }
 
 
 export const selectProps = {
   /* 选择器的值 **/
   value: {
-    type: [Number, String, Array]
+    type: [Number, String, Array] as PropType<SelectValue>
   },
   /* 选择器的尺寸 **/
   size: {
@@ -58,7 +58,7 @@ export const selectProps = {
 
 export const selectOptionsProps = {
   value: {
-    type: [Number, String, Array]
+    type: [Number, String, Array] as PropType<SelectValue>
   },
   onUpdateValue: {
     type: Function as PropType<OnUpdateInputValueFn>

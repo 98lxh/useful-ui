@@ -25,6 +25,9 @@ export const overlayProps = {
   },
   onHidden:{
     type: Function
+  },
+  onPositionUpdate: {
+    type: Function
   }
 }
 
