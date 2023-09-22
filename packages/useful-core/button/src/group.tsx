@@ -3,7 +3,7 @@ import { createComponentName, createNameSpace } from '@useful-ui/utils'
 import { buttonGroupInjectionKey } from './context'
 import { buttonGroupProps } from './props'
 
-const bem = createNameSpace('button-group')
+const nsp = createNameSpace('button-group')
 const name = createComponentName('ButtonGroup')
 
 const ButtonGroup = defineComponent({
@@ -11,7 +11,7 @@ const ButtonGroup = defineComponent({
   props: buttonGroupProps,
   setup(props, { slots }) {
     provide(buttonGroupInjectionKey, props)
-    return () => <div class={bem.b()}>{slots.default && slots.default()}</div>
+    return () => <div class={nsp.b()}>{slots.default && slots.default()}</div>
   }
 })
 

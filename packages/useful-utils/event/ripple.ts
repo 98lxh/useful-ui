@@ -6,7 +6,7 @@ export interface RippleOptions {
   duration?: number
 }
 
-const bem = createNameSpace('ripples')
+const nsp = createNameSpace('ripples')
 
 function calculationPosition(event: MouseEvent) {
   const { layerX, layerY } = event as any
@@ -29,7 +29,7 @@ function createRipplesEffect(event: MouseEvent, target: HTMLElement, _options: R
 
   const ripples = createRipples(calculationPosition(event))
 
-  ripples.className = bem.b(name)
+  ripples.className = nsp.b(name)
 
   if (color) ripples.style.background = color
 

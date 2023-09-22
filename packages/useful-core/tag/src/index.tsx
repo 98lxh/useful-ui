@@ -7,8 +7,7 @@ import Icon from '../../icon'
 
 
 import {
-  flatten,
-  className,
+  cls,
   createNameSpace,
   createComponentName,
 } from '@useful-ui/utils'
@@ -22,7 +21,7 @@ const defaultProps: TagProps = {
   round: false
 }
 
-const bem = createNameSpace('tag')
+const nsp = createNameSpace('tag')
 
 const Tag = defineComponent({
   name: createComponentName('Tag'),
@@ -33,13 +32,13 @@ const Tag = defineComponent({
 
     const classes = computed(() => {
       const { size, type, disabled, bordered, round } = props.value
-      return className(
-        bem.b(),
-        bem.m(type),
-        bem.m(size),
-        bem.is('disabled', disabled),
-        bem.is('bordered', bordered),
-        bem.is('round', round)
+      return cls(
+        nsp.b(),
+        nsp.m(type),
+        nsp.m(size),
+        nsp.is('disabled', disabled),
+        nsp.is('bordered', bordered),
+        nsp.is('round', round)
       )
     })
 

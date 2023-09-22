@@ -3,8 +3,8 @@ import { useMergeProps } from '@useful-ui/hooks'
 import { type SpaceProps, spaceProps } from './props'
 
 import {
+  cls,
   flatten,
-  className,
   createNameSpace,
   createComponentName,
 } from '@useful-ui/utils'
@@ -14,7 +14,7 @@ const defaultProps: SpaceProps = {
   direction: 'horizontal'
 }
 
-const bem = createNameSpace('space')
+const nsp = createNameSpace('space')
 
 const Space = defineComponent({
   name: createComponentName('Space'),
@@ -24,11 +24,11 @@ const Space = defineComponent({
 
     const classes = computed(() => {
       const { direction, wrap, fill } = props.value
-      return className(
-        bem.b(),
-        bem.is(direction!, true),
-        bem.is('wrap', wrap || direction === 'vertical'),
-        bem.is('fill', fill)
+      return cls(
+        nsp.b(),
+        nsp.is(direction!, true),
+        nsp.is('wrap', wrap || direction === 'vertical'),
+        nsp.is('fill', fill)
       )
     })
 
@@ -44,7 +44,7 @@ const Space = defineComponent({
       const children = flatten(slots.default && slots.default())
       if (!children) return null
       return children.map(childNode => (
-        <div class={bem.b('item')} style={styles.value}>
+        <div class={nsp.b('item')} style={styles.value}>
           {childNode}
         </div>
       ))

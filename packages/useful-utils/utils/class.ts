@@ -1,4 +1,4 @@
-function classNames(...args: Array<string | undefined>) {
+function cls(...args: Array<string | undefined>) {
   const length = args.length
   const classes: string[] = []
 
@@ -11,4 +11,4 @@ function classNames(...args: Array<string | undefined>) {
   return [...new Set(classes)].join(' ')
 }
 
-export default classNames
+export default cls

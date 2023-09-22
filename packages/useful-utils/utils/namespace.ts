@@ -33,28 +33,16 @@ function createBEM(prefixName: string) {
       : ''
 
   const is = (name: string, state: any) => (state ? `is-${name}` : '')
-
-  return {
-    b,
-    e,
-    m,
-    be,
-    bm,
-    em,
-    bem,
-    is
-  }
+  return { b, e, m, be, bm, em, bem, is }
 }
 
 function createNameSpace(name: string) {
   const prefixName = `use-${name}`
-
   return createBEM(prefixName)
 }
 
 function createComponentName(name: string) {
   const componentName = `Use${name}`
-
   return componentName
 }
 

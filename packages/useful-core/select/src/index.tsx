@@ -7,7 +7,6 @@ import Options from "./options"
 import Icon from "../../icon"
 import Tag from "../../tag"
 
-
 import { useMergeProps } from '@useful-ui/hooks'
 import { ArrowDown } from "@useful-ui/icons"
 
@@ -30,12 +29,12 @@ import {
 
 const defaultProps: SelectProps = {
   options: [],
+  placeholder: '',
   disabled: false,
   multiple: false,
-  placeholder: ''
 }
 
-const bem = createNameSpace('select')
+const nsp = createNameSpace('select')
 
 const Select = defineComponent({
   name: createComponentName('Select'),
@@ -51,23 +50,23 @@ const Select = defineComponent({
     } as const))
 
     const inputState = shallowReactive({
-      height: 0,
       width: 0,
+      height: 0,
       value: ""
     })
 
     const active = computed(() => {
       const { options, value } = props.value
-      let _active: SelectOption | SelectOption[] | undefined = []
+      let active: SelectOption | SelectOption[] = []
       if (!Array.isArray(value)) {
-        _active = options?.find(({ value: oV }) => value === oV)
+        active = options!.find(({ value: oV }) => value === oV)!
       } else {
         for (const sV of value) {
           const item = options?.find(({ value: oV }) => oV === sV)
-          item && _active.push(item)
+          item && active.push(item)
         }
       }
-      return _active
+      return active
     })
 
     const calculateOptionWidth = function () {
@@ -110,15 +109,11 @@ const Select = defineComponent({
       const { multiple, size } = props.value
       if (!multiple || !isArray(active.value)) return null
       return (
-        <div class={bem.e('tags')}>
+        <div class={nsp.e('tags')}>
           {active.value.map(({ label, value }) => (
-            <Tag
-              closable
-              size={size}
-              key={value}
-              v-slots={{ default: () => label }}
-              onClose={(event) => onCloseTag(event, value)}
-            />
+            <Tag closable size={size} key={value} onClose={
+              (event) => onCloseTag(event, value)
+            }>{{ label }}</Tag>
           ))}
         </div>
       )
@@ -129,10 +124,9 @@ const Select = defineComponent({
       const value = !isArray(active.value) ? active.value?.label : active.value.join(',')
       const isRenderTag = multiple && isArray(active.value) && hasInnerInput
       const renderTag = isRenderTag ? () => renderTags(hasInnerInput) : undefined
-
       return (
         <Input
-          class={bem.is('inner', !hasInnerInput)}
+          class={nsp.is('inner', !hasInnerInput)}
           inputStyle={value && isRenderTag ? { height: '100% !important' } : {}}
           placeholder={state.value.placeholder}
           disabled={state.value.disabled}
@@ -153,7 +147,7 @@ const Select = defineComponent({
       const { value, multiple, options } = props.value
       const { trigger } = state.value
       return (
-        <div class={bem.b()}>
+        <div class={nsp.b()}>
           <Overlay
             ref={overlayRef}
             trigger={trigger}
@@ -163,13 +157,13 @@ const Select = defineComponent({
             v-slots={{ trigger: () => renderTrigger(true) }}
           >
             <Options
-                  value={value}
-                  focus={focus}
-                  options={options}
-                  multiple={multiple}
-                  width={inputState.width}
-                  onUpdateValue={onUpdateValue}
-                />
+              value={value}
+              focus={focus}
+              options={options}
+              multiple={multiple}
+              width={inputState.width}
+              onUpdateValue={onUpdateValue}
+            />
           </Overlay>
         </div >
       )

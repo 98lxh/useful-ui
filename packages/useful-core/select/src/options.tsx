@@ -4,13 +4,13 @@ import { Operators } from '../../_tokens'
 import Scrollbar from '../../scrollbar'
 
 import {
+  cls,
   isArray,
-  className,
   createNameSpace,
   createComponentName,
 } from '@useful-ui/utils'
 
-const bem = createNameSpace('select-option')
+const nsp = createNameSpace('select-option')
 
 const Options = defineComponent({
   name: createComponentName('SelectOptions'),
@@ -19,11 +19,11 @@ const Options = defineComponent({
     const style = computed(() => ({ width: props.width! + 'px' }))
 
     function createOptionClassName(option: SelectOption) {
-      return className(
-        bem.e('item'),
-        bem.is('disbaled', option.disabled),
-        bem.is('active', option.value === props.value),
-        bem.is('multiple-active', isArray(props.value) && props.value.includes(option.value!))
+      return cls(
+        nsp.e('item'),
+        nsp.is('disbaled', option.disabled),
+        nsp.is('active', option.value === props.value),
+        nsp.is('multiple-active', isArray(props.value) && props.value.includes(option.value!))
       )
     }
 
@@ -38,7 +38,7 @@ const Options = defineComponent({
     return () => {
       return (
         <Scrollbar
-          class={bem.b()}
+          class={nsp.b()}
           maxHeight={300}
           style={style.value}
           v-slots={{

@@ -5,7 +5,7 @@ import { useMergeProps } from '@useful-ui/hooks'
 import Spin from '@useful-ui/core/spin'
 
 import {
-  className,
+  cls,
   createRipples,
   createNameSpace,
   createComponentName
@@ -16,7 +16,7 @@ const defaultProps: ButtonProps = {
   ripple: true
 }
 
-const bem = createNameSpace('button')
+const nsp = createNameSpace('button')
 
 const Button = defineComponent({
   name: createComponentName('Button'),
@@ -38,16 +38,16 @@ const Button = defineComponent({
     const classes = computed(() => {
       const { type, shape, size } = state.value
       const { ghost, block, danger, disabled, loading } = props.value
-      return className(
-        bem.b(),
-        bem.m(type),
-        bem.m(size),
-        bem.m(shape),
-        bem.is('ghost', ghost),
-        bem.is('block', block),
-        bem.is('danger', danger),
-        bem.is('loading', loading),
-        bem.is('disabled', disabled)
+      return cls(
+        nsp.b(),
+        nsp.m(type),
+        nsp.m(size),
+        nsp.m(shape),
+        nsp.is('ghost', ghost),
+        nsp.is('block', block),
+        nsp.is('danger', danger),
+        nsp.is('loading', loading),
+        nsp.is('disabled', disabled)
       )
     })
 

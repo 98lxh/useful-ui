@@ -4,7 +4,7 @@ import { useMergeProps } from '@useful-ui/hooks'
 import LoadNode from './load-node'
 
 import {
-  className,
+  cls,
   createNameSpace,
   createComponentName
 } from '@useful-ui/utils'
@@ -14,7 +14,7 @@ const defaultProps: SpinProps = {
   document: true
 }
 
-const bem = createNameSpace('spin')
+const nsp = createNameSpace('spin')
 
 const Spin = defineComponent({
   name: createComponentName('Spin'),
@@ -30,12 +30,12 @@ const Spin = defineComponent({
     const classes = computed(() => {
       const { type } = state
       const { target, document, status } = props.value
-      return className(
-        bem.b(),
-        bem.is(status!, status),
-        bem.is('target', target),
-        bem.is('document', document),
-        bem.m(type)
+      return cls(
+        nsp.b(),
+        nsp.m(type),
+        nsp.is(status!, status),
+        nsp.is('target', target),
+        nsp.is('document', document)
       )
     })
 

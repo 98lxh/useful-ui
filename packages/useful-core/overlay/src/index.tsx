@@ -36,6 +36,10 @@ const Overlay = defineComponent({
     let getOverlayPlacement: (() => OverlayPlacement) | null = null
     const getOverlayElementFn = () => overlayRef.value as HTMLElement
 
+
+    const { run: updatePositionHandler } = debounce(updateOverlayPosition, { delay: 100 })
+    const onUpdateVisible = async (visible: boolean) => visible ? onDisplayOverlay() : onHiddenOverlay()
+
     const state = reactive({
       placement: props.value.placement,
       visible: props.value.visible,
@@ -57,9 +61,7 @@ const Overlay = defineComponent({
         zoom
       });
 
-      getOverlayPlacement = function () {
-        return overlayPlacement;
-      }
+      getOverlayPlacement = () => overlayPlacement
       return createOverlayStyle({ ...overlayPosition, overlayTarget })
     }
 
@@ -68,30 +70,28 @@ const Overlay = defineComponent({
       if (!triggerRef.value || !trigger) return null
       const triggerElement = getTriggerElement(triggerRef.value)
       const callback = () => onUpdateVisible(false);
-      const options = {
-        callback,
-        eventName: getOutsideEventName(trigger),
-        elm: [triggerElement, getOverlayElementFn, ...getOverlayElementFns.values()],
-      }
+      const elm = [triggerElement, getOverlayElementFn, ...getOverlayElementFns.values()]
+      const options = { callback, elm, eventName: getOutsideEventName(trigger) }
       return createEventOutsideHelper(options)
     }
 
-    function updateOverlayPosition({ zoom, allowConvertPlacement } = {zoom:10 ,allowConvertPlacement:true}) {
+    function updateOverlayPosition(
+      { zoom, allowConvertPlacement } = { zoom: 10, allowConvertPlacement: true }
+    ) {
+
       if (!overlayRef.value || !triggerRef.value) return null
       overlayStyle.value = getOverlayStyle({ zoom })!;
 
-      if(allowConvertPlacement){
-         const placement = getOverlayPlacement?.()
-         if (placement && placement !== state.placement){
-           state.placement = placement
-           onPlacementChange()
-         } 
+      if (allowConvertPlacement) {
+        const placement = getOverlayPlacement?.()
+        if (placement && placement !== state.placement) {
+          state.placement = placement
+          onPlacementChange()
+        }
       }
 
       props.value.onPositionUpdate && props.value.onPositionUpdate()
     }
-
-    const { run: updatePositionHandler } = debounce(updateOverlayPosition, { delay: 100 })
 
     async function onDisplayOverlay() {
       const { onVisible } = props.value
@@ -101,28 +101,26 @@ const Overlay = defineComponent({
           eventOutsideHelper = getOutsideEvent()
           eventOutsideHelper && eventOutsideHelper.registerListener()
         }
+
         updateOverlayPosition()
         overlayTarget.incrementHierarchy()
         onVisible && onVisible()
       })
     }
 
-    function onHiddenOverlay(){
+    function onHiddenOverlay() {
       const { onHidden } = props.value
-      if(getOverlayPlacement){
-          state.placement = getOverlayPlacement()
+      if (getOverlayPlacement) {
+        state.placement = getOverlayPlacement()
       }
       state.visible = false
-      if(eventOutsideHelper){
+      if (eventOutsideHelper) {
         eventOutsideHelper.removeListener()
         eventOutsideHelper = null
       }
       onHidden && onHidden()
     }
 
-    async function onUpdateVisible(visible: boolean) {
-      visible ? onDisplayOverlay() : onHiddenOverlay()
-    }
 
     function renderTrigger() {
       const triggerNode = getFirstSlotVNode(slots, 'trigger')
@@ -143,11 +141,11 @@ const Overlay = defineComponent({
       const style: CSSProperties = overlayStyle.value ? overlayStyle.value : { position: 'absolute' }
       if (!state.visible) return null
       return (<div style={style} ref={overlayRef}>
-          {slots.default && slots.default()}
+        {slots.default && slots.default()}
       </div>)
     }
 
-    function onPlacementChange(){
+    function onPlacementChange() {
       onUpdateVisible(false)
       nextTick(() => onUpdateVisible(true))
     }
@@ -161,7 +159,7 @@ const Overlay = defineComponent({
         eventOutsideHelper && eventOutsideHelper.setContainsElement(containsElement)
       }
     }
-    
+
     overlayParent && overlayParent.onUpdateChildrenFn(getOverlayElementFn, Addition)
     onMounted(() => window.addEventListener('resize', updatePositionHandler))
 
@@ -176,8 +174,8 @@ const Overlay = defineComponent({
 
     expose({
       getTrigger: () => triggerRef.value,
-      setVisible:(visible:boolean) => onUpdateVisible(visible),
-      updateOverlayPosition: () => updateOverlayPosition({ zoom: 1 ,allowConvertPlacement:false})
+      setVisible: (visible: boolean) => onUpdateVisible(visible),
+      updateOverlayPosition: () => updateOverlayPosition({ zoom: 1, allowConvertPlacement: false })
     })
 
     return () => {

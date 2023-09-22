@@ -15,7 +15,7 @@ const defaultProps: ScrollbarProps = {
   tag: 'div'
 }
 
-const bem = createNameSpace('scrollbar')
+const nsp = createNameSpace('scrollbar')
 
 const Scrollbar = defineComponent({
   name: createComponentName('Scrollbar'),
@@ -164,9 +164,9 @@ const Scrollbar = defineComponent({
       const { thumbHeight, thumbWidth, viewWidth, viewHeight, width, retio, maxHeight, height } = state
 
       return (
-        <div class={bem.b()}>
-          <div ref={scrollbarWrapRef} class={bem.e('wrap')} style={heightStyle.value}>
-            <div ref={scrollbarViewRef} class={bem.e('view')}>
+        <div class={nsp.b()}>
+          <div ref={scrollbarWrapRef} class={nsp.e('wrap')} style={heightStyle.value}>
+            <div ref={scrollbarViewRef} class={nsp.e('view')}>
               {slots.default && slots.default()}
             </div>
           </div>

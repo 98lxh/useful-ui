@@ -2,7 +2,7 @@ import { computed, defineComponent } from 'vue'
 import { createNameSpace, createComponentName } from '@useful-ui/utils'
 import { iconProps } from './props'
 
-const bem = createNameSpace('icon')
+const nsp = createNameSpace('icon')
 
 const Icon = defineComponent({
   name: createComponentName('Icon'),
@@ -19,7 +19,7 @@ const Icon = defineComponent({
 
     return () => {
       return (
-        <i class={bem.b()} style={style.value} onClick={props.onClick}>
+        <i class={nsp.b()} style={style.value} onClick={props.onClick}>
           {slots.default && slots.default()}
         </i>
       )

@@ -6,12 +6,12 @@ import Spin from '@useful-ui/core/spin'
 import Icon from '@useful-ui/core/icon'
 
 import {
-  className,
+  cls,
   createNameSpace,
   createComponentName
 } from '@useful-ui/utils'
 
-const bem = createNameSpace('input')
+const nsp = createNameSpace('input')
 
 const defaultProps: InputProps = {
   value: '',
@@ -43,13 +43,13 @@ const Input = defineComponent({
     const classes = computed(() => {
       const { size, status } = props.value
       const { disabled, readonly } = state.value;
-      return className(
-        bem.b(),
-        bem.m(size),
-        bem.is(status!, status),
-        bem.is('focus', focusedRef.value),
-        bem.is('disabled', disabled),
-        bem.is('readonly', readonly)
+      return cls(
+        nsp.b(),
+        nsp.m(size),
+        nsp.is(status!, status),
+        nsp.is('focus', focusedRef.value),
+        nsp.is('disabled', disabled),
+        nsp.is('readonly', readonly)
       )
     })
 
@@ -100,7 +100,7 @@ const Input = defineComponent({
     function renderPrefix() {
       const customPrefix = slots.prefix
       if (!customPrefix) return null
-      return <div class={bem.e('prefix')}>{customPrefix && customPrefix()}</div>
+      return <div class={nsp.e('prefix')}>{customPrefix && customPrefix()}</div>
     }
 
     function togglePassword() {
@@ -133,7 +133,7 @@ const Input = defineComponent({
       const { value } = props.value
       if (!value) return null
       return (
-        <Icon class={bem.b('clear')} onClick={handleClear}>
+        <Icon class={nsp.b('clear')} onClick={handleClear}>
           <ClearSharp />
         </Icon>
       )
@@ -143,7 +143,7 @@ const Input = defineComponent({
       const { maxLength, value } = props.value
       const length = String(value).length
       const innerText = maxLength ? `${length} / ${maxLength}` : length
-      return <p class={bem.b('counter')}>{innerText}</p>
+      return <p class={nsp.b('counter')}>{innerText}</p>
     }
 
     function renderLoadingSuffix() {
@@ -164,7 +164,7 @@ const Input = defineComponent({
       if (!isRender) return null
 
       return (
-        <div class={bem.e('suffix')}>
+        <div class={nsp.e('suffix')}>
           {clearable && renderClearSuffix()}
           {isCounter && renderCounterSuffix()}
           {customSuffix && customSuffix()}
@@ -181,7 +181,7 @@ const Input = defineComponent({
       const basicProps = {
         type,
         value,
-        class: bem.e('input-el'),
+        class: nsp.e('input-el'),
         ...(!renderTag ? {
           onInput: handleInput,
           onFocus,
@@ -190,9 +190,9 @@ const Input = defineComponent({
       }
 
       return (
-        <div class={bem.e('input')} style={{...(inputStyle ? inputStyle : {})}}>
+        <div class={nsp.e('input')} style={{ ...(inputStyle ? inputStyle : {}) }}>
           {renderTag ? renderTag() : (<input ref={innerInputRef} {...basicProps} />)}
-          < div class={bem.e('placeholder')} >
+          < div class={nsp.e('placeholder')} >
             {!value && <span>{placeholder}</span>}
           </div >
         </div >
@@ -217,13 +217,13 @@ const Input = defineComponent({
             onBlur
           } : {}
         }>
-          <div class={bem.b('wrapper')}>
+          <div class={nsp.b('wrapper')}>
             {renderPrefix()}
             {renderInput()}
             {renderSuffix()}
           </div>
-          <div class={bem.e('border')}></div>
-          <div class={bem.e('state')}></div>
+          <div class={nsp.e('border')}></div>
+          <div class={nsp.e('state')}></div>
         </div>
       )
     }

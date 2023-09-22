@@ -2,12 +2,12 @@ import { computed, defineComponent, nextTick, onMounted, onUnmounted, ref, shall
 import { ScrollbarMove, scrollThumbProps } from './props'
 
 import {
-  className,
+  cls,
   createNameSpace,
   createComponentName
 } from '@useful-ui/utils'
 
-const bem = createNameSpace('scrollbar-thumb')
+const nsp = createNameSpace('scrollbar-thumb')
 
 const ScrollThumb = defineComponent({
   name: createComponentName('ScrollbarThumb'),
@@ -26,12 +26,12 @@ const ScrollThumb = defineComponent({
       isCalculating: false
     })
 
-    const classes = computed(() => className(
-      bem.b(),
-      bem.is('hidden', isHidden.value),
-      bem.is('display', state.isDrawing),
-      bem.is('horizontal', props.move === 'moveX'),
-      bem.is('vertical', props.move === 'moveY')
+    const classes = computed(() => cls(
+      nsp.b(),
+      nsp.is('hidden', isHidden.value),
+      nsp.is('display', state.isDrawing),
+      nsp.is('horizontal', props.move === 'moveX'),
+      nsp.is('vertical', props.move === 'moveY')
     ))
 
 
@@ -170,7 +170,7 @@ const ScrollThumb = defineComponent({
     return () => {
       return (
         <div ref={scrollbarRef} class={classes.value} style={scrollbarStyle.value}>
-          <div ref={scrollbarThumbRef} class={bem.e('bar')} style={scrollbarThumbStyle.value} />
+          <div ref={scrollbarThumbRef} class={nsp.e('bar')} style={scrollbarThumbStyle.value} />
         </div>
       )
     }

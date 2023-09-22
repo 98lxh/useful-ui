@@ -1,4 +1,4 @@
-export { default as className } from './utils/class'
+export { default as cls } from './utils/class'
 export { default as createRipples } from './event/ripple'
 export { createComponentName, createNameSpace } from './utils/namespace'
 export { createEventOutsideHelper, type EventOutsideHelper } from "./event/outside"
